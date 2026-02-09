@@ -1,0 +1,25 @@
+.home{
+    text-align: center;
+    background-image: url('/assets/hero_img4.jpg');
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-position:cover;
+    display: flex;
+    gap: 50px;
+    flex-direction: column;
+    min-height:100vh;
+    height:auto;
+    justify-content: center;
+    align-items: center;
+}
+.desc{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.cta{
+    padding:8px;
+    font-size: 1.2rem;
+    border-radius: 15px;
+    
+}

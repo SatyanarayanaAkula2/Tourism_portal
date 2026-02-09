@@ -1,0 +1,15 @@
+<nav>
+    <div class="logo">
+        <h1>YatriGo</h1>
+    </div>
+
+    <div class="nav-right">
+        <button class="menu-btn" (click)=togglemenu()>☰</button>
+        <ul class="nav-links" [class.open]="menuOpen">
+            <li><a routerLink="/" routerLinkActive="active">Home</a></li>
+            <li><a routerLink="/destinations" routerLinkActive="active">Destinations</a></li>
+            <li><a routerLink="/booking" routerLinkActive="active">Book a Tour</a></li>
+            <li><a routerLink="/contact" routerLinkActive="active">Contact</a></li>
+        </ul>
+    </div>
+</nav>
