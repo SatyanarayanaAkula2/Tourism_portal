@@ -1,3 +1,76 @@
 .destinations{
+    display: flex;
+    flex-direction: column;
+    gap:50px;
+    min-height: 100vh;
+    padding: 32px 5%;
+    background-color: #FFFFFF;
+}
+.title{
     text-align: center;
+}
+.search_filter{
+    display: flex;
+    gap:50px;
+    justify-content: center;
+}
+.cards{
+    padding: 40px 5%;
+    background-color: #F2FBFD;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 32px;
+}
+.btn{
+    background-color:#008c9e;; 
+    color: #FFFFFF;
+    padding:12px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 15px;
+    border-style: none;
+    font-family: 'Poppins', sans-serif;
+}
+.btn:hover{
+    background-color: #006D7A;
+}
+.searchbar{
+    padding:10px;
+    width:30vw;
+    border-radius: 25px;
+    border:2px solid #006D7A;
+    transition:0.3s ease;
+}
+.searchbar:hover{
+     box-shadow:0 2px 12px rgba(0, 0, 0, 0.15) ;
+}
+
+.search_form{
+    display:flex;
+    gap:20px;
+}
+
+.filter{
+    position:relative;
+}  
+
+.filter ul {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background: white;
+    list-style: none;
+    padding: 10px 0;
+    width: 200px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+} 
+
+.filter ul li {
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.filter ul li:hover {
+    background-color: #f1f1f1;
 }

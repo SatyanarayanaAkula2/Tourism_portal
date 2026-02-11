@@ -1,18 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Home } from './home/home';
-import { Destinations } from './destinations/destinations';
+
 import { Bookatour } from './bookatour/bookatour';
 import { Contact } from './contact/contact';
+import { Hero } from './hero/hero';
+
+
+
+
 
 
 
 @NgModule({
   declarations: [
     Home,
-    Destinations,
     Bookatour,
-    Contact
+    Contact,
+    Hero,
+  
+  
   ],
   imports: [
     CommonModule

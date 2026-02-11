@@ -1,4 +1,31 @@
 <section class="destinations">
-<h1>Destination Page</h1>
-<p>This is page to show all the Destinations</p>
+
+<div class="title">
+    <h1>Find Your Destinations here!</h1>
+</div>
+
+<div class="search_filter">
+    <div class="search">
+        <form class="search_form">
+        <input type="text" class="searchbar" placeholder="Search for your destinations"/>
+        <button type="submit" class="btn">Search</button>
+        </form>
+    </div>
+    <div class="filter">
+            <button class="btn menufilter" (click)=togglefilter()>Filter the list</button>
+            <ul *ngIf="menufilter">
+                <li (click)=sortByRating()>High-Low Popularity</li>
+                <li (click)="filterByType('Beach')">Beaches</li>
+                <li (click)="filterByType('Temple')">Temples</li>
+                <li (click)="filterByType('Monument')">Monuments</li>
+                <li (click)="filterByType('Hill station')">Hill Stations</li>
+                <li (click)="resetfilter()">Reset</li>
+            </ul>
+    </div>
+</div>
+
+<div class="cards">
+    <app-destination-card *ngFor="let dest of destinations" [destination]="dest"></app-destination-card>
+</div>
+
 </section>
