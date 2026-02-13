@@ -1,0 +1,17 @@
+<section class="highlights">
+    <div class="highlight_container">
+        <h1 class="heading">Why YatriGo?</h1>
+    <div class="high_cards">
+        <div class="high_card1" *ngFor="let card of highlightcards">
+            <span>
+                <img [src]="card.image" width="100px"/>
+            </span>
+            <div class="card_content">
+                <h3>{{card.title}}</h3>
+                <p>{{card.matter}}</p>
+            </div>
+        </div>
+            
+    </div>
+    </div>
+</section>

@@ -5,6 +5,7 @@ import { Home } from './home/home';
 import { Bookatour } from './bookatour/bookatour';
 import { Contact } from './contact/contact';
 import { Hero } from './hero/hero';
+import { Highlights } from './highlights/highlights';
 
 
 
@@ -18,6 +19,7 @@ import { Hero } from './hero/hero';
     Bookatour,
     Contact,
     Hero,
+    Highlights,
   
   
   ],

@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { SharedModule } from './shared/shared-module';
 import { CommonModule } from '@angular/common';
+import { PagesModule } from './pages/pages-module';
 
 
 
@@ -17,7 +18,7 @@ import { CommonModule } from '@angular/common';
     BrowserModule,
     SharedModule,
     AppRoutingModule,
-    CommonModule
+    CommonModule,PagesModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

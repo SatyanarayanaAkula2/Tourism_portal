@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Highlights } from '../highlights/highlights';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
