@@ -44,19 +44,7 @@
     display: flex;
     gap:50px;
 }
-.btn{
-    background-color:#008c9e;; 
-    color: #FFFFFF;
-    padding:12px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 15px;
-    border-style: none;
-    font-family: 'Poppins', sans-serif;
-}
-.btn:hover{
-    background-color: #006D7A;
-}
+
 
 @media (max-width:768px) {
     .hero{

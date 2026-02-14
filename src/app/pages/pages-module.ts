@@ -6,6 +6,7 @@ import { Bookatour } from './bookatour/bookatour';
 import { Contact } from './contact/contact';
 import { Hero } from './hero/hero';
 import { Highlights } from './highlights/highlights';
+import { Populardest } from './populardest/populardest';
 
 
 
@@ -20,6 +21,7 @@ import { Highlights } from './highlights/highlights';
     Contact,
     Hero,
     Highlights,
+    Populardest,
   
   
   ],
