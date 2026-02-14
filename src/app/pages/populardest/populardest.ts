@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Desttypes } from '../../models/desttypes';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-populardest',
@@ -8,6 +9,7 @@ import { Desttypes } from '../../models/desttypes';
   styleUrl: './populardest.css',
 })
 export class Populardest {
+    Title='Destinations';
     Types:Desttypes[]=[
       {
         id:1,
@@ -17,7 +19,7 @@ export class Populardest {
       },
       {
         id:2,
-        title:'Hill Stations',
+        title:'Hill stations',
         image:'assets/places/hillstations.jpg',
         content:'Escape the heat and enjoy cool weather surrounded by misty hills.Ideal for scenic views, cozy stays, and refreshing nature walks.',
       },
@@ -34,4 +36,7 @@ export class Populardest {
         content:'Discover spiritual serenity in ancient and sacred temples.Temples reflect rich culture, devotion, and timeless architecture.',
       },
     ]
+    titleupdate(title:string){
+      this.Title=title;
+    }
 }

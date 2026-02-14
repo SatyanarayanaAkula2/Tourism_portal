@@ -14,12 +14,12 @@
     <div class="filter">
             <button class="btn menufilter" (click)=togglefilter()>Filter the list</button>
             <ul *ngIf="menufilter">
-                <li (click)=sortByRating()>High-Low Popularity</li>
-                <li (click)="filterByType('Beach')">Beaches</li>
-                <li (click)="filterByType('Temple')">Temples</li>
-                <li (click)="filterByType('Monument')">Monuments</li>
-                <li (click)="filterByType('Hill station')">Hill Stations</li>
-                <li (click)="resetfilter()">Reset</li>
+                <li [routerLink]="['/destinations', 'popular']">High-Low Popularity</li>
+                <li [routerLink]="['/destinations', 'Beaches']">Beaches</li>
+                <li [routerLink]="['/destinations', 'Temples']">Temples</li>
+                <li [routerLink]="['/destinations', 'Monuments']">Monuments</li>
+                <li [routerLink]="['/destinations', 'Hill stations']">Hill Stations</li>
+                <li [routerLink]="['/destinations']">Reset</li>
             </ul>
     </div>
 </div>

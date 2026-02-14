@@ -4,17 +4,20 @@
     </div>
     <div class="pop_destbar">
         <div class="type">
-            <h3>Type Of the Destination</h3>
+            <h3>{{Title}}</h3>
         </div>
         <div class="bar" >
             <div class="bar_card" *ngFor="let t of Types" [style.background-image]="'url(' +t.image+ ')'">
-                <div class="hover_con">
+                <div class="hover_con" (mouseenter)=titleupdate(t.title)>
                 <div class="content">
                     <h3>{{t.title}}</h3>
                     <p>{{t.content}}</p>
-                    <button class="btn">view {{t.title}}</button>
+                    <a class="btn" [routerLink]="['/destinations',t.title]">view {{t.title}}</a>
                 </div>
                 </div>
+            </div>
+            <div class="All">
+                <a class="btn" [routerLink]="['/destinations']">View All Destinations</a>
             </div>
         </div>
     </div>

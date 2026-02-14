@@ -10,6 +10,7 @@ const routes: Routes = [
   {path:'destinations',component:Destinations},
   {path:'booking',component:Bookatour},
   {path:'contact',component:Contact},
+  {path:'destinations/:type',component:Destinations},
   {path:'**',redirectTo:''}
 ];
 

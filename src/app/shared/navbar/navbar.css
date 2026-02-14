@@ -45,7 +45,7 @@ nav{
     }
     .nav-links{
         position:absolute;
-        top:52px;
+        top:46px;
         right:0;
         height:100vh;
         flex-direction: column;
