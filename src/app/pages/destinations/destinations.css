@@ -74,3 +74,31 @@
 .filter ul li:hover {
     background-color: #f1f1f1;
 }
+.Types{
+    padding:2% 0px;
+}
+.allTypes{
+    display: flex;
+    gap:20px;
+    justify-content: center;
+}
+.button{
+    list-style:none;
+    padding: 15px;
+    border-radius: 15px;
+    align-self: center;
+    background: linear-gradient(120deg, #ddf0f4, #06b2c9);
+    background-size: 200%;
+    transition: background-position 0.5s;
+}
+
+.button:hover{
+    cursor: pointer;
+    background-position: right;
+    color:white;
+}
+.button.active{
+    background-position:right;
+    background-color: #008c9e;
+    color:white;
+}
