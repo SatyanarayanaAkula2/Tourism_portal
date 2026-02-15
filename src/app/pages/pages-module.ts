@@ -9,6 +9,7 @@ import { Highlights } from './highlights/highlights';
 import { Populardest } from './populardest/populardest';
 import { Router, RouterModule } from '@angular/router';
 import { About } from './about/about';
+import { Footer } from './footer/footer';
 
 
 
@@ -24,6 +25,7 @@ import { About } from './about/about';
     Highlights,
     Populardest,
     About,
+    Footer,
   
   
   ],
