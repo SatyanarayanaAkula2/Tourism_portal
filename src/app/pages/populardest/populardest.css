@@ -28,7 +28,6 @@
     margin-bottom:20px;
 }
 
-/* ===== Grid Layout ===== */
 .bar{
     position: relative;
     padding:5% 0;
@@ -41,7 +40,7 @@
     display: flex;
     align-items: flex-end;
     position: absolute;
-    bottom:-50px;
+    bottom:-40px;
     right:50px;
 }
 .All .btn{

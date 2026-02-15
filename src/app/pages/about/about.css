@@ -1,0 +1,70 @@
+.about {
+    position: relative;
+    margin-top: -40px;
+    z-index: 2;
+    padding: 80px 5%;
+    border-radius: 24px 24px 0 0;
+
+    background-image:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.45),
+            rgba(0,0,0,0.45)
+        ),
+        url("/assets/hero_img4.jpg");
+    background-size: cover;
+    background-position: center;
+    color:white;
+}
+.heading{
+    text-align: center;
+    margin-bottom:5%;
+    font-weight:700;
+    background:linear-gradient(90deg,#ffffff,#bdeff5);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color: transparent;
+    
+}
+.intro{
+    max-width:80vw;
+    margin:0 auto 60px;
+    text-align: center;
+    line-height: 1.7;
+    font-size: 17px;
+}
+.cards{
+    margin:5% auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+    gap:50px;
+    width:100%;
+}
+
+.card{
+    padding:30px;
+    line-height: 1.4;
+    border-radius: 18px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border:1px solid rgba(255,255,255,0.25);
+    color:white;
+    transition:0.3s;
+}
+.card:hover{
+    transform: translateY(-6px);
+    background:rgba(255,255,255,0.25)
+}
+.card h2{
+    color:#7dd3fc;
+    margin-bottom:15px;
+    font-size: 22px;
+}
+.card p2{
+    color:#e2e8f0
+}
+@media (max-width:768px) {
+    .about{
+        margin-top: 0px;
+    }
+}

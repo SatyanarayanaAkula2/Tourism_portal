@@ -37,6 +37,9 @@ nav{
     background:none;
     cursor:pointer;
 }
+.active{
+    
+}
 
 
 @media (max-width:768px){
