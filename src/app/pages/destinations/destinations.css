@@ -102,3 +102,8 @@
     background-color: #008c9e;
     color:white;
 }
+.noData{
+    text-align: center;
+    background-color: #e6fafd;
+    padding:5% 0px;
+}

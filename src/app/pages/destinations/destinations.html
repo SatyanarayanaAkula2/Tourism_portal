@@ -7,8 +7,8 @@
 <div class="search_filter">
 
     <div class="search">
-        <form class="search_form">
-        <input type="text" class="searchbar" placeholder="Search for your destinations"/>
+        <form class="search_form" (submit)="searchcontent(searchbox.value); $event.preventDefault()">
+        <input type="text" class="searchbar" (input)="searchcontent(searchbox.value)" #searchbox placeholder="Search for your destinations"/>
         <button type="submit" class="btn">Search</button>
         </form>
     </div>
@@ -31,8 +31,11 @@
     </ul>
 </div>
 
-<div class="cards">
+<div *ngIf="destinations.length > 0; else noData" class="cards">
     <app-destination-card *ngFor="let dest of destinations" [destination]="dest"></app-destination-card>
 </div>
+<ng-template #noData class="norecs">
+    <p class="noData">No Destinations Found!</p>
+</ng-template>
 
 </section>

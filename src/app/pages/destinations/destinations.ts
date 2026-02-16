@@ -154,10 +154,19 @@ export class Destinations {
     this.destinations=this.originaldestinations.filter(
       destination=>destination.type===type
     );
-    this.menufilter=false;
   }
   resetfilter(){
     this.destinations=[...this.originaldestinations];
+  }
+  searchcontent(name:string){
+    console.log(name);
+    if(!name.trim()){
+      this.resetfilter();
+      return;
+    }
+    const search=name.toLowerCase();
+      this.destinations=this.originaldestinations.filter(
+        destination=>destination.type.toLowerCase().trim().includes(search)||destination.name.toLowerCase().trim().includes(search)||destination.place.toLowerCase().trim().includes(search));
   }
   
 }
