@@ -4,5 +4,6 @@ export interface Destination {
     image:string;
     place:string;
     rating:number;
+    price:number;
     type:string;
 }

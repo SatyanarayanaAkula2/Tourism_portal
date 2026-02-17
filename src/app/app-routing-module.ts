@@ -11,6 +11,8 @@ const routes: Routes = [
   {path:'booking',component:Bookatour},
   {path:'contact',component:Contact},
   {path:'destinations/:type',component:Destinations},
+  {path:'destinations/:type/:range',component:Destinations},
+  {path:'destinations/:type/:range1/:range2',component:Destinations},
   {path:'**',redirectTo:''}
 ];
 

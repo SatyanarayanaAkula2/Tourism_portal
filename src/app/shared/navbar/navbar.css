@@ -14,6 +14,7 @@ nav{
 .nav-links{
    display: flex;
    gap:50px;
+   align-items: center;
 }
 
 .nav-links li{
@@ -37,8 +38,54 @@ nav{
     background:none;
     cursor:pointer;
 }
-.active{
-    
+.toggle_btn{
+    background-color: rgba(255,255,255,0.15);
+    color:white;
+    border-radius: 12px;
+    padding:6px 10px;
+    border: none;
+    transition: transform 0.3s ease;
+}
+.toggle_btn:hover{
+    background-color: rgba(255,255,255,0.25);
+    color:white;
+    transform:translateY(-3px);
+}
+.login_btn {
+  position:relative;
+  overflow:hidden;
+  background: white;
+  cursor:pointer;
+  border:none;
+  color: #008C9E;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: background-color 0.5s ease;
+}
+.login_btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background: #1fc5db;
+  transition: width 0.5s ease;
+  z-index: 0;
+}
+.login_btn span {
+  position: relative;
+  z-index: 1;
+}
+.login_btn:hover::before {
+  width: 100%;
+  
+}
+
+
+.login_btn:hover {
+  color:white;
 }
 
 

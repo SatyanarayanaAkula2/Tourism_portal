@@ -34,7 +34,10 @@
   font-weight: 600;
   margin: 8px 0;
 }
-
+.price{
+  font-weight:600;
+  margin:8px;
+}
 .btn-primary {
   background-color: #008C9E;
   color: #ffffff;

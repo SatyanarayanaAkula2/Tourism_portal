@@ -1,41 +1,89 @@
 <section class="destinations">
 
-<div class="title">
+  <div class="title">
     <h1>Find Your Destinations here!</h1>
-</div>
+  </div>
 
-<div class="search_filter">
+  <div class="search_filter">
 
     <div class="search">
-        <form class="search_form" (submit)="searchcontent(searchbox.value); $event.preventDefault()">
-        <input type="text" class="searchbar" (input)="searchcontent(searchbox.value)" #searchbox placeholder="Search for your destinations"/>
+      <form class="search_form"
+            (submit)="searchcontent(searchbox.value); $event.preventDefault()">
+        <input type="text"
+               class="searchbar"
+               (input)="searchcontent(searchbox.value)"
+               #searchbox
+               placeholder="Search for your destinations"/>
         <button type="submit" class="btn">Search</button>
-        </form>
+      </form>
     </div>
 
+    <!-- FILTER MENU -->
     <div class="filter">
-            <button class="btn menufilter" (click)=togglefilter()>Filter the list</button>
-            <ul *ngIf="menufilter">
-                <li [routerLink]="['/destinations', 'popular']">High-Low Popularity</li>
-                <li [routerLink]="['/destinations']">Reset</li>
-            </ul>
+      <button class="btn menufilter" (click)="togglefilter()">
+        Filter the list
+      </button>
+
+      <ul *ngIf="menufilter">
+
+        <li [routerLink]="['/destinations','popular']">
+          High-Low Popularity
+        </li>
+
+        <li [routerLink]="['/destinations','popularrev']">
+          Low-High Popularity
+        </li>
+        <li class="price"
+            (click)="pricemenuopen(); $event.stopPropagation()">
+          Price range
+        </li>
+
+        <!-- PRICE OPTIONS -->
+        <ul *ngIf="pricemenu" class="priceranges">
+
+          <li (click)="selectprice(); $event.stopPropagation()"
+              [routerLink]="['/destinations','price','0','2500']">
+              Below 2,500
+          </li>
+
+          <li (click)="selectprice(); $event.stopPropagation()"
+              [routerLink]="['/destinations','price','2500','5000']">
+              2,500-5,000
+          </li>
+
+          <li (click)="selectprice(); $event.stopPropagation()"
+              [routerLink]="['/destinations','price','5000','10000']">
+              5,000-10,000
+          </li>
+
+          <li (click)="selectprice(); $event.stopPropagation()"
+              [routerLink]="['/destinations','price','10000','20000']">
+              10,000-20,000
+          </li>
+
+          <li (click)="selectprice(); $event.stopPropagation()"
+              [routerLink]="['/destinations','price','20000','1000000000']">
+              Above 20,000
+          </li>
+
+        </ul>
+
+        <li [routerLink]="['/destinations']">Reset</li>
+
+      </ul>
     </div>
-</div>
+  </div>
 
-<div class="Types">
-    <ul class="allTypes">
-        <li class="button" [routerLink]="['/destinations', 'Beaches']" routerLinkActive="active"><i class="fa-solid fa-sun" style="color: #FFD700;"></i>Beaches</li>
-        <li class="button" [routerLink]="['/destinations', 'Temples']" routerLinkActive="active"><i class="fa-solid fa-place-of-worship" style="color: #FF9933;"></i>Temples</li>
-        <li class="button" [routerLink]="['/destinations', 'Monuments']" routerLinkActive="active"><i class="fa-solid fa-landmark" style="color: #708090;"></i>Monuments</li>
-        <li class="button" [routerLink]="['/destinations', 'Hill stations']" routerLinkActive="active"><i class="fa-solid fa-mountain" style="color: #2E8B57;"></i>Hill Stations</li>
-    </ul>
-</div>
+  <!-- DESTINATION CARDS -->
+  <div *ngIf="destinations.length > 0; else noData" class="cards">
+    <app-destination-card
+      *ngFor="let dest of destinations"
+      [destination]="dest">
+    </app-destination-card>
+  </div>
 
-<div *ngIf="destinations.length > 0; else noData" class="cards">
-    <app-destination-card *ngFor="let dest of destinations" [destination]="dest"></app-destination-card>
-</div>
-<ng-template #noData class="norecs">
+  <ng-template #noData>
     <p class="noData">No Destinations Found!</p>
-</ng-template>
+  </ng-template>
 
 </section>

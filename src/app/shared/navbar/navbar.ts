@@ -8,7 +8,11 @@ import { Component } from '@angular/core';
 })
 export class Navbar {
   menuOpen=false;
+  dark=false;
   togglemenu(){
     this.menuOpen=!this.menuOpen;
+  }
+  togglemenu2(){
+    this.dark=!this.dark;
   }
 }
