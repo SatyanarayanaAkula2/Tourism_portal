@@ -73,8 +73,14 @@
       </ul>
     </div>
   </div>
-
-  <!-- DESTINATION CARDS -->
+  <div class="Types"> 
+    <ul class="allTypes"> 
+      <li class="button" [routerLink]="['/destinations', 'Beaches']" routerLinkActive="active"><i class="fa-solid fa-sun" style="color: #FFD700;"></i>Beaches</li> 
+      <li class="button" [routerLink]="['/destinations', 'Temples']" routerLinkActive="active"><i class="fa-solid fa-place-of-worship" style="color: #FF9933;"></i>Temples</li>
+       <li class="button" [routerLink]="['/destinations', 'Monuments']" routerLinkActive="active"><i class="fa-solid fa-landmark" style="color: #708090;"></i>Monuments</li> 
+       <li class="button" [routerLink]="['/destinations', 'Hill stations']" routerLinkActive="active"><i class="fa-solid fa-mountain" style="color: #2E8B57;"></i>Hill Stations</li> 
+      </ul> 
+    </div>
   <div *ngIf="destinations.length > 0; else noData" class="cards">
     <app-destination-card
       *ngFor="let dest of destinations"
