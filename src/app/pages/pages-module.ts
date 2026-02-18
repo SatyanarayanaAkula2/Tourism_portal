@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Home } from './home/home';
-
 import { Bookatour } from './bookatour/bookatour';
 import { Contact } from './contact/contact';
 import { Hero } from './hero/hero';
@@ -30,7 +30,7 @@ import { Footer } from './footer/footer';
   
   ],
   imports: [
-    CommonModule,RouterModule
+    CommonModule,RouterModule,ReactiveFormsModule
   ],
 })
 export class PagesModule { }

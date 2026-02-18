@@ -1,3 +1,79 @@
 .booking{
+    padding:80px 5%;
+    background:#F2FBFD;
+    display: flex;
+    justify-content: center;
+}
+.booking_box{
+    padding: 40px;
+    border-radius: 18px;
+    background-color: white;
+    border:1px solid rgba(255,255,255,0.25);
+    width:100%;
+    max-width: 700px;
+}
+ .heading h2{
     text-align: center;
+    margin-bottom: 30px;
+    color:#0F3F46;
+    font-weight:600;
+ }
+.booking_form{
+    display: flex;
+    flex-direction: column;
+    gap:18px;
+}
+.name,
+.passengers{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.form_com{
+  display: flex;
+  flex-direction: column;
+  gap:6px;   
+}
+.form_com label{
+    font-size: 14px;
+    color:#475569;
+}
+.form_com input{
+    padding:15px 12px;
+    border-radius: 10px;
+    border:1px solid #d1d5db;
+    font-size: 15px;
+    outline:none;
+    transition:0.2s;
+}
+.form_com input:focus{
+    border-color: #0089ce;
+    box-shadow: 0 0 0 2px rgba(0,140,158,0.15);
+}
+.booking_form input{
+    padding:5px 0;
+}
+.pass_head,.price_head{
+    margin-top:10px;
+    font-weight: 600;
+    color:#0089ce;
+}
+.price_show{
+    background-color: rgb(227, 240, 244);
+    padding:12px;
+    border-radius: 18px;
+}
+.btn{
+    margin: 0 20%;
+}
+
+@media (max-width: 600px){
+  .name,
+  .passengers{
+    grid-template-columns: 1fr;
+  }
+
+  .booking_box{
+    padding: 25px;
+  }
 }

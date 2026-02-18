@@ -1,4 +1,56 @@
 <section class='booking'>
-    <h1>Booking page</h1>
-    <p>This is page Where booking goes on</p>
+    <div class="booking_box">
+        <div class="heading">
+            <h2>Book Your Tour Here</h2>
+        </div>
+        <form [formGroup]="bookingForm" (ngSubmit)="submit()" class="booking_form">
+            <div class="name">
+                <div class="form_com">
+                    <label for="firstname" >First Name: </label>
+                    <input type="text" id="firstname" formControlName="firstName" />
+                </div>
+                <div class="form_com">
+                    <label for="lastname">Last Name: </label>
+                    <input type="text" id="lastname"formControlName="laststName" />
+                </div>
+            </div>
+            <div class="form_com">
+                <label for="email">Email: </label>
+                <input type="email" id="email" formControlName="email"/>
+                <small *ngIf="bookingForm.get('email')?.invalid && bookingForm.get('email')?.touched">
+                    enter vaid email
+                </small>
+            </div>
+            <div class="form_com">
+                <label for="phno">Mobile: </label>
+                <input type="number" id="phno" formControlName="phone"/>
+                    <small *ngIf="bookingForm.get('phone')?.invalid && bookingForm.get('phone')?.touched">
+                    Enter 10 digit number
+                    </small>
+
+            </div>
+            <div class="form_com">
+                <label for="location">Current Location: </label>
+                <input type="text" id="location" formControlName="location"/>
+            </div>
+            <div class="form_com">
+                <label for="destination">Destination: </label>
+                <input type="text" id="destination" formControlName="destination"/>
+            </div>
+            <button class="btn">Select from Destinations</button>
+            <p class="pass_head">About Passengers: </p>
+            <div class="passengers">
+                <div class="form_com">
+                    <label for="child">Children: </label>
+                    <input type="number" id="child" formControlName="children"/>
+                </div>
+                <div class="form_com">
+                    <label for="adult">Adults: </label>
+                    <input type="number" id="adult" formControlName="adults"/>
+                </div>
+            </div>
+            <p ><span class="price_head">Price: </span><span class="price_show">adsf</span> </p>
+            <button class="btn" type="submit">Book Now</button>
+        </form>
+    </div>
 </section>
