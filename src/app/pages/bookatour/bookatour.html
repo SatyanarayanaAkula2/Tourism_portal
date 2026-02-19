@@ -31,8 +31,8 @@
             </div>
             <div class="form_com">
                 <label for="location">Current Location: </label>
-                <input type="text" id="location" formControlName="location" placeholder="Click detect location"/>
-                <button type="button" class="btn" (click)="detectlocation()">Detect Location</button>
+                <input type="text" id="location" formControlName="location" [placeholder]=" isdetecting? 'Detecting Location...' : 'Enter your location'"/>
+                <button type="button" class="btn" (click)="detectlocation()" [disabled]="isdetecting">{{isdetecting?'Detecting...':'Detect Location'}}</button>
             </div>
             <div class="form_com">
                 <label for="destination">Destination: </label>
@@ -64,7 +64,7 @@
                     <input type="number" id="adult" formControlName="adults"/>
                 </div>
             </div>
-            <p ><span class="price_head">Price: </span><span class="price_show">adsf</span> </p>
+            <p ><span class="price_head">Price: </span><span class="price_show">{{price}}</span> </p>
             <button class="btn" type="submit">Book Now</button>
         </form>
     </div>
