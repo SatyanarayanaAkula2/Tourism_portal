@@ -11,7 +11,7 @@
                 </div>
                 <div class="form_com">
                     <label for="lastname">Last Name: </label>
-                    <input type="text" id="lastname"formControlName="laststName" />
+                    <input type="text" id="lastname"formControlName="lastName" />
                 </div>
             </div>
             <div class="form_com">
@@ -31,13 +31,28 @@
             </div>
             <div class="form_com">
                 <label for="location">Current Location: </label>
-                <input type="text" id="location" formControlName="location"/>
+                <input type="text" id="location" formControlName="location" placeholder="Click detect location"/>
+                <button type="button" class="btn" (click)="detectlocation()">Detect Location</button>
             </div>
             <div class="form_com">
                 <label for="destination">Destination: </label>
-                <input type="text" id="destination" formControlName="destination"/>
+                <input matInput type="text" id="destination" formControlName="destination" [matAutocomplete]="auto"/>
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let d of filtereddestinations" [value]="d.name">
+                        {{d.name}}-{{d.place}}
+                    </mat-option>
+                </mat-autocomplete>
             </div>
             <button class="btn">Select from Destinations</button>
+            <div class="form_com">
+                <mat-form-field appearance="outline">
+                <mat-label>Travel Date</mat-label>
+                <input matInput [matDatepicker]="picker" [min]="minDate" formControlName="travelDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+            </div>
             <p class="pass_head">About Passengers: </p>
             <div class="passengers">
                 <div class="form_com">
