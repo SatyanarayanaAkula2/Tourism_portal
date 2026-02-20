@@ -7,23 +7,23 @@
             <div class="name">
                 <div class="form_com">
                     <label for="firstname" >First Name: </label>
-                    <input type="text" id="firstname" formControlName="firstName" />
+                    <input type="text" id="firstname" [ngClass]="{'error-input': bookingForm.get('firstName')?.invalid && submitted}" formControlName="firstName" />
                 </div>
                 <div class="form_com">
                     <label for="lastname">Last Name: </label>
-                    <input type="text" id="lastname"formControlName="lastName" />
+                    <input type="text" id="lastname" [ngClass]="{'error-input': bookingForm.get('lastName')?.invalid && submitted}" formControlName="lastName" />
                 </div>
             </div>
             <div class="form_com">
                 <label for="email">Email: </label>
-                <input type="email" id="email" formControlName="email"/>
+                <input type="email" id="email" [ngClass]="{'error-input': bookingForm.get('email')?.invalid && submitted}" formControlName="email"/>
                 <small *ngIf="bookingForm.get('email')?.invalid && bookingForm.get('email')?.touched">
                     enter valid email
                 </small>
             </div>
             <div class="form_com">
                 <label for="phno">Mobile: </label>
-                <input type="number" id="phno" formControlName="phone"/>
+                <input type="number" id="phno" [ngClass]="{'error-input': bookingForm.get('phone')?.invalid && submitted}" formControlName="phone"/>
                     <small *ngIf="bookingForm.get('phone')?.invalid && bookingForm.get('phone')?.touched">
                     Enter 10 digit number
                     </small>
@@ -31,12 +31,12 @@
             </div>
             <div class="form_com">
                 <label for="location">Current Location: </label>
-                <input type="text" id="location" formControlName="location" [placeholder]=" isdetecting? 'Detecting Location...' : 'Enter your location'"/>
-                <button type="button" class="btn" (click)="detectlocation()" [disabled]="isdetecting">{{isdetecting?'Detecting...':'Detect Location'}}</button>
+                <input type="text" id="location" [ngClass]="{'error-input': bookingForm.get('location')?.invalid && submitted}" formControlName="location" [placeholder]=" isdetecting? 'Detecting Location...' : 'Enter your location'"/>
+                <button type="button" class="btn"  (click)="detectlocation()" [disabled]="isdetecting">{{isdetecting?'Detecting...':'Detect Location'}}</button>
             </div>
             <div class="form_com">
                 <label for="destination">Destination: </label>
-                <input matInput type="text" id="destination" formControlName="destination" [matAutocomplete]="auto"/>
+                <input matInput type="text" id="destination" [ngClass]="{'error-input': bookingForm.get('destination')?.invalid && submitted}" formControlName="destination" [matAutocomplete]="auto"/>
                 <mat-autocomplete #auto="matAutocomplete">
                     <mat-option *ngFor="let d of filtereddestinations" [value]="d.name">
                         {{d.name}}-{{d.place}}

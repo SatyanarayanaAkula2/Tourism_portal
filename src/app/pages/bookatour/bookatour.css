@@ -50,6 +50,11 @@
     border-color: #0089ce;
     box-shadow: 0 0 0 2px rgba(0,140,158,0.15);
 }
+.error-input{
+    border:1px solid #e53935 !important;
+    outline: none;
+}
+
 .booking_form input{
     padding:5px 0;
 }

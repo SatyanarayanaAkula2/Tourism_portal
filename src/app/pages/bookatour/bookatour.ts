@@ -18,6 +18,7 @@ export class Bookatour implements OnInit {
   price:number=0;
   selecteddest:any=null;
   isdetecting:boolean=false;
+  submitted:boolean=false;
   mapUrl:string='';
   filtereddestinations:Destination[]=[];
     constructor(private fb: FormBuilder,private destservices:Destinationsservice){}
@@ -26,7 +27,7 @@ export class Bookatour implements OnInit {
     ngOnInit(){
     this.bookingForm=this.fb.group({
         firstName:['',Validators.required],
-        lastName:[''],
+        lastName:['',Validators.required],
         email:['',[Validators.required,Validators.email]],
         phone:['',[Validators.required,Validators.pattern('[0-9]{10}')]],
         location: ['', Validators.required],
@@ -55,9 +56,11 @@ export class Bookatour implements OnInit {
   }
   minDate=new Date();
     submit(){
+      this.submitted=true;
       if(this.bookingForm.valid){
         console.log(this.bookingForm.value);
         alert("Booking submitted!");
+        
         this.bookingForm.reset({
           adults:1,
           children:0
@@ -68,6 +71,9 @@ export class Bookatour implements OnInit {
         this.mapUrl='';
         this.bookingForm.markAsPristine();
         this.bookingForm.markAsUntouched();
+      }
+      else{
+        alert("fill complete details before booking!")
       }
     }
     detectlocation(){
