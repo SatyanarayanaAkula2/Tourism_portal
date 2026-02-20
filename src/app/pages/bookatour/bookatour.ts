@@ -71,6 +71,7 @@ export class Bookatour implements OnInit {
         this.mapUrl='';
         this.bookingForm.markAsPristine();
         this.bookingForm.markAsUntouched();
+        this.submitted=false;
       }
       else{
         alert("fill complete details before booking!")

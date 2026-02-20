@@ -1,13 +1,13 @@
 .booking{
     padding:80px 5%;
-    background:#F2FBFD;
+    background:linear-gradient(to bottom,rgba(255,255,255,0.45),rgba(255,255,255,0.45)),url('/assets/bookinFormbg.jpg') center/cover ;
     display: flex;
     justify-content: center;
 }
-.booking_box{
+.booking_box{   
     padding: 40px;
     border-radius: 18px;
-    background-color: white;
+    background-color: rgb(238, 252, 253,0.45);
     border:1px solid rgba(255,255,255,0.25);
     width:100%;
     max-width: 700px;
@@ -60,8 +60,9 @@
 }
 .pass_head,.price_head{
     margin-top:10px;
-    font-weight: 600;
-    color:#0089ce;
+    font-weight: 700;
+    font-size: 18px;
+    color:#2795cc;
 }
 .price_show{
     background-color: rgb(227, 240, 244);
@@ -77,6 +78,10 @@ small{
 
 mat-form-field{
     width: 100%;
+}
+label{
+    font-size: 16px;
+    font-weight: 600;
 }
 
 @media (max-width: 600px){
