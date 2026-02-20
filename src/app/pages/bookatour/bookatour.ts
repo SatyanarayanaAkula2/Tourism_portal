@@ -58,6 +58,16 @@ export class Bookatour implements OnInit {
       if(this.bookingForm.valid){
         console.log(this.bookingForm.value);
         alert("Booking submitted!");
+        this.bookingForm.reset({
+          adults:1,
+          children:0
+        });
+        this.isdetecting=false;
+        this.filtereddestinations=this.destinations;
+        this.price=0;
+        this.mapUrl='';
+        this.bookingForm.markAsPristine();
+        this.bookingForm.markAsUntouched();
       }
     }
     detectlocation(){
