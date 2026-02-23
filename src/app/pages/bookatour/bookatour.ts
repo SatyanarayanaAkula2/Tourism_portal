@@ -59,7 +59,9 @@ export class Bookatour implements OnInit {
       this.submitted=true;
       if(this.bookingForm.valid){
         console.log(this.bookingForm.value);
-        alert("Booking submitted!");
+        if(confirm("click ok to confirm booking")){
+          alert("booking confirmed with details:")
+        
         
         this.bookingForm.reset({
           adults:1,
@@ -72,6 +74,7 @@ export class Bookatour implements OnInit {
         this.bookingForm.markAsPristine();
         this.bookingForm.markAsUntouched();
         this.submitted=false;
+      }
       }
       else{
         alert("fill complete details before booking!")
