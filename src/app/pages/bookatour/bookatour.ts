@@ -20,6 +20,12 @@ export class Bookatour implements OnInit {
   isdetecting:boolean=false;
   submitted:boolean=false;
   mapUrl:string='';
+  showSuccessModal:boolean=false;
+  showBookingDetails:boolean=false;
+  bookingData:any={};
+  notificationMessage:string='';
+  notificationType:'success'|'error'|''='';
+  shownotification:boolean=false;
   filtereddestinations:Destination[]=[];
     constructor(private fb: FormBuilder,private destservices:Destinationsservice){}
 
@@ -54,15 +60,23 @@ export class Bookatour implements OnInit {
     })
 
   }
+  showToast(message:string,type:'success'|'error'){
+      this.notificationMessage=message;
+      this.notificationType=type;
+      this.shownotification=true;
+      setTimeout(()=>{
+        this.shownotification=false;
+      },3000)
+  }
   minDate=new Date();
     submit(){
       this.submitted=true;
       if(this.bookingForm.valid){
         console.log(this.bookingForm.value);
+        this.bookingData=this.bookingForm.value;
         if(confirm("click ok to confirm booking")){
-          alert("booking confirmed with details:")
-        
-        
+          this.showSuccessModal=true;
+
         this.bookingForm.reset({
           adults:1,
           children:0
@@ -77,7 +91,7 @@ export class Bookatour implements OnInit {
       }
       }
       else{
-        alert("fill complete details before booking!")
+        this.showToast("Fill complete Details!",'error');
       }
     }
     detectlocation(){
@@ -135,6 +149,11 @@ calculateprice(){
   const adultprice=dest.price*adults;
   const childprice=dest.price*0.5*children;
   this.price=adultprice+childprice;
+}
+
+showdetails(){
+  this.showSuccessModal=false;
+  this.showBookingDetails=true;
 }
 
     }

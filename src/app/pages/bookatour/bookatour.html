@@ -1,4 +1,7 @@
 <section class='booking'>
+    <div class="toast" *ngIf="shownotification" [ngClass]="notificationType">
+        {{notificationMessage}}
+    </div>
     <div class="booking_box">
         <div class="heading">
             <h2>Book Your Tour Here</h2>
@@ -67,4 +70,41 @@
             <button class="btn" type="submit">Book Now</button>
         </form>
     </div>
+
+    <div class="modal-backdrop " *ngIf="showSuccessModal">
+        <div class="modal-box">
+            <div class="tick">✔</div>
+            <h2>Booking Confirmed!</h2>
+            <p>Your tour has been booked Successfully.</p>
+            <div class="btns">
+                <button class="btn1" routerLink="/" routerLinkActive="active" (click)="showSuccessModal=false">
+                Back to Home
+            </button>
+            <button class="btn1" (click)="showdetails()">
+                Booking Details
+            </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop" *ngIf="showBookingDetails">
+        <div class="modal-box">
+            <h2><span>🎟️</span>Your Booking Details:</h2>
+            <div class="details">
+                <p><span>Name: </span> {{bookingData.firstName}} {{bookingData.lastName}}</p>
+                <p><span>Mobile: </span> {{bookingData.phone}} </p>
+                <p><span>Email:  </span> {{bookingData.email}} </p>
+                <p><span>From: </span> {{bookingData.location}} </p>
+                <p><span>To: </span> {{bookingData.destination}} </p>
+                <p><span>Date: </span> {{bookingData.travelDate}} </p>
+                <p><span>No of people: </span> {{bookingData.adults+bookingData.children}} </p>
+                <p><span>Total Price: </span> {{bookingData.adultprice+bookingData.childprice}} </p>
+            </div>
+            <div class="btns">
+                <button class="btn1" routerLink="/" routerLinkActive="active" (click)="showBookingDetails=false">Back to Home</button>
+                <button class="btn1" (click)="showBookingDetails=false">Book another tour</button>
+            </div>
+        </div>
+    </div>
+
 </section>
