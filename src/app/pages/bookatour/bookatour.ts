@@ -5,6 +5,8 @@ import { OnInit } from '@angular/core';
 import { Destinationsservice } from '../../services/destinationsservice';
 import { Destination } from '../../models/destinations';
 import { environment } from '../../../environment';
+import { NgZone } from '@angular/core';
+import { ToastService } from '../../services/toast';
 
 @Component({
   selector: 'app-bookatour',
@@ -23,11 +25,10 @@ export class Bookatour implements OnInit {
   showSuccessModal:boolean=false;
   showBookingDetails:boolean=false;
   bookingData:any={};
-  notificationMessage:string='';
-  notificationType:'success'|'error'|''='';
-  shownotification:boolean=false;
+  
   filtereddestinations:Destination[]=[];
-    constructor(private fb: FormBuilder,private destservices:Destinationsservice){}
+    constructor(private fb: FormBuilder,private destservices:Destinationsservice,private toast:ToastService
+    ){}
 
 
     ngOnInit(){
@@ -60,14 +61,7 @@ export class Bookatour implements OnInit {
     })
 
   }
-  showToast(message:string,type:'success'|'error'){
-      this.notificationMessage=message;
-      this.notificationType=type;
-      this.shownotification=true;
-      setTimeout(()=>{
-        this.shownotification=false;
-      },3000)
-  }
+  
   minDate=new Date();
     submit(){
       this.submitted=true;
@@ -91,7 +85,7 @@ export class Bookatour implements OnInit {
       }
       }
       else{
-        this.showToast("Fill complete Details!",'error');
+        this.toast.show("Fill complete Details!",'error');
       }
     }
     detectlocation(){
