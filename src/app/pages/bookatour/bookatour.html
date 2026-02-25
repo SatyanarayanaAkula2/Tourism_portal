@@ -72,8 +72,8 @@
         <div class="modal-box">
             <h2>Do you want to proceed with the booking?</h2>
             <div class="btns">
-                <button class="primary" (click)="showsuccessmodal()">Yes</button>
-                <button class="secondary" (click)="unconfirm()">Cancel</button>
+                <button class="primary" (click)="confirmBooking()">Yes</button>
+                <button class="secondary" (click)="cancelBooking()">Cancel</button>
             </div>
         </div>
     </div>
@@ -139,7 +139,7 @@
       </div>
 
       <div class="price-box">
-        Total Paid: ₹{{price}}
+        Total Paid: ₹{{bookinginfo.price}}
       </div>
 
     </div>

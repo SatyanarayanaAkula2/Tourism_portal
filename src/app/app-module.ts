@@ -6,7 +6,7 @@ import { App } from './app';
 import { SharedModule } from './shared/shared-module';
 import { CommonModule } from '@angular/common';
 import { PagesModule } from './pages/pages-module';
-
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -18,7 +18,7 @@ import { PagesModule } from './pages/pages-module';
     BrowserModule,
     SharedModule,
     AppRoutingModule,
-    CommonModule,PagesModule
+    CommonModule,PagesModule,HttpClientModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

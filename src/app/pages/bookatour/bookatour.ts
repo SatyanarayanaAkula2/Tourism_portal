@@ -27,6 +27,8 @@ export class Bookatour implements OnInit {
   showBookingDetails:boolean=false;
   showBookings:boolean=false;
   showconfirmation:boolean=false;
+  confirmed:boolean=false;
+  pendingbooking!:Bookings;
   bookinginfo:any={};
   realbookings:Bookings[]=[];
   
@@ -74,9 +76,19 @@ export class Bookatour implements OnInit {
   minDate=new Date();
     submit(){
       this.submitted=true;
-      if(this.bookingForm.valid){
+      if(!this.bookingForm.valid){
+        this.bookingData.showerror().subscribe({
+        next: () => {},
+        error: err => {
+          console.log("Error Status:", err.status); // 404
+        }
+  });
+        this.toast.show("Fill complete Details!",'error');
+        return;
+      }
+ 
         this.bookinginfo=this.bookingForm.value;
-        const booking: Bookings = {
+        this.pendingbooking = {
   firstName: this.bookingForm.value.firstName,
   lastName: this.bookingForm.value.lastName,
   mobile: this.bookingForm.value.phone,
@@ -85,15 +97,16 @@ export class Bookatour implements OnInit {
   destination: this.bookingForm.value.destination,
   date: this.bookingForm.value.travelDate,
   adults: this.bookingForm.value.adults,
-  children: this.bookingForm.value.children
+  children: this.bookingForm.value.children,
+  price:this.price
 };
-    
-          this.bookingData.createBooking(booking).subscribe(res=>{
-          this.loadbookings();   
-        });
-          this.showconfirmation=true;
+this.bookinginfo=this.pendingbooking;
+this.showconfirmation=true;  
+}
 
-        this.bookingForm.reset({
+
+resetForm(){
+    this.bookingForm.reset({
           adults:1,
           children:0
         });
@@ -104,12 +117,29 @@ export class Bookatour implements OnInit {
         this.bookingForm.markAsPristine();
         this.bookingForm.markAsUntouched();
         this.submitted=false;
-      
-      }
-      else{
-        this.toast.show("Fill complete Details!",'error');
-      }
+  }
+
+confirmBooking(){
+  this.bookingData.createBooking(this.pendingbooking).subscribe({
+    next: res => {
+      console.log("Booking success", res);
+
+      this.showconfirmation = false;
+      this.showSuccessModal = true;
+
+      this.loadbookings();
+      this.resetForm();
+    },
+    error: err => {
+      console.log("Booking failed", err);
+      this.toast.show("Booking failed", 'error');
     }
+  });
+}
+
+cancelBooking(){
+  this.showconfirmation = false;
+}
     detectlocation(){
       if(!navigator.geolocation){
         alert("geolocation not supported");
@@ -175,13 +205,6 @@ showdetails(){
 showallbookings(){
   this.showSuccessModal=false;
     this.showBookings=true;
-}
-showsuccessmodal(){
-  this.showconfirmation=false;
-  this.showSuccessModal=true;
-}
-unconfirm(){
-  this.showconfirmation=false;
 }
 
     }
