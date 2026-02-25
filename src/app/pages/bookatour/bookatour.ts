@@ -7,6 +7,7 @@ import { Destination } from '../../models/destinations';
 import { environment } from '../../../environment';
 import { NgZone } from '@angular/core';
 import { ToastService } from '../../services/toast';
+import { TestBookingData,Bookings } from '../../services/booking-data';
 
 @Component({
   selector: 'app-bookatour',
@@ -24,10 +25,13 @@ export class Bookatour implements OnInit {
   mapUrl:string='';
   showSuccessModal:boolean=false;
   showBookingDetails:boolean=false;
-  bookingData:any={};
+  showBookings:boolean=false;
+  showconfirmation:boolean=false;
+  bookinginfo:any={};
+  realbookings:Bookings[]=[];
   
   filtereddestinations:Destination[]=[];
-    constructor(private fb: FormBuilder,private destservices:Destinationsservice,private toast:ToastService
+    constructor(private fb: FormBuilder,private destservices:Destinationsservice,private toast:ToastService,private bookingData:TestBookingData
     ){}
 
 
@@ -59,17 +63,35 @@ export class Bookatour implements OnInit {
     this.bookingForm.valueChanges.subscribe(()=>{
       this.calculateprice();
     })
+    this.loadbookings();
 
   }
-  
+  loadbookings(){
+    this.bookingData.getBookings().subscribe(data=> {
+      this.realbookings=data;
+    });
+  }
   minDate=new Date();
     submit(){
       this.submitted=true;
       if(this.bookingForm.valid){
-        console.log(this.bookingForm.value);
-        this.bookingData=this.bookingForm.value;
-        if(confirm("click ok to confirm booking")){
-          this.showSuccessModal=true;
+        this.bookinginfo=this.bookingForm.value;
+        const booking: Bookings = {
+  firstName: this.bookingForm.value.firstName,
+  lastName: this.bookingForm.value.lastName,
+  mobile: this.bookingForm.value.phone,
+  email: this.bookingForm.value.email,
+  location: this.bookingForm.value.location,
+  destination: this.bookingForm.value.destination,
+  date: this.bookingForm.value.travelDate,
+  adults: this.bookingForm.value.adults,
+  children: this.bookingForm.value.children
+};
+    
+          this.bookingData.createBooking(booking).subscribe(res=>{
+          this.loadbookings();   
+        });
+          this.showconfirmation=true;
 
         this.bookingForm.reset({
           adults:1,
@@ -82,7 +104,7 @@ export class Bookatour implements OnInit {
         this.bookingForm.markAsPristine();
         this.bookingForm.markAsUntouched();
         this.submitted=false;
-      }
+      
       }
       else{
         this.toast.show("Fill complete Details!",'error');
@@ -150,4 +172,18 @@ showdetails(){
   this.showBookingDetails=true;
 }
 
+showallbookings(){
+  this.showSuccessModal=false;
+    this.showBookings=true;
+}
+showsuccessmodal(){
+  this.showconfirmation=false;
+  this.showSuccessModal=true;
+}
+unconfirm(){
+  this.showconfirmation=false;
+}
+
     }
+
+

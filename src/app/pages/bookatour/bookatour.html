@@ -68,16 +68,26 @@
         </form>
     </div>
 
+    <div class="modal-backdrop" *ngIf="showconfirmation">
+        <div class="modal-box">
+            <h2>Do you want to proceed with the booking?</h2>
+            <div class="btns">
+                <button class="primary" (click)="showsuccessmodal()">Yes</button>
+                <button class="secondary" (click)="unconfirm()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <div class="modal-backdrop " *ngIf="showSuccessModal">
         <div class="modal-box">
             <div class="tick">✔</div>
             <h2>Booking Confirmed!</h2>
             <p>Your tour has been booked Successfully.</p>
             <div class="btns">
-                <button class="btn1" routerLink="/" routerLinkActive="active" (click)="showSuccessModal=false">
+                <button class="primary" routerLink="/" routerLinkActive="active" (click)="showSuccessModal=false">
                 Back to Home
             </button>
-            <button class="btn1" (click)="showdetails()">
+            <button class="secondary" (click)="showdetails()">
                 Booking Details
             </button>
             </div>
@@ -85,22 +95,74 @@
     </div>
 
     <div class="modal-backdrop" *ngIf="showBookingDetails">
+  <div class="modal-box">
+
+    <div class="header">
+      <h2>🎉 Booking Confirmed!</h2>
+    </div>
+
+    <div class="details">
+
+      <div class="row">
+        <span>Name</span>
+        <strong>{{bookinginfo.firstName}} {{bookinginfo.lastName}}</strong>
+      </div>
+
+      <div class="row">
+        <span>Mobile</span>
+        <strong>{{bookinginfo.phone}}</strong>
+      </div>
+
+      <div class="row">
+        <span>Email</span>
+        <strong>{{bookinginfo.email}}</strong>
+      </div>
+
+      <div class="row">
+        <span>From</span>
+        <strong>{{bookinginfo.location}}</strong>
+      </div>
+
+      <div class="row">
+        <span>Destination</span>
+        <strong>{{bookinginfo.destination}}</strong>
+      </div>
+
+      <div class="row">
+        <span>Travel Date</span>
+        <strong>{{bookinginfo.travelDate}}</strong>
+      </div>
+
+      <div class="row">
+        <span>Travellers</span>
+        <strong>{{bookinginfo.adults + bookinginfo.children}}</strong>
+      </div>
+
+      <div class="price-box">
+        Total Paid: ₹{{price}}
+      </div>
+
+    </div>
+
+    <div class="btns">
+      <button class="primary" routerLink="/" (click)="showBookingDetails=false">
+        Back to Home
+      </button>
+
+      <button class="secondary" (click)="showBookingDetails=false">
+        Book Another Tour
+      </button>
+    </div>
+
+  </div>
+</div>
+
+    <div class="modal-backdrop" *ngIf="showBookings">
         <div class="modal-box">
-            <h2><span>🎟️</span>Your Booking Details:</h2>
-            <div class="details">
-                <p><span>Name: </span> {{bookingData.firstName}} {{bookingData.lastName}}</p>
-                <p><span>Mobile: </span> {{bookingData.phone}} </p>
-                <p><span>Email:  </span> {{bookingData.email}} </p>
-                <p><span>From: </span> {{bookingData.location}} </p>
-                <p><span>To: </span> {{bookingData.destination}} </p>
-                <p><span>Date: </span> {{bookingData.travelDate}} </p>
-                <p><span>No of people: </span> {{bookingData.adults+bookingData.children}} </p>
-                <p><span>Total Price: </span> {{bookingData.adultprice+bookingData.childprice}} </p>
+            <div *ngFor="let b of realbookings">
+                {{b.firstName+b.lastName}} - {{b.destination}} - {{b.date}}
             </div>
-            <div class="btns">
-                <button class="btn1" routerLink="/" routerLinkActive="active" (click)="showBookingDetails=false">Back to Home</button>
-                <button class="btn1" (click)="showBookingDetails=false">Book another tour</button>
-            </div>
+            <button class="btn1" (click)="showBookings=false">Close</button>
         </div>
     </div>
 
