@@ -14,6 +14,8 @@ import { Populardest } from './populardest/populardest';
 import { Router, RouterModule } from '@angular/router';
 import { About } from './about/about';
 import { Footer } from './footer/footer';
+import { Signup } from './signup/signup';
+import { Signin } from './signin/signin';
 
 
 
@@ -30,6 +32,8 @@ import { Footer } from './footer/footer';
     Populardest,
     About,
     Footer,
+    Signup,
+    Signin,
   
   
   ],
