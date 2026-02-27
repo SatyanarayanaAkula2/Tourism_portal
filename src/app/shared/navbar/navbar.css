@@ -1,14 +1,46 @@
 nav{
-    padding:1% 5%;
+    padding:1.5% 10%;
     display: flex;
     align-items: center;
-    background-color: #008c9e;
-    position: sticky;
+    position: fixed;
+    width:100%;
     top:0;
     z-index:1000;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
 }
+
 .logo{
     margin-right:auto;
+    padding-right:20px;
+}
+.logo h1{
+    color:#a1bcc1;
+    font-weight:700;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.25);
+}
+.logo span{
+    color:#1fc5db
+}
+
+nav.scrolled,nav.white{
+    background:#f4fbfc;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+nav.scrolled .nav-links a,nav.white .nav-links a{
+    color:#0A2540;
+}
+
+nav.scrolled .nav-links a:hover,nav.white .nav-links a:hover{
+    color:#008C9E;
+}
+
+/* nav.scrolled .logo h1,nav.white .logo h1{
+    color:#008C9E;
+} */
+nav{
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .nav-links{
@@ -26,10 +58,15 @@ nav{
 .nav-links li a{
     text-decoration: none;
     color:white;
+    font-weight: 500;
 }
 
 .nav-links li a:hover{
-    color:darkblue;
+    color:rgb(1, 1, 14);
+}
+.nav-links li a.active{
+    color:#1fc5db;
+    border-bottom:2px solid #1fc5db;
 }
 .menu-btn{
     display:none;
@@ -39,15 +76,15 @@ nav{
     cursor:pointer;
 }
 .toggle_btn{
-    background-color: rgba(255,255,255,0.15);
-    color:white;
+    background-color: #a4ebf5;
+    color:#90afb4;
     border-radius: 12px;
     padding:6px 10px;
     border: none;
     transition: transform 0.3s ease;
 }
 .toggle_btn:hover{
-    background-color: rgba(255,255,255,0.25);
+    background-color:#1fc5db;
     color:white;
     transform:translateY(-3px);
 }
@@ -87,11 +124,18 @@ nav{
 .login_btn:hover {
   color:white;
 }
-
+.menu-btn{
+    color:#0A2540;
+    font-size: 22px;
+}
 
 @media (max-width:768px){
     .menu-btn{
-        display:block;
+    display:block;
+    font-size:24px;
+    background:none;
+    border:none;
+    cursor:pointer;
     }
     .nav-links{
         position:absolute;
@@ -101,12 +145,20 @@ nav{
         flex-direction: column;
         align-items: center;
         width:0;
-        background-color:#008c9e ;
+        background-color:#f4fbfc;
         overflow: hidden;
         transition:width 0.3s ease;
     }
+    
     .nav-links.open{
         width: 50%;
+    }
+    .nav-links li a{
+        color:#0A2540;
+        font-size: 16px;
+    }
+    .nav-links li a:hover{
+        color:#1fc5db;
     }
     .nav-links li{
         padding: 1rem 0;

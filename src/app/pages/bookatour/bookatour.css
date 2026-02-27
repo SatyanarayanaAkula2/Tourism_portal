@@ -3,6 +3,7 @@
     background:linear-gradient(to bottom,rgba(255,255,255,0.45),rgba(255,255,255,0.45)),url('/assets/bookinFormbg.jpg') center/cover ;
     display: flex;
     justify-content: center;
+    padding-top:120px;
 }
 .booking_box{   
     padding: 40px;
