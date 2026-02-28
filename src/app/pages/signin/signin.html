@@ -1,1 +1,36 @@
-<p>signin works!</p>
+<section class="auth_form">
+    <div class="heading">Sign In</div>
+            <form [formGroup]="loginform" (ngSubmit)=submit() class="login_form">
+                    <div class="form_com">
+                        <label for="email">Email: </label>
+                        <input type="email" id="email" placeholder="Enter your email" formControlName="email">
+                        <div *ngIf="submitted && loginform.controls['email'].errors?.['required']"
+                            class="pass_errors">
+                            Email is required
+                        </div>
+
+                        <div *ngIf="submitted && loginform.controls['email'].errors?.['email']"
+                            class="pass_errors">
+                        Invalid email address
+                        </div>
+                    </div>
+                    <div class="form_com">
+                        <label for="password">Password:<span>(min 8 chars, 1 letter, 1 number, 1 special char)</span></label>
+                        <input type="text" id="password" placeholder="Enter your password" formControlName="password"/>
+                            <div *ngIf="submitted && loginform.controls['password'].errors?.['required']" class="pass_errors">
+                                Password is required
+                            </div>
+                            <div *ngIf="submitted && loginform.controls['password'].errors?.['minlength']" class="pass_errors">
+                                Password must be at least 8 characters
+                            </div>
+                            <div *ngIf="submitted && loginform.controls['password'].errors?.['pattern']" class="pass_errors">
+                                Must contain letter, number, and special character
+                            </div>
+                    </div>
+                    <div class="buttons">
+                        <button class="btn" type="submit">login</button>
+                        <a routerLink="/auth/signup">Don't have an account? signup</a>
+                    </div>
+                </form>
+</section>
+
