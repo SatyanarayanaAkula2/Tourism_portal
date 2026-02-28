@@ -27,4 +27,8 @@ export class Navbar {
   togglemenu2(){
     this.dark=!this.dark;
   }
+  gotosignup() {
+  this.menuOpen=false;
+  this.router.navigate(['/signup']);
+}
 }

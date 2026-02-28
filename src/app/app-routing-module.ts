@@ -4,6 +4,8 @@ import { Home } from './pages/home/home';
 import { Contact } from './pages/contact/contact';
 import { Bookatour } from './pages/bookatour/bookatour';
 import { Destinations } from './pages/destinations/destinations';
+import { Signup } from './pages/signup/signup';
+import { Signin } from './pages/signin/signin';
 
 const routes: Routes = [
   {path:'',component:Home},
@@ -13,6 +15,8 @@ const routes: Routes = [
   {path:'destinations/:type',component:Destinations},
   {path:'destinations/:type/:range',component:Destinations},
   {path:'destinations/:type/:range1/:range2',component:Destinations},
+  {path:'signup',component:Signup},
+  {path:'signin',component:Signin},
   {path:'**',redirectTo:''}
 ];
 
