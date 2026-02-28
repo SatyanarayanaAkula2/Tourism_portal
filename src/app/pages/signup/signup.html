@@ -1,15 +1,5 @@
-<section class="signup">
-    <div class="main_signupcard">
-        <div class="signup_left">
-            <div class="overlay">
-                <h2>Welcome to YatriGo</h2>
-            <p>Explore the world with us ✈️</p>
-            </div>
-        </div>
-        <div class="signup_right">
-            <div class="heading">
-                Sign Up
-            </div>
+<section class="auth_form">
+    <div class="heading">Sign Up</div>
             <form [formGroup]="signupform" (ngSubmit)=submit() class="signup_form">
                     <div class="form_com">
                         <label for="name">Name: </label>
@@ -18,24 +8,33 @@
                     <div class="form_com">
                         <label for="email">Email: </label>
                         <input type="email" id="email" placeholder="Enter your email" formControlName="email">
+                        <div *ngIf="submitted && signupform.controls['email'].errors?.['required']"
+                            class="pass_errors">
+                            Email is required
+                        </div>
+
+                        <div *ngIf="submitted && signupform.controls['email'].errors?.['email']"
+                            class="pass_errors">
+                        Invalid email address
+                        </div>
                     </div>
                     <div class="form_com">
                         <label for="password">Password:<span>(min 8 chars, 1 letter, 1 number, 1 special char)</span></label>
                         <input type="text" id="password" placeholder="Enter your password" formControlName="password"/>
-                            <div *ngIf="signupform.controls['password'].errors?.['required']" class="pass_errors">
+                            <div *ngIf="submitted && signupform.controls['password'].errors?.['required']" class="pass_errors">
                                 Password is required
                             </div>
-                            <div *ngIf="signupform.controls['password'].errors?.['minlength']" class="pass_errors">
+                            <div *ngIf="submitted && signupform.controls['password'].errors?.['minlength']" class="pass_errors">
                                 Password must be at least 8 characters
                             </div>
-                            <div *ngIf="signupform.controls['password'].errors?.['pattern']" class="pass_errors">
+                            <div *ngIf="submitted && signupform.controls['password'].errors?.['pattern']" class="pass_errors">
                                 Must contain letter, number, and special character
                             </div>
                     </div>
                     <div class="form_com">
                         <label for="cpassword">Confirm Password: </label>
                         <input type="text" id="cpassword" placeholder="Enter the password again" formControlName="cpassword"/>
-                        <div *ngIf="signupform.controls['cpassword'].errors?.['mismatch']" class="pass_errors">
+                        <div *ngIf="submitted && signupform.controls['cpassword'].errors?.['mismatch']" class="pass_errors">
                             Passwords do not match
                         </div>
                     </div>
@@ -44,6 +43,4 @@
                         <a>Already have an account? Login</a>
                     </div>
                 </form>
-        </div>
-    </div>
 </section>

@@ -6,6 +6,7 @@ import { Bookatour } from './pages/bookatour/bookatour';
 import { Destinations } from './pages/destinations/destinations';
 import { Signup } from './pages/signup/signup';
 import { Signin } from './pages/signin/signin';
+import { AuthLayout } from './pages/auth-layout/auth-layout';
 
 const routes: Routes = [
   {path:'',component:Home},
@@ -15,8 +16,11 @@ const routes: Routes = [
   {path:'destinations/:type',component:Destinations},
   {path:'destinations/:type/:range',component:Destinations},
   {path:'destinations/:type/:range1/:range2',component:Destinations},
-  {path:'signup',component:Signup},
-  {path:'signin',component:Signin},
+  {path:'auth',component:AuthLayout,children:[
+    {path:'signup',component:Signup},
+    {path:'login',component:Signin},
+    {path:'',redirectTo:'signup',pathMatch:'full'}
+  ]},
   {path:'**',redirectTo:''}
 ];
 
