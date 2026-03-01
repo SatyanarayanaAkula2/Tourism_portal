@@ -4,6 +4,7 @@ import { ToastService } from '../../services/toast';
 import { Toast } from '../../shared/toast/toast';
 import { UserData,User} from '../../services/user-data';
 import { Router } from '@angular/router';
+import { Authservice } from '../../services/authservice';
 
 
 @Component({
@@ -16,7 +17,9 @@ export class Signup {
     signupform!:FormGroup;
     submitted:boolean=false;
     currentUser!:User
-    constructor(private fb:FormBuilder,private toast:ToastService,private users:UserData,private router:Router){}
+    constructor(private fb:FormBuilder,private toast:ToastService,private users:UserData,private router:Router
+      ,private authservice:Authservice
+    ){}
     
     ngOnInit(){
       this.signupform=this.fb.group({
@@ -72,9 +75,8 @@ export class Signup {
             email:newUser.email
           }));
           localStorage.setItem('expiry',expirytime.toString());
-          this.router.navigate(['/home']).then(()=>{
-            location.reload();
-          });
+          this.authservice.startexpirytimer(expirytime);
+          this.router.navigate(['/home']);
       },
       error:()=>{
         this.toast.show("signup failed",'error');

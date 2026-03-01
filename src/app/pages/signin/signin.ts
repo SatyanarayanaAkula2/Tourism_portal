@@ -3,6 +3,7 @@ import { FormBuilder,FormControl,FormGroup,Validators,AbstractControl } from '@a
 import { ToastService } from '../../services/toast';
 import { User,UserData } from '../../services/user-data';
 import { Router } from '@angular/router';
+import { Authservice } from '../../services/authservice';
 
 @Component({
   selector: 'app-signin',
@@ -11,7 +12,9 @@ import { Router } from '@angular/router';
   styleUrl: './signin.css',
 })
 export class Signin {
-  constructor(private fb:FormBuilder,private toast:ToastService,private users:UserData,private router:Router){}
+  constructor(private fb:FormBuilder,private toast:ToastService,private users:UserData,private router:Router,
+    private authservice:Authservice
+  ){}
   
   loginform!:FormGroup;
   currUserData!:User;
@@ -50,10 +53,8 @@ export class Signin {
             email:exists.email
           }));
           localStorage.setItem('expiry',expirytime.toString());
-          // window.location.reload();
-          this.router.navigate(['/home']).then(()=>{
-            location.reload();
-          });
+          this.authservice.startexpirytimer(expirytime);
+          this.router.navigate(['/home']);
       }
     },
     error:()=>{

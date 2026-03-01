@@ -1,5 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { Authservice } from './services/authservice';
 
 @Component({
   selector: 'app-root',
@@ -9,29 +10,10 @@ import { Router } from '@angular/router';
 })
 export class App implements OnInit{
   protected readonly title = signal('Tourism');
-  constructor(private router:Router){}
+  constructor(private router:Router,private auth:Authservice){}
   ngOnInit(){
-    this.checkloginexpiry();
+    const expiry = localStorage.getItem('expiry');
+  if (expiry) this.auth.startexpirytimer(+expiry);
   }
-  checkloginexpiry() {
-  const expiry = localStorage.getItem('expiry');
-
-  if (!expiry) return;
-
-  const timeLeft = +expiry - Date.now();
-
-  if (timeLeft <= 0) {
-    this.logoutUser();
-  } else {
-    setTimeout(() => {
-      this.logoutUser();
-    }, timeLeft);
-  }
-}
-
-logoutUser() {
-  localStorage.clear();
-  alert("Session expired. Please login again.");
-  this.router.navigate(['/auth/login']);
-}
+  
 }
