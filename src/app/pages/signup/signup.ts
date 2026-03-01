@@ -2,6 +2,8 @@ import { Component,OnInit} from '@angular/core';
 import { FormBuilder,FormGroup,Validators,AbstractControl } from '@angular/forms';
 import { ToastService } from '../../services/toast';
 import { Toast } from '../../shared/toast/toast';
+import { UserData,User} from '../../services/user-data';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,7 +15,8 @@ import { Toast } from '../../shared/toast/toast';
 export class Signup {
     signupform!:FormGroup;
     submitted:boolean=false;
-    constructor(private fb:FormBuilder,private toast:ToastService){}
+    currentUser!:User
+    constructor(private fb:FormBuilder,private toast:ToastService,private users:UserData,private router:Router){}
     
     ngOnInit(){
       this.signupform=this.fb.group({
@@ -41,5 +44,36 @@ export class Signup {
         this.toast.show("Fill complete Details!",'error');
         return;
     }
+    this.users.getUsers().subscribe(users=>{
+      const exists=users.find(u=>u.email===this.signupform.value.email);
+      if(exists){
+      this.toast.show("Email Already registered!",'error');
+      return;
+    }
+    this.createAccount();
+    });
+    
+  }
+
+  createAccount(){
+    const newUser:User={
+      name:this.signupform.value.Name,
+      email:this.signupform.value.email,
+      password:this.signupform.value.password
+    }
+    this.users.createUsers(newUser).subscribe({
+      next:()=>{
+          this.toast.show("signup Successful",'success');
+          this.signupform.reset();
+          this.submitted=false;
+          const expirytime=Date.now()+(10000);
+          localStorage.setItem('user',JSON.stringify(newUser));
+          localStorage.setItem('expiry',expirytime.toString());
+          this.router.navigate(['/home']);
+      },
+      error:()=>{
+        this.toast.show("signup failed",'error');
+      }
+    })
   }
 }

@@ -89,16 +89,16 @@ export class Bookatour implements OnInit {
  
         this.bookinginfo=this.bookingForm.value;
         this.pendingbooking = {
-  firstName: this.bookingForm.value.firstName,
-  lastName: this.bookingForm.value.lastName,
-  mobile: this.bookingForm.value.phone,
-  email: this.bookingForm.value.email,
-  location: this.bookingForm.value.location,
-  destination: this.bookingForm.value.destination,
-  date: this.bookingForm.value.travelDate,
-  adults: this.bookingForm.value.adults,
-  children: this.bookingForm.value.children,
-  price:this.price
+        firstName: this.bookingForm.value.firstName,
+        lastName: this.bookingForm.value.lastName,
+        mobile: this.bookingForm.value.phone,
+        email: this.bookingForm.value.email,
+        location: this.bookingForm.value.location,
+        destination: this.bookingForm.value.destination,
+        date: this.bookingForm.value.travelDate,
+        adults: this.bookingForm.value.adults,
+        children: this.bookingForm.value.children,
+        price:this.price
 };
 this.bookinginfo=this.pendingbooking;
 this.showconfirmation=true;  

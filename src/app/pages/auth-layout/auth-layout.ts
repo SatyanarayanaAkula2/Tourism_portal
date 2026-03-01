@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './auth-layout.css',
 })
 export class AuthLayout {
-
+  
 }
