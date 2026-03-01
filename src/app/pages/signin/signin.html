@@ -15,16 +15,10 @@
                         </div>
                     </div>
                     <div class="form_com">
-                        <label for="password">Password:<span>(min 8 chars, 1 letter, 1 number, 1 special char)</span></label>
+                        <label for="password">Password:</label>
                         <input type="text" id="password" placeholder="Enter your password" formControlName="password"/>
                             <div *ngIf="submitted && loginform.controls['password'].errors?.['required']" class="pass_errors">
                                 Password is required
-                            </div>
-                            <div *ngIf="submitted && loginform.controls['password'].errors?.['minlength']" class="pass_errors">
-                                Password must be at least 8 characters
-                            </div>
-                            <div *ngIf="submitted && loginform.controls['password'].errors?.['pattern']" class="pass_errors">
-                                Must contain letter, number, and special character
                             </div>
                     </div>
                     <div class="buttons">

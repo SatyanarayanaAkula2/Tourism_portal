@@ -1,8 +1,29 @@
 {
-  "bookings": [
-    
-  ],
-  "users":[
-    
+  "bookings": [],
+  "users": [
+    {
+      "id": "f1bb",
+      "name": "Akula Venkata surya Satyanarayana",
+      "email": "satyanarayanaakula2006@gmail.com",
+      "password": "aas1@uiry"
+    },
+    {
+      "id": "22ac",
+      "name": "satish",
+      "email": "akulasatish49@gmail.com",
+      "password": "hdsjh%7yy"
+    },
+    {
+      "id": "fba8",
+      "name": "satish",
+      "email": "akulasatish48@gmail.com",
+      "password": "ghjh7$fff"
+    },
+    {
+      "id": "50f0",
+      "name": "satish",
+      "email": "satyanarayanaakula200@gmail.com",
+      "password": "hhh7%hhh"
+    }
   ]
 }

@@ -31,4 +31,5 @@ export class UserData {
     updateBooking(id:number,user:User){
       return this.http.put(`${this.apiurl}/${id}`,user);
     }
+  
 }

@@ -67,9 +67,14 @@ export class Signup {
           this.signupform.reset();
           this.submitted=false;
           const expirytime=Date.now()+(10000);
-          localStorage.setItem('user',JSON.stringify(newUser));
+          localStorage.setItem('user',JSON.stringify({
+            name:newUser.name,
+            email:newUser.email
+          }));
           localStorage.setItem('expiry',expirytime.toString());
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home']).then(()=>{
+            location.reload();
+          });
       },
       error:()=>{
         this.toast.show("signup failed",'error');
