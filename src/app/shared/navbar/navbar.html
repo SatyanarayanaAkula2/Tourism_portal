@@ -18,7 +18,11 @@
                     <i class="fa-solid fa-sun"></i>
                 </ng-template>
             </button></li>
-            <li><a routerLink="/auth/signup" routerLinkActive="active" (click)="togglemenu()" class="login_btn"><span>Signin</span></a></li>
+            <li *ngIf="loggedin; else signupbtn"><a class="user_prof">{{firstchar}}</a></li>
+            <ng-template #signupbtn>
+                <li><a routerLink="/auth/login" routerLinkActive="active" (click)="togglemenu()" class="login_btn"><span>Signin</span></a></li>
+            </ng-template>
+            
         </ul>
     </div>
 </nav>

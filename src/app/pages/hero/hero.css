@@ -44,7 +44,12 @@
     display: flex;
     gap:50px;
 }
-
+.login_head{
+    color:white;
+}
+.login_head span{
+    color:#0bacc2;
+}
 
 @media (max-width:768px) {
     .hero{
