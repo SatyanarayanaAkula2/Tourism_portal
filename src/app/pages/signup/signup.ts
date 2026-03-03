@@ -69,13 +69,10 @@ export class Signup {
           this.toast.show("signup Successful",'success');
           this.signupform.reset();
           this.submitted=false;
-          const expirytime=Date.now()+(10000);
-          localStorage.setItem('user',JSON.stringify({
+          this.authservice.signup({
             name:newUser.name,
             email:newUser.email
-          }));
-          localStorage.setItem('expiry',expirytime.toString());
-          this.authservice.startexpirytimer(expirytime);
+          });
           this.router.navigate(['/home']);
       },
       error:()=>{

@@ -1,5 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { Authservice } from '../../services/authservice';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-hero',
@@ -10,13 +11,25 @@ import { Authservice } from '../../services/authservice';
 export class Hero implements OnInit {
   username:string='';
   isloggedin:boolean=false;
+  private sub!:Subscription;
  constructor(private authservice:Authservice){}
  ngOnInit(){
-  this.isloggedin=this.authservice.isLoggedin();
-  if(this.isloggedin){
-    const user=this.authservice.getUser();
-    this.username=user?.name;
+    this.sub=this.authservice.loginstatus$.subscribe(status=>{
+      this.isloggedin=status;
+      if(status){
+        const user=this.authservice.getUser();
+        this.username=user.name||'';
+      }
+      else{
+        this.username='';
+        console.log('username not rendered');
+      }
+    });
+  }
+  ngOnDestroy(){
+    if(this.sub){
+      this.sub.unsubscribe();
+    }
   }
  }
   
-}

@@ -1,17 +1,31 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Authservice {
   private logouttimer:any;
+  private loginstatus=new BehaviorSubject<boolean>(false);
+  loginstatus$=this.loginstatus.asObservable();
   constructor(private router:Router){}
+  login(user:any){
+    const expiry=Date.now()+50000;
+    localStorage.setItem('user',JSON.stringify(user));
+    localStorage.setItem('expiry',expiry.toString());
+    this.loginstatus.next(true);
+    this.startexpirytimer(expiry);
+  }
+  signup(user:any){
+    this.login(user);
+  }
   isLoggedin():boolean{
     const user=localStorage.getItem('user');
     const expiry=localStorage.getItem('expiry');
     if(!user||!expiry) return false;
     if(Date.now()> +expiry){
+      this.logout();
       return false;
     }
     return true;
@@ -38,7 +52,10 @@ export class Authservice {
   }
   logout(){
     localStorage.clear();
-    alert("session expired.please login again");
+    if(this.logouttimer){
+      clearTimeout(this.logouttimer);
+    }
+    this.loginstatus.next(false);
     this.router.navigate(['/auth/login']);
   }
 }

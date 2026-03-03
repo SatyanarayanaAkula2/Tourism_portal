@@ -46,14 +46,11 @@ export class Signin {
         this.toast.show("Login Successful",'success');
           this.loginform.reset();
           this.submitted=false;
-          const expirytime=Date.now()+(10000);
-          localStorage.setItem('user',JSON.stringify({
+          this.authservice.login({
             id:exists.id,
             name:exists.name,
             email:exists.email
-          }));
-          localStorage.setItem('expiry',expirytime.toString());
-          this.authservice.startexpirytimer(expirytime);
+          })
           this.router.navigate(['/home']);
       }
     },
