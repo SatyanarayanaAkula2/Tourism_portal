@@ -1,4 +1,4 @@
-import { Component,HostListener} from '@angular/core';
+import { Component,Host,HostListener} from '@angular/core';
 import { Router } from '@angular/router';
 import { Authservice } from '../../services/authservice';
 import { Subscription } from 'rxjs';
@@ -17,6 +17,7 @@ export class Navbar {
   username:string='';
   loggedin:boolean=false;
   firstchar:string='';
+  profiledropdown:boolean=false;
   private sub!:Subscription;
   constructor(private router:Router,private authservice:Authservice){
     this.router.events.subscribe(()=>{
@@ -25,14 +26,15 @@ export class Navbar {
   }
   ngOnInit(){
     this.sub=this.authservice.loginstatus$.subscribe(status=>{
+      this.loggedin=status;
         if(status){
-          this.loggedin=status;
           const user=this.authservice.getUser();
           this.username=user.name||'';
-          this.firstchar=this.username.charAt(0);
+          this.firstchar=this.username.charAt(0).toUpperCase();
         }
         else{
-          this.firstchar='N';
+          this.username='';
+          this.firstchar='';
           console.log('no username rendered');
         }
     });
@@ -50,6 +52,19 @@ export class Navbar {
   gotosignup() {
   this.menuOpen=false;
   this.router.navigate(['/signup']);
+}
+toggledropdown(){
+  this.profiledropdown=!this.profiledropdown;
+}
+logout(){
+  this.authservice.logout();
+}
+@HostListener('document:click',['$event'])
+clickoutside(event:Event){
+  const target=event.target as HTMLElement;
+  if(!target.closest('.profile_container')){
+    this.profiledropdown=false;
+  }
 }
 ngOnDestroy(){
   if(this.sub){

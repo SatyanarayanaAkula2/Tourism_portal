@@ -17,6 +17,7 @@ import { Footer } from './footer/footer';
 import { Signup } from './signup/signup';
 import { Signin } from './signin/signin';
 import { AuthLayout } from './auth-layout/auth-layout';
+import { Profile } from './profile/profile';
 
 
 
@@ -36,6 +37,7 @@ import { AuthLayout } from './auth-layout/auth-layout';
     Signup,
     Signin,
     AuthLayout,
+    Profile,
   
   
   ],

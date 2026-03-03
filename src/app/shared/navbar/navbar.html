@@ -18,7 +18,31 @@
                     <i class="fa-solid fa-sun"></i>
                 </ng-template>
             </button></li>
-            <li *ngIf="loggedin; else signupbtn"><a class="user_prof">{{firstchar}}</a></li>
+            <li *ngIf="loggedin; else signupbtn" class="profile_container" ><a  (click)="toggledropdown()" class="user_prof">{{firstchar}}</a>
+                <ul class="dropdown-menu" *ngIf="profiledropdown">
+
+    <li>
+      <a routerLink="/profile"
+         (click)="profiledropdown=false">
+         Profile
+      </a>
+    </li>
+
+    <li>
+      <a routerLink="/bookings"
+         (click)="profiledropdown=false">
+         My Bookings
+      </a>
+    </li>
+
+    <li>
+      <a (click)="logout()">
+         Logout
+      </a>
+    </li>
+
+  </ul>
+            </li>
             <ng-template #signupbtn>
                 <li><a routerLink="/auth/login" routerLinkActive="active" (click)="togglemenu()" class="login_btn"><span>Signin</span></a></li>
             </ng-template>

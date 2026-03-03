@@ -9,9 +9,12 @@ export class Authservice {
   private logouttimer:any;
   private loginstatus=new BehaviorSubject<boolean>(false);
   loginstatus$=this.loginstatus.asObservable();
-  constructor(private router:Router){}
+  constructor(private router: Router) {
+  this.loginstatus.next(this.isLoggedin());
+}
+  
   login(user:any){
-    const expiry=Date.now()+50000;
+    const expiry=Date.now()+100000;
     localStorage.setItem('user',JSON.stringify(user));
     localStorage.setItem('expiry',expiry.toString());
     this.loginstatus.next(true);
@@ -20,16 +23,14 @@ export class Authservice {
   signup(user:any){
     this.login(user);
   }
-  isLoggedin():boolean{
-    const user=localStorage.getItem('user');
-    const expiry=localStorage.getItem('expiry');
-    if(!user||!expiry) return false;
-    if(Date.now()> +expiry){
-      this.logout();
-      return false;
-    }
-    return true;
-  }
+  isLoggedin(): boolean {
+  const user = localStorage.getItem('user');
+  const expiry = localStorage.getItem('expiry');
+
+  if (!user || !expiry) return false;
+
+  return Date.now() <= +expiry;
+}
   getUser():any|null{
     try {
     const user = localStorage.getItem('user');

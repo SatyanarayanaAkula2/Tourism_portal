@@ -1,0 +1,104 @@
+<section class="profile" >
+    <div class="msg" *ngIf="!loggedin">
+        Please login to view profile.
+    </div>
+
+    <div class="msg" *ngIf="loggedin && !user">
+        Loading profile...
+    </div>
+
+    <div class="main" *ngIf="loggedin && user">
+                <div class="edit_overlay" *ngIf="editmode" (click)="closeedit()">
+                <div class="edit_card" (click)="$event.stopPropagation()">
+
+                <div class="edit_header"><h2>Edit Profile</h2></div>
+
+                <form [formGroup]="profileform">
+
+                    <div class="form_group">
+                    <label>Name</label>
+                    <input type="text" formControlName="name">
+                </div>
+
+                <div class="form_group">
+                    <label>Email</label>
+                    <input type="email" formControlName="email">
+                </div>
+
+                <div class="form_group">
+                    <label>Mobile</label>
+                    <input type="text" formControlName="mobile">
+                </div>
+
+                <div class="form_group">
+                    <label>Place</label>
+                    <input type="text" formControlName="place">
+                </div>
+
+                    <div class="edit_buttons">
+                    <button type="button" class="btn save_btn" (click)="saveprofile()">
+                        Save Changes
+                    </button>
+
+                    <button type="button" class="btn back_btn" (click)="closeedit()">
+                        Cancel
+                    </button>
+                    </div>
+
+                </form>
+
+                </div>
+            </div>
+
+  <div class="my_details">
+
+    <div class="profile_pic">
+      {{ user.name.charAt(0).toUpperCase() }}
+    </div>
+
+ 
+    <div class="my_info">
+      <h2>{{ user.name }}</h2>
+
+      <ul class="details_list">
+        <li><span>Email:</span> {{ user.email }}</li>
+        <li><span>Mobile:</span> {{ user.mobile || 'Not added' }}</li>
+        <li><span>Place:</span> {{ user.place || 'Not added' }}</li>
+      </ul>
+
+      <div class="buttons">
+        <button class="btn update_btn" (click)="enableedit()">
+          Update Profile
+        </button>
+
+        <button class="btn logout_btn" (click)="logout()">
+          Logout
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  
+  <div class="my_bookings">
+
+    <div class="heading">
+      <h2>My Bookings</h2>
+      <button class="view_all_btn">View All</button>
+    </div>
+
+    <div class="act_bookings" *ngIf="mybookings?.length; else noBookings">
+      <div class="booking_card" *ngFor="let booking of mybookings">
+        <h4>{{ booking.tourName }}</h4>
+        <p>Date: {{ booking.date | date }}</p>
+      </div>
+    </div>
+
+    <ng-template #noBookings>
+      <p class="no_bookings">No bookings yet</p>
+    </ng-template>
+
+  </div>
+  </div>
+
+</section>

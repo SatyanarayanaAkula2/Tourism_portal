@@ -7,6 +7,8 @@ export interface User{
   name:string;
   email:string;
   password:string;
+  mobile?:string;
+  place?:string;
 }
 @Injectable({
   providedIn: 'root',
@@ -24,12 +26,15 @@ export class UserData {
     return this.http.post<User>(this.apiurl,user);
   }
 
-  deleteBooking(id:number){
+  deleteUser(id:number){
       return this.http.delete(`${this.apiurl}/${id}`);
     }
   
-    updateBooking(id:number,user:User){
-      return this.http.put(`${this.apiurl}/${id}`,user);
+    updateUser(id:number,user:User){
+      return this.http.put<User>(`${this.apiurl}/${id}`,user);
+    }
+      getUserById(id: number): Observable<User> {
+        return this.http.get<User>(`${this.apiurl}/${id}`);
     }
   
 }
