@@ -1,19 +1,35 @@
 {
-  "bookings": [],
+  "bookings": [
+    {
+      "id": "fdd9",
+      "firstName": "Akula",
+      "lastName": "Satyanarayana",
+      "mobile": 8143853022,
+      "email": "satyanarayanaakula2006@gmail.com",
+      "location": "66-7-5A, S Atchutapuram, Narasanna Nagar, Suryaraopeta, Andhra Pradesh 533003, India",
+      "destination": "Kakinada Beach",
+      "date": "2026-03-12T18:30:00.000Z",
+      "adults": 1,
+      "children": 0,
+      "price": 1500
+    }
+  ],
   "users": [
     {
       "id": "f1bb",
       "name": "Akula Venkata surya Satyanarayana",
-      "email": "satyanarayanaakula2006@gmail.com",
-      "password": "aas1@uiry"
+      "email": "satyanarayanaakula2006@gmsi",
+      "password": "aas1@uiry",
+      "mobile": "8143853022",
+      "place": ""
     },
     {
       "id": "22ac",
       "name": "satish",
-      "email": "akulasatish49@gmail.com",
+      "email": "akulasatish49gmail.com",
       "password": "hdsjh%7yy",
-      "mobile": "8143853022",
-      "place": "kakinada"
+      "mobile": "98378328",
+      "place": "city"
     },
     {
       "id": "fba8",

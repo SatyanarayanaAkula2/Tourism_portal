@@ -1,0 +1,82 @@
+.analytics{
+    padding:120px 10%;
+    background:#f7fbfc;
+    min-height:100vh;
+}
+
+.heading{
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 40px;
+    color:#0A2540;
+}
+
+.analytics_card {
+    background: white;
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 35px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.analytics_card:hover {
+    transform: translateY(-4px);
+    transition: 0.3s;
+}
+
+.card_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.card_header h3 {
+    font-size: 18px;
+    color: #0A2540;
+}
+
+.card_header p {
+    font-size: 14px;
+    color: gray;
+}
+
+.card_body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
+.insights_container {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 10px;
+}
+
+.insight_box {
+    text-align: center;
+}
+
+.insight_box p {
+    color: gray;
+    font-size: 14px;
+}
+
+.insight_box h4 {
+    font-size: 20px;
+    color: #089cce;
+    margin: 6px 0;
+}
+
+.insight_box span {
+    font-size: 14px;
+    color: #555;
+}
+
+select {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+

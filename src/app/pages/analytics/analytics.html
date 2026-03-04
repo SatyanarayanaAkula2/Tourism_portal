@@ -1,0 +1,62 @@
+<section class="analytics">
+
+    <div class="heading">Booking Status Analytics</div>
+
+    <div class="analytics_card">
+        <div class="card_header">
+            <h3>Booking Distributions</h3>
+            <p>Bookings across all destinations</p>
+        </div>
+        <div class="card_body">
+            <canvas id="bookingBarChart"></canvas>
+        </div>
+    </div>
+
+    <div class="analytics_card">
+        <div class="card_header">
+            <h3>Destination Popularity</h3>
+            <p>Percentage share of total bookings</p>
+        </div>
+        <div class="card_body">
+            <canvas id="popularityPieChart"></canvas>
+        </div>
+    </div>
+
+    <div class="analytics_card insights_card">
+        <div class="card_header">
+            <h3>Destination Insights</h3>
+        </div>
+
+        <div class="insights_container">
+
+            <div class="insight_box">
+                <p>Most Booked</p>
+                <h4>{{}}</h4>
+                <span>{{}} bookings</span>
+            </div>
+
+            <div class="insight_box">
+                <p>Least Booked</p>
+                <h4>{{}}</h4>
+                <span>{{}} bookings</span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="analytics_card">
+        <div class="card_header">
+            <h3>Monthly Destination popularity</h3>
+            <select (change)="">
+                <option value="">Select Month</option>
+                <option *ngFor="" [value]=""></option>
+            </select>
+        </div>
+
+        <div class="card_body">
+            <canvas id="monthlyBarChart"></canvas>
+        </div>
+    </div>
+
+
+</section>

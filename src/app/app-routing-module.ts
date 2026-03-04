@@ -8,6 +8,7 @@ import { Signup } from './pages/signup/signup';
 import { Signin } from './pages/signin/signin';
 import { AuthLayout } from './pages/auth-layout/auth-layout';
 import { Profile } from './pages/profile/profile';
+import { Analytics } from './pages/analytics/analytics';
 
 const routes: Routes = [
   {path:'',component:Home},
@@ -23,6 +24,7 @@ const routes: Routes = [
     {path:'',redirectTo:'signup',pathMatch:'full'}
   ]},
   {path:'profile',component:Profile},
+  {path:'analytics',component:Analytics},
   {path:'**',redirectTo:''}
 ];
 

@@ -249,6 +249,10 @@
   color: #555;
   text-align: center;
 }
+.err_msg{
+  color:#e53935;
+  margin-bottom: 5px;
+}
 
 @media (max-width: 768px) {
   .my_details {

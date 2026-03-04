@@ -10,11 +10,19 @@ export class Authservice {
   private loginstatus=new BehaviorSubject<boolean>(false);
   loginstatus$=this.loginstatus.asObservable();
   constructor(private router: Router) {
-  this.loginstatus.next(this.isLoggedin());
+  const loggedIn = this.isLoggedin();
+  this.loginstatus.next(loggedIn);
+
+  if (loggedIn) {
+    const expiry = localStorage.getItem('expiry');
+    if (expiry) {
+      this.startexpirytimer(+expiry);
+    }
+  }
 }
   
   login(user:any){
-    const expiry=Date.now()+100000;
+    const expiry=Date.now()+(60*60*1000);
     localStorage.setItem('user',JSON.stringify(user));
     localStorage.setItem('expiry',expiry.toString());
     this.loginstatus.next(true);

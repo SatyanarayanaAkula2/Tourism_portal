@@ -24,10 +24,16 @@
                     <label>Email</label>
                     <input type="email" formControlName="email">
                 </div>
+                <div *ngIf="submitted && profileform.controls['email'].errors?.['email']" class="err_msg">
+                  Invalid email
+                </div>
 
                 <div class="form_group">
                     <label>Mobile</label>
                     <input type="text" formControlName="mobile">
+                </div>
+                <div *ngIf="submitted && profileform.controls['mobile'].invalid" class="err_msg">
+                  Invalid mobile number
                 </div>
 
                 <div class="form_group">

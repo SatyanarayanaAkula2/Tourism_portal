@@ -18,6 +18,7 @@ import { Signup } from './signup/signup';
 import { Signin } from './signin/signin';
 import { AuthLayout } from './auth-layout/auth-layout';
 import { Profile } from './profile/profile';
+import { Analytics } from './analytics/analytics';
 
 
 
@@ -38,6 +39,7 @@ import { Profile } from './profile/profile';
     Signin,
     AuthLayout,
     Profile,
+    Analytics,
   
   
   ],
