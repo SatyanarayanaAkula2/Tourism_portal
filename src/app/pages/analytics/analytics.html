@@ -29,17 +29,25 @@
 
         <div class="insights_container">
 
-            <div class="insight_box">
-                <p>Most Booked</p>
-                <h4></h4>
-                <span>bookings</span>
+           <div class="insight_box">
+            <div class="header">
+                <h4>Most Booked Destinations</h4>
             </div>
+            <div class="destination_item" *ngFor="let d of topDestinations">
+                <span class="destination_name">{{d.destination}}</span>
+                <span class="destination_count">{{d.count}}</span>
+            </div>
+           </div>
 
-            <div class="insight_box">
-                <p>Least Booked</p>
-                <h4></h4>
-                <span> bookings</span>
+           <div class="insight_box">
+            <div class="header">
+                <h4>Least Booked Destinations</h4>
             </div>
+                <div class="destination_item" *ngFor="let d of leastDestinations">
+                    <span class="destination_name">{{d.destination}}</span>
+                    <span class="destination_count">{{d.count}}</span>
+                </div>
+           </div>
 
         </div>
     </div>

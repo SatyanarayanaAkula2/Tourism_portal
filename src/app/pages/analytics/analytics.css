@@ -51,28 +51,40 @@
 
 .insights_container {
     display: flex;
-    justify-content: space-around;
+    gap:30px;
+    justify-content: space-between;
+    flex-wrap: wrap;
     padding-top: 10px;
 }
 
-.insight_box {
-    text-align: center;
+.insight_box{
+    flex:1;
+    background:#f8fcfd;
+    padding:18px;
+    border-radius: 10px;
+}
+.insight_box h4{
+    margin-bottom: 14px;
+    color:#0A2540;
 }
 
-.insight_box p {
-    color: gray;
-    font-size: 14px;
+.destination_item{
+    display: flex;
+    justify-content: space-between;
+    padding:8px 10px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
-.insight_box h4 {
-    font-size: 20px;
-    color: #089cce;
-    margin: 6px 0;
+.destination_name{
+    font-weight:500;
 }
 
-.insight_box span {
-    font-size: 14px;
-    color: #555;
+.destination_count{
+    color:#089cce;
+    font-weight: 600;
 }
 
 select {

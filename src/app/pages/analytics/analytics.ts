@@ -30,6 +30,7 @@ export class Analytics implements AfterViewInit{
       this.calculateBookingDistribution();
       this.createBarChart();
       this.createPopularityChart();
+      this.calculateTopDestinations();
     })
   }
 
@@ -72,6 +73,9 @@ export class Analytics implements AfterViewInit{
   createPopularityChart(){
     const destinations=Object.keys(this.destinationcounts);
     const counts=Object.values(this.destinationcounts);
+    if(this.popularityChart){
+      this.popularityChart.destroy();
+    }
     const total=counts.reduce((sum,val)=>sum+val,0);
     const percentages=counts.map(c=>Number(((c/total)*100).toFixed(1)));
     this.popularityChart = new Chart(this.popularityChartRef.nativeElement,{
@@ -96,5 +100,17 @@ export class Analytics implements AfterViewInit{
         maintainAspectRatio:false
       }
     });
+  }
+  calculateTopDestinations(){
+    const entries=Object.entries(this.destinationcounts);
+    const sorted=entries.sort((a,b)=>b[1]-a[1]);
+    this.topDestinations=sorted.slice(0,5).map(item=>({
+      destination:item[0],
+      count:item[1]
+    }));
+    this.leastDestinations=sorted.slice(-5).map(item=>({
+      destination:item[0],
+      count:item[1]
+    }));
   }
 }
