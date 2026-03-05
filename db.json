@@ -12,6 +12,58 @@
       "adults": 1,
       "children": 0,
       "price": 1500
+    },
+    {
+      "id": "2cc0",
+      "firstName": "saradhi",
+      "lastName": "laxmi",
+      "mobile": 8143853022,
+      "email": "akulasatish49@gmail.com",
+      "location": "66-7-5A, S Atchutapuram, Narasanna Nagar, Suryaraopeta, Andhra Pradesh 533003, India",
+      "destination": "Taj Mahal",
+      "date": "2026-04-15T18:30:00.000Z",
+      "adults": 1,
+      "children": 0,
+      "price": 3500
+    },
+    {
+      "id": "2ae1",
+      "firstName": "Akula",
+      "lastName": "ganesh",
+      "mobile": 8143853022,
+      "email": "satyanarayanaakula2006@gmail.com",
+      "location": "india",
+      "destination": "Araku valley",
+      "date": "2026-12-22T18:30:00.000Z",
+      "adults": 1,
+      "children": 0,
+      "price": 2500
+    },
+    {
+      "id": "2da7",
+      "firstName": "Akula",
+      "lastName": "Satyanarayana",
+      "mobile": 8143853022,
+      "email": "satyanarayanaakula2006@gmail.com",
+      "location": "66-7-5A, S Atchutapuram, Narasanna Nagar, Suryaraopeta, Andhra Pradesh 533003, India",
+      "destination": "Kedarnath Temple",
+      "date": "2027-02-10T18:30:00.000Z",
+      "adults": 1,
+      "children": 0,
+      "price": 4500
+    },
+    {
+      "id": "9dda",
+      "firstName": "Akula",
+      "lastName": "Satyanarayana",
+      "mobile": 8143853022,
+      "email": "satyanarayanaakula2006@gmail.com",
+      "location": "66-7-4, S Atchutapuram, Narasanna Nagar, Kakinada, Suryaraopeta, Andhra Pradesh 533003, India",
+      "destination": "Kakinada Beach",
+      "date": "2026-05-19T18:30:00.000Z",
+      "adults": 1,
+      "children": 0,
+      "price": 1500
     }
   ],
   "users": [
