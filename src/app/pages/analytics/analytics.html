@@ -8,7 +8,7 @@
             <p>Bookings across all destinations</p>
         </div>
         <div class="card_body">
-            <canvas id="bookingBarChart"></canvas>
+            <canvas #bookingBarChart></canvas>
         </div>
     </div>
 
@@ -52,19 +52,20 @@
         </div>
     </div>
 
-    <!-- <div class="analytics_card">
+    <div class="analytics_card">
         <div class="card_header">
             <h3>Monthly Destination popularity</h3>
-            <select (change)="">
+            <span>Top 5 destinations(month wise)</span>
+            <select (change)="onMonthChange($event)" [value]="selectedmonth">
                 <option value="">Select Month</option>
-                <option *ngFor="" [value]=""></option>
+                <option *ngFor="let m of months" [value]="m.value">{{m.name}}</option>
             </select>
         </div>
 
         <div class="card_body">
-            <canvas id="monthlyBarChart"></canvas>
+            <canvas #monthlyBarChart></canvas>
         </div>
-    </div> -->
+    </div>
 
 
 </section>
