@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-const secret='satish@22$';
+const secret=process.env.SECRET;
 
 
 export const setUser = (user) => {
