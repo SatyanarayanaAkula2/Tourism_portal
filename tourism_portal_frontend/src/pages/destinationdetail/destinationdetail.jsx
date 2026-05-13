@@ -1,0 +1,584 @@
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import "./destinationdetail.css"
+import { useBooking } from "../../context/bookingContext";
+
+function DestinationDetails() {
+
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [destination, setDestination] = useState(null);
+
+  const [hotels, setHotels] = useState([]);
+
+  const [packages, setPackages] = useState([]);
+
+  const [searchText, setSearchText] = useState("");
+
+  const [filteredLocations, setFilteredLocations] = useState([]);
+
+  const [allLocations, setAllLocations] = useState([]);
+
+  const [showDropdown, setShowDropdown] = useState(false);
+  
+
+  const [selectedHotel, setSelectedHotel] = useState(null);
+
+  const [selectedPackage, setSelectedPackage] = useState(null);
+
+  const [activeDropdown, setActiveDropdown] = useState("");
+
+  const [showMap, setShowMap] = useState(false);
+
+  const [mapUrl, setMapUrl] = useState("");
+  const [loading,setloading]=useState(true);
+  const {setBookingData}=useBooking();
+
+  useEffect(() => {
+
+    // FETCH DESTINATION
+    // Replace with your API/service
+
+    const fetchDestination = async () => {
+
+      try {
+        setloading(true);
+        const res=await fetch(`http://localhost:5000/destination/destinations/${id}`);
+        const data=await res.json();
+
+        setDestination(data.destination);
+
+        setAllLocations([
+          "Goa",
+          "Hyderabad",
+          "Delhi",
+          "Mumbai",
+          "Kerala"
+        ]);
+
+        setHotels([
+          {
+            id: 1,
+            name: "Sea View Resort",
+            image: "/assets/hotels/hotel1.jpg",
+            rating: 4.5,
+            type: "Luxury",
+            priceperNight: "₹4500/night"
+          },
+
+          {
+            id: 2,
+            name: "Blue Ocean Hotel",
+            image: "/assets/hotels/hotel2.jpg",
+            rating: 4.2,
+            type: "Premium",
+            priceperNight: "₹3800/night"
+          }
+        ]);
+
+        setPackages([
+          {
+            id: 1,
+            name: "Basic",
+            price: "₹5000",
+
+            includes: [
+              "2 Days",
+              "Breakfast",
+              "Sightseeing"
+            ]
+          },
+
+          {
+            id: 2,
+            name: "Standard",
+            price: "₹9000",
+
+            includes: [
+              "4 Days",
+              "Hotel Stay",
+              "Transport"
+            ]
+          },
+
+          {
+            id: 3,
+            name: "Premium",
+            price: "₹15000",
+
+            includes: [
+              "7 Days",
+              "Luxury Hotel",
+              "Private Cab"
+            ]
+          }
+        ]);
+
+      } catch (err) {
+        console.log(err);
+      }
+      finally{
+        setloading(false);
+      }
+    };
+
+    fetchDestination();
+
+  }, [id]);
+
+  // ======================
+  // LOCATION SEARCH
+  // ======================
+
+  const filterLocations = (value) => {
+
+    setSearchText(value);
+
+    if (!value.trim()) {
+      setFilteredLocations([]);
+      setShowDropdown(false);
+      return;
+    }
+
+    const filtered = allLocations.filter((loc) =>
+      loc.toLowerCase().includes(value.toLowerCase())
+    );
+
+    setFilteredLocations(filtered);
+
+    setShowDropdown(true);
+  };
+
+  const selectLocation = (loc) => {
+    setSearchText(loc);
+    setShowDropdown(false);
+  };
+
+  // ======================
+  // HOTEL SELECT
+  // ======================
+
+  const selectHotel = (hotel) => {
+
+    if (selectedHotel?.id === hotel.id) {
+      setSelectedHotel(null);
+    } else {
+      setSelectedHotel(hotel);
+    }
+  };
+
+  // ======================
+  // PACKAGE SELECT
+  // ======================
+
+  const selectPackage = (pkg) => {
+
+    if (selectedPackage?.id === pkg.id) {
+      setSelectedPackage(null);
+    } else {
+      setSelectedPackage(pkg);
+    }
+  };
+
+  // ======================
+  // PACKAGE CLASS
+  // ======================
+
+  const getPackageClass = (name) => {
+
+    const lower = name.toLowerCase();
+
+    switch (lower) {
+
+      case "basic":
+        return "basic-card";
+
+      case "standard":
+        return "standard-card";
+
+      case "premium":
+        return "premium-card";
+
+      default:
+        return "";
+    }
+  };
+
+  // ======================
+  // ACCORDION
+  // ======================
+
+  const toggle = (type) => {
+
+    if (activeDropdown === type) {
+      setActiveDropdown("");
+    } else {
+      setActiveDropdown(type);
+    }
+  };
+
+  // ======================
+  // MAP
+  // ======================
+
+  const toggleMap = () => {
+
+    setShowMap(!showMap);
+
+    if (!showMap && destination) {
+
+      const url = `https://www.google.com/maps?q=${destination.place}&output=embed`;
+
+      setMapUrl(url);
+    }
+  };
+
+  // ======================
+  // BOOK
+  // ======================
+
+  const gotoBook = () => {
+
+    if (!selectedPackage) {
+      alert("Please select a package");
+      return;
+    }
+    setBookingData({
+        destination:destination,
+        hotel:selectedHotel,
+        package:selectedPackage
+    });
+    navigate("/booktour");
+  };
+
+  // ======================
+  // LOADING
+  // ======================
+
+  if(loading){
+    return(
+        <div className="loader-container">
+            <div className="loader"></div>
+        </div>
+    )
+  }
+
+  return (
+
+    <section className="spec-dest">
+
+      {/* GALLERY */}
+
+      <div className="gallery">
+
+        <img
+          className="main-img"
+          src={destination?.image}
+          alt={destination?.name}
+        />
+
+        <div className="thumbs">
+
+          {destination?.images?.map((img, index) => (
+
+            <img
+              key={index}
+              src={img}
+              alt=""
+            />
+
+          ))}
+
+        </div>
+
+      </div>
+
+      {/* DESCRIPTION */}
+
+      <div className="description">
+
+        <h2>{destination?.name}</h2>
+
+        <p>{destination?.description}</p>
+
+      </div>
+
+      {/* LOCATION */}
+
+      <div className="location-selection">
+
+        <h3>Update Your Location</h3>
+
+        <div className="location-row">
+
+          <div className="location-box">
+
+            <input
+              type="text"
+              placeholder="Enter your location"
+              value={searchText}
+              onChange={(e) =>
+                filterLocations(e.target.value)
+              }
+            />
+
+            {showDropdown &&
+              filteredLocations.length > 0 && (
+
+              <ul className="location-list">
+
+                {filteredLocations.map((location, index) => (
+
+                  <li
+                    key={index}
+                    onClick={() =>
+                      selectLocation(location)
+                    }
+                  >
+                    {location}
+                  </li>
+
+                ))}
+
+              </ul>
+
+            )}
+
+          </div>
+
+          <button
+            className="map-btn"
+            onClick={toggleMap}
+          >
+            {showMap ? "Hide Map" : "Show Map"}
+          </button>
+
+        </div>
+
+      </div>
+
+      {/* MAP */}
+
+      {showMap && (
+
+        <div className="map-container">
+
+          <iframe
+            title="map"
+            width="100%"
+            height="400"
+            src={mapUrl}
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+          />
+
+        </div>
+
+      )}
+
+      {/* HOTELS */}
+
+      <div className="hotels">
+
+        <h3>
+          Hotels near {destination?.name}
+        </h3>
+
+        <div className="hotel-list">
+
+          {hotels.map((hotel) => (
+
+            <div
+              key={hotel.id}
+              className={`hotel-card ${
+                selectedHotel?.id === hotel.id
+                  ? "selected"
+                  : ""
+              }`}
+            >
+
+              <div className="hotel-img">
+
+                <img
+                  src={hotel.image}
+                  alt={hotel.name}
+                />
+
+              </div>
+
+              <div className="hotel-content">
+
+                <h4>{hotel.name}</h4>
+
+                <p>
+                  ⭐ {hotel.rating}/5
+                </p>
+
+                <p>{hotel.type}</p>
+
+                <p>{hotel.priceperNight}</p>
+
+                <button
+                  className={`btn-primary ${
+                    selectedHotel?.id === hotel.id
+                      ? "btn-selected"
+                      : ""
+                  }`}
+                  onClick={() =>
+                    selectHotel(hotel)
+                  }
+                >
+                  {selectedHotel?.id === hotel.id
+                    ? "Selected"
+                    : "Select Hotel"}
+                </button>
+
+              </div>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      </div>
+
+      {/* PACKAGES */}
+
+      <div className="Packages">
+
+        <h3>Select Package</h3>
+
+        <div className="package-list">
+
+          {packages.map((pkg) => (
+
+            <div
+              key={pkg.id}
+              className={`package-card 
+                ${getPackageClass(pkg.name)}
+                ${
+                  selectedPackage?.id === pkg.id
+                    ? "selected"
+                    : ""
+                }`}
+            >
+
+              <h4>{pkg.name}</h4>
+
+              <p className="price">
+                {pkg.price}
+              </p>
+
+              <ul>
+
+                {pkg.includes.map((item, index) => (
+
+                  <li key={index}>
+                    {item}
+                  </li>
+
+                ))}
+
+              </ul>
+
+              <button
+                className="btn-primary"
+                onClick={() =>
+                  selectPackage(pkg)
+                }
+              >
+                {selectedPackage?.id === pkg.id
+                  ? "Selected"
+                  : "Select Package"}
+              </button>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      </div>
+
+      {/* ACCORDION */}
+
+      <div className="info-section">
+
+        <div
+          className="dropdown-block"
+          onClick={() => toggle("info")}
+        >
+
+          <h3>Info</h3>
+
+          {activeDropdown === "info" && (
+            <p>{destination.info}</p>
+          )}
+
+        </div>
+
+        <div
+          className="dropdown-block"
+          onClick={() => toggle("famous")}
+        >
+
+          <h3>Famous For</h3>
+
+          {activeDropdown === "famous" && (
+            <p>{destination.famousfor}</p>
+          )}
+
+        </div>
+
+        <div
+          className="dropdown-block"
+          onClick={() => toggle("best")}
+        >
+
+          <h3>Best Time To Visit</h3>
+
+          {activeDropdown === "best" && (
+            <p>{destination.bestTime}</p>
+          )}
+
+        </div>
+
+      </div>
+
+      {/* EXTRA */}
+
+      <div className="extra-info">
+
+        <h3>
+          Why Visit {destination?.name} ?
+        </h3>
+
+        <p>
+          Experience the beauty, culture and
+          unforgettable charm of{" "}
+          {destination?.name}.
+        </p>
+
+      </div>
+
+      {/* CTA */}
+
+      <div className="book-cta">
+
+        <button
+          className="book-btn"
+          onClick={gotoBook}
+        >
+          Book Now
+        </button>
+
+      </div>
+
+    </section>
+  );
+}
+
+export default DestinationDetails;

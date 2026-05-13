@@ -1,0 +1,200 @@
+.footer{
+    background:#0f172a;
+
+    color:#e2e8f0;
+
+    padding:70px 6% 30px;
+
+    transition:0.3s ease;
+}
+
+/* DARK MODE */
+
+body.dark .footer{
+    background:#020817;
+}
+
+/* CONTAINER */
+
+.footer_container{
+    max-width:1250px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+    gap:45px;
+}
+
+/* COLUMN */
+
+.footer_col{
+    display:flex;
+    flex-direction:column;
+
+    gap:12px;
+}
+
+/* BRAND */
+
+.footer_col.brand h2{
+    font-size:2rem;
+    font-weight:700;
+
+    color:white;
+
+    letter-spacing:1px;
+}
+
+.footer_col.brand span{
+    color:#00bcd4;
+}
+
+.footer_col.brand p{
+    font-size:14px;
+
+    color:#94a3b8;
+
+    line-height:1.8;
+
+    margin-top:8px;
+
+    max-width:320px;
+}
+
+/* HEADINGS */
+
+.footer_col h3{
+    font-size:1rem;
+    font-weight:600;
+
+    margin-bottom:12px;
+
+    color:white;
+}
+
+/* LINKS */
+
+.footer_col a{
+    text-decoration:none;
+
+    color:#94a3b8;
+
+    font-size:14px;
+
+    transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.footer_col a:hover{
+    color:#00bcd4;
+
+    transform:translateX(4px);
+}
+
+/* TEXT */
+
+.footer_col p{
+    font-size:14px;
+
+    color:#94a3b8;
+
+    line-height:1.7;
+}
+
+/* SOCIALS */
+
+.socials{
+    display:flex;
+
+    gap:12px;
+
+    margin-top:14px;
+}
+
+/* ICON */
+
+.socials span{
+    width:38px;
+    height:38px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#1e293b;
+
+    cursor:pointer;
+
+    transition:
+    background 0.3s ease,
+    transform 0.3s ease,
+    color 0.3s ease;
+}
+
+/* ICON HOVER */
+
+.socials span:hover{
+    background:#00bcd4;
+
+    color:white;
+
+    transform:translateY(-3px);
+}
+
+/* BOTTOM */
+
+.footer_bottom{
+    text-align:center;
+
+    margin-top:50px;
+
+    padding-top:22px;
+
+    border-top:
+    1px solid rgba(255,255,255,0.08);
+
+    font-size:13px;
+
+    color:#94a3b8;
+}
+
+/* TABLET */
+
+@media(max-width:768px){
+
+    .footer{
+        padding:60px 7% 25px;
+    }
+
+    .footer_container{
+        gap:35px;
+    }
+
+    .footer_col.brand h2{
+        font-size:1.7rem;
+    }
+}
+
+/* MOBILE */
+
+@media(max-width:480px){
+
+    .footer_container{
+        grid-template-columns:1fr;
+    }
+
+    .footer_col{
+        gap:10px;
+    }
+
+    .footer_bottom{
+        margin-top:40px;
+    }
+}

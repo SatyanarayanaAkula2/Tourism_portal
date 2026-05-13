@@ -1,0 +1,839 @@
+import { useEffect, useMemo, useState } from "react";
+import { useBooking } from "../../context/bookingContext";
+import "./booking.css";
+
+const Booking = () => {
+
+  // =========================
+  // TEMP DATA
+  // Later from Context API
+  // =========================
+  const {bookingData} = useBooking();
+  const [packages, setPackages] = useState([]);
+  const [destinations, setDestinations] = useState([]);
+  const [hotels, setHotels] = useState([]);
+  const [selectedDestination, setselectedDestination] = useState(null);
+  const [selectedHotel, setSelectedHotel] = useState(null);
+  const [selectedPackage, setSelectedPackage] = useState(null);
+  const [minStartDate,setminStartDate]=useState("");
+  const [minEndDate,setminEndDate]=useState("");
+  // =========================
+  // FORM
+  // =========================
+
+  const [formData, setFormData] = useState({
+
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+
+    location: "",
+
+    destination:"",
+
+    adults: 1,
+    children: 0,
+
+    startDate: "",
+    endDate: "",
+
+    transport: "",
+    payment: ""
+  });
+
+  // =========================
+  // UI STATES
+  // =========================
+
+  const [submitted, setSubmitted] = useState(false);
+
+  const [showConfirm, setShowConfirm] =
+    useState(false);
+
+  const [showSuccess, setShowSuccess] =
+    useState(false);
+
+  // =========================
+  // OPTIONS
+  // =========================
+
+  const transports = [
+    "Bus",
+    "Train",
+    "Flight"
+  ];
+
+  const paymentMethods = [
+    "UPI",
+    "Card",
+    "NetBanking"
+  ];
+
+
+  useEffect(() => {
+    const fetchDestinations=async()=>{
+      try{
+        const res=await fetch("http://localhost:5000/destination/destinations");
+        const data=await res.json();
+        setDestinations(data.destinations||[]);
+      }
+      catch(err){
+        console.error("Error fetching destinations:",err);
+      }
+    }
+    fetchDestinations();
+  }, []);
+  
+  useEffect(() => {
+    if(bookingData?.destination){
+      setselectedDestination(bookingData.destination);
+      setSelectedHotel(bookingData.hotel);
+      setSelectedPackage(bookingData.package);
+      setFormData((prev) => ({
+        ...prev,
+        destination: bookingData.destination.name
+      }));
+      loadHotelsandPackages(bookingData.destination.id);
+    }
+  }, [bookingData]);
+
+  const loadHotelsandPackages=async(destId)=>{
+    try{
+      const res=await fetch(`http://localhost:5000/destination/destinations/${destId}`);
+      const data=await res.json();
+      setHotels(data?.hotels||[]);
+      setPackages(data?.packages||[]);
+    }
+    catch(err){
+      console.error("Error fetching hotels and packages:",err);
+    }
+  };
+
+  useEffect(()=>{
+    const tomorrow=new Date();
+    tomorrow.setDate(tomorrow.getDate()+1);
+    const formatted=tomorrow.toISOString().split("T")[0];
+    setminStartDate(formatted);
+  },[]);
+
+  useEffect(() => {
+
+  if(formData.startDate){
+
+    const nextDay =
+      new Date(
+        formData.startDate
+      );
+
+    nextDay.setDate(
+      nextDay.getDate() + 1
+    );
+
+    const formatted =
+      nextDay.toISOString()
+      .split("T")[0];
+
+    setminEndDate(formatted);
+  }
+
+}, [formData.startDate]);
+
+   const handleDestinationChange=(e)=>{
+    const value=e.target.value;
+    setFormData((prev) => ({
+      ...prev,
+      destination:value
+    }));
+    const foundDestination=destinations.find((d)=>d.name===value);
+    setselectedDestination(foundDestination);
+    setSelectedHotel(null);
+    setSelectedPackage(null);
+    if(foundDestination){
+      loadHotelsandPackages(foundDestination.id);
+    }
+   };
+   const handleHotelSelect=(hotelId)=>{
+    const hotel=hotels.find((h)=>h._id===hotelId);
+    setSelectedHotel(hotel);
+   }
+   const handlePackageSelect=(pkg)=>{
+    selectedPackage(pkg);
+   }
+  // =========================
+  // HANDLE INPUT
+  // =========================
+
+  const handleChange = (e) => {
+
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // =========================
+  // PRICE CALCULATION
+  // =========================
+
+  const totalPrice = useMemo(() => {
+
+  const adults =
+    Number(formData.adults);
+
+  const children =
+    Number(formData.children);
+
+  const packagePrice =
+    Number(
+      selectedPackage?.price || 0
+    );
+
+  const hotelPrice =
+    Number(
+      selectedHotel?.priceperNight || 0
+    );
+
+  let nights = 1;
+
+  if(
+    formData.startDate &&
+    formData.endDate
+  ){
+
+    const start =
+      new Date(
+        formData.startDate
+      );
+
+    const end =
+      new Date(
+        formData.endDate
+      );
+
+    nights = Math.max(
+      1,
+
+      Math.ceil(
+        (end - start) /
+        (1000*60*60*24)
+      )
+    );
+  }
+
+  return (
+
+    packagePrice * adults +
+
+    packagePrice * 0.5 * children +
+
+    hotelPrice * nights
+  );
+
+}, [
+
+  formData,
+
+  selectedHotel,
+
+  selectedPackage
+]);
+  // =========================
+  // SUBMIT
+  // =========================
+
+  const submitBooking = (e) => {
+
+    e.preventDefault();
+    if(!selectedPackage){
+      alert("please select package");
+      return;
+    }
+    setSubmitted(true);
+
+    if (
+      !formData.firstName ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.transport ||
+      !formData.payment
+    ) {
+      alert("fill details")
+      return;
+    }
+
+    setShowConfirm(true);
+  };
+
+  
+
+  const confirmBooking = () => {
+
+    setShowConfirm(false);
+
+    setShowSuccess(true);
+  };
+
+  return (
+
+    <section className="booking">
+
+      <div className="booking_container">
+
+        {/* LEFT */}
+
+        <div className="booking_left">
+
+          <div className="booking_box">
+
+            <div className="heading">
+
+              <h2>
+                Book Your Tour Here
+              </h2>
+
+            </div>
+
+            <form
+              className="booking_form"
+              onSubmit={submitBooking}
+            >
+
+              {/* NAME */}
+
+              <div className="name">
+
+                <div className="form_com">
+
+                  <label>
+                    First Name
+                  </label>
+
+                  <input
+                    type="text"
+                    name="firstName"
+                    placeholder="Enter first name"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    className={
+                      submitted &&
+                      !formData.firstName
+                        ? "error-input"
+                        : ""
+                    }
+                  />
+
+                </div>
+
+                <div className="form_com">
+
+                  <label>
+                    Last Name
+                  </label>
+
+                  <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Enter last name"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                  />
+
+                </div>
+
+              </div>
+
+              {/* EMAIL */}
+
+              <div className="form_com">
+
+                <label>Email</label>
+
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className={
+                    submitted &&
+                    !formData.email
+                      ? "error-input"
+                      : ""
+                  }
+                />
+
+              </div>
+
+              {/* PHONE */}
+
+              <div className="form_com">
+
+                <label>Phone</label>
+
+                <input
+                  type="number"
+                  name="phone"
+                  placeholder="Enter phone number"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className={
+                    submitted &&
+                    !formData.phone
+                      ? "error-input"
+                      : ""
+                  }
+                />
+
+              </div>
+
+              {/* LOCATION */}
+
+              <div className="form_com">
+
+                <label>
+                  Current Location
+                </label>
+
+                <input
+                  type="text"
+                  name="location"
+                  placeholder="Enter location"
+                  value={formData.location}
+                  onChange={handleChange}
+                />
+
+              </div>
+              {/*destination*/}
+                <div className="form_com">
+                  <label>
+                    Destination
+                  </label>
+
+                  <select
+                    value={formData.destination}
+                    onChange={
+                      handleDestinationChange
+                    }
+                  >
+
+                    <option value="">
+                      Select Destination
+                    </option>
+
+                    {destinations.map((dest) => (
+
+                      <option
+                        key={dest._id}
+                        value={dest.name}
+                      >
+
+                        {dest.name}
+
+                      </option>
+
+                    ))}
+
+                  </select>
+                </div>
+
+                {/*Hotels*/}
+                    <div className="form_com">
+
+                      <label>
+                        Hotel (Optional)
+                      </label>
+
+                      <select
+                        disabled={
+                          !selectedDestination
+                        }
+
+                        value={
+                          selectedHotel?._id || ""
+                        }
+
+                        onChange={(e) =>
+                          handleHotelSelect(
+                            e.target.value
+                          )
+                        }
+                      >
+
+                        <option value="">
+                          Select Hotel
+                        </option>
+
+                        {hotels.map((hotel) => (
+
+                          <option
+                            key={hotel._id}
+                            value={hotel._id}
+                          >
+
+                            {hotel.name}
+
+                          </option>
+
+                        ))}
+
+                      </select>
+
+                    </div>
+
+                    {/* packages */}
+                    <div className="form_com">
+
+                            <h3>
+                              Select Package
+                            </h3>
+
+                            <div className="option-row">
+
+                              {packages.map((pkg) => (
+
+                                <div
+                                  key={pkg._id}
+
+                                  className={`option-card ${
+                                    selectedPackage?._id ===
+                                    pkg._id
+                                    ? "selected"
+                                    : ""
+                                  }`}
+
+                                  onClick={() =>
+                                    handlePackageSelect(pkg)
+                                  }
+                                >
+
+                                  <h4>
+                                    {pkg.name}
+                                  </h4>
+
+                                  <p>
+                                    ₹{pkg.price}
+                                  </p>
+
+                                </div>
+
+                              ))}
+
+                            </div>
+
+                          </div>
+
+              {/* DATES */}
+
+              <div className="passengers">
+
+                <div className="form_com">
+
+                  <label>
+                    Start Date
+                  </label>
+
+                  <input
+                    type="date"
+                    name="startDate" min={minStartDate}
+                    value={formData.startDate}
+                    onChange={handleChange}
+                  />
+
+                </div>
+
+                <div className="form_com">
+
+                  <label>
+                    End Date
+                  </label>
+
+                  <input
+                    type="date"
+                    name="endDate" min={minEndDate}
+                    value={formData.endDate}
+                    onChange={handleChange}
+                  />
+
+                </div>
+
+              </div>
+
+              {/* PASSENGERS */}
+
+              <div className="passengers">
+
+                <div className="form_com">
+
+                  <label>
+                    Adults
+                  </label>
+
+                  <input
+                    type="number"
+                    name="adults"
+                    value={formData.adults}
+                    onChange={handleChange}
+                  />
+
+                </div>
+
+                <div className="form_com">
+
+                  <label>
+                    Children
+                  </label>
+
+                  <input
+                    type="number"
+                    name="children"
+                    value={formData.children}
+                    onChange={handleChange}
+                  />
+
+                </div>
+
+              </div>
+
+              {/* TRANSPORT */}
+
+              <div className="form_com">
+
+                <h3>Select Transport</h3>
+
+                <div className="option-row">
+
+                  {transports.map((item) => (
+
+                    <div
+                      key={item}
+                      className={`option-card ${
+                        formData.transport ===
+                        item
+                          ? "selected"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          transport: item
+                        }))
+                      }
+                    >
+                      {item}
+                    </div>
+
+                  ))}
+
+                </div>
+
+              </div>
+
+              {/* PAYMENT */}
+
+              <div className="form_com">
+
+                <h3>
+                  Payment Method
+                </h3>
+
+                <div className="option-row">
+
+                  {paymentMethods.map(
+                    (item) => (
+
+                    <div
+                      key={item}
+                      className={`option-card ${
+                        formData.payment ===
+                        item
+                          ? "selected"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          payment: item
+                        }))
+                      }
+                    >
+                      {item}
+                    </div>
+
+                  ))}
+
+                </div>
+
+              </div>
+
+              {/* BUTTON */}
+
+              <button
+                className="btn_form"
+                type="submit"
+              >
+                Book Now
+              </button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+        {/* RIGHT */}
+
+        <div className="booking_right">
+
+          <div
+            className="preview_image"
+            style={{
+              backgroundImage:
+              `url(${selectedDestination?.image})`
+            }}
+          />
+
+          <div className="preview_info">
+
+            <div className="summary_box">
+
+              <h3 className="summary_title">
+                Booking Summary
+              </h3>
+
+              <div className="summary_row">
+                <span>Destination</span>
+                <strong>
+                  {selectedDestination?.name}
+                </strong>
+              </div>
+
+              <div className="summary_row">
+                <span>Package</span>
+                <strong>
+                  {selectedPackage?.name}
+                </strong>
+              </div>
+
+              <div className="summary_row">
+                <span>Hotel</span>
+                <strong>
+                  {selectedHotel?.name}
+                </strong>
+              </div>
+
+              <div className="summary_row">
+                <span>Transport</span>
+                <strong>
+                  {formData.transport}
+                </strong>
+              </div>
+
+              <div className="summary_row">
+                <span>Adults</span>
+                <strong>
+                  {formData.adults}
+                </strong>
+              </div>
+
+              <div className="summary_row">
+                <span>Children</span>
+                <strong>
+                  {formData.children}
+                </strong>
+              </div>
+
+              <div className="summary_total">
+
+                Total : ₹{totalPrice}
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      {/* CONFIRM MODAL */}
+
+      {showConfirm && (
+
+        <div className="modal-backdrop">
+
+          <div className="modal-box">
+
+            <h2>
+              Confirm Your Booking?
+            </h2>
+
+            <div className="btns">
+
+              <button
+                className="primary"
+                onClick={confirmBooking}
+              >
+                Yes
+              </button>
+
+              <button
+                className="secondary"
+                onClick={() =>
+                  setShowConfirm(false)
+                }
+              >
+                Cancel
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      )}
+
+      {/* SUCCESS MODAL */}
+
+      {showSuccess && (
+
+        <div className="modal-backdrop">
+
+          <div className="modal-box">
+
+            <div className="tick">
+              ✔️
+            </div>
+
+            <h2>
+              Booking Confirmed!
+            </h2>
+
+            <p>
+              Your trip has been booked
+              successfully.
+            </p>
+
+            <div className="btns">
+
+              <button className="primary">
+                Back Home
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      )}
+
+    </section>
+  );
+};
+
+export default Booking;

@@ -1,0 +1,150 @@
+.toast{
+
+  position:fixed;
+
+  top:25px;
+  right:25px;
+
+  min-width:320px;
+  max-width:420px;
+
+  padding:18px 22px;
+
+  border-radius:18px;
+
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  color:white;
+
+  z-index:99999;
+
+  backdrop-filter:blur(12px);
+
+  animation:
+  slideIn .4s ease,
+  fadeOut .5s ease 3.5s forwards;
+
+  box-shadow:
+  0 15px 40px rgba(0,0,0,0.18);
+}
+
+/* ======================
+TYPES
+====================== */
+
+.success{
+
+  background:
+  linear-gradient(
+    135deg,
+    rgba(16,185,129,0.95),
+    rgba(5,150,105,0.92)
+  );
+
+}
+
+.error{
+
+  background:
+  linear-gradient(
+    135deg,
+    rgba(239,68,68,0.96),
+    rgba(185,28,28,0.92)
+  );
+
+}
+
+.info{
+
+  background:
+  linear-gradient(
+    135deg,
+    rgba(59,130,246,0.95),
+    rgba(37,99,235,0.92)
+  );
+
+}
+
+/* ======================
+ICON
+====================== */
+
+.icon{
+
+  width:34px;
+  height:34px;
+
+  border-radius:50%;
+
+  background:
+  rgba(255,255,255,0.2);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-weight:700;
+
+  flex-shrink:0;
+}
+
+.toast p{
+
+  margin:0;
+
+  font-size:14px;
+  font-weight:500;
+
+  line-height:1.5;
+}
+
+/* ======================
+ANIMATIONS
+====================== */
+
+@keyframes slideIn{
+
+  from{
+    opacity:0;
+    transform:
+    translateX(120px);
+  }
+
+  to{
+    opacity:1;
+    transform:
+    translateX(0);
+  }
+
+}
+
+@keyframes fadeOut{
+
+  to{
+    opacity:0;
+    transform:
+    translateX(120px);
+  }
+
+}
+
+/* ======================
+MOBILE
+====================== */
+
+@media(max-width:768px){
+
+  .toast{
+
+    right:15px;
+    left:15px;
+
+    min-width:auto;
+    max-width:none;
+
+    top:20px;
+  }
+
+}

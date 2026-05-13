@@ -1,0 +1,718 @@
+.booking{
+  padding:120px 5% 80px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  min-height:100vh;
+
+  background:
+  linear-gradient(
+    rgba(15,23,42,0.68),
+    rgba(15,23,42,0.82)
+  ),
+  url("../../assets/book_newf.jpg");
+
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
+/* =========================
+CONTAINER
+========================= */
+
+.booking_container{
+  width:100%;
+  max-width:1200px;
+
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+
+  gap:40px;
+  align-items:start;
+}
+
+/* =========================
+LEFT
+========================= */
+
+.booking_left{
+  width:100%;
+}
+
+/* =========================
+BOOKING BOX
+========================= */
+
+.booking_box{
+  width:100%;
+
+  padding:45px 40px;
+
+  border-radius:24px;
+
+  background:rgba(255,255,255,0.95);
+
+  backdrop-filter:blur(18px);
+
+  box-shadow:
+  0 20px 45px rgba(0,0,0,0.18);
+
+  animation:fadeUp .5s ease;
+}
+
+/* =========================
+HEADING
+========================= */
+
+.heading h2{
+  text-align:center;
+
+  margin-bottom:35px;
+
+  color:#0f3f46;
+
+  font-size:1.8rem;
+  font-weight:700;
+
+  letter-spacing:0.4px;
+}
+
+/* =========================
+FORM
+========================= */
+
+.booking_form{
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+}
+
+/* =========================
+GRID
+========================= */
+
+.name,
+.passengers{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+/* =========================
+FORM BLOCK
+========================= */
+
+.form_com{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.form_com label{
+  font-size:14px;
+  font-weight:500;
+  color:#475569;
+}
+
+/* =========================
+INPUTS
+========================= */
+
+.form_com input{
+  width:100%;
+
+  padding:14px 16px;
+
+  border-radius:12px;
+
+  border:1px solid #e2e8f0;
+
+  background:#f8fafc;
+
+  font-size:14px;
+
+  outline:none;
+
+  transition:all .25s ease;
+}
+
+.form_com input:hover{
+  border-color:#cbd5e1;
+}
+
+.form_com input:focus{
+  background:white;
+
+  border-color:#00bcd4;
+
+  box-shadow:
+  0 0 0 3px rgba(0,188,212,0.15);
+}
+
+/* =========================
+ERROR
+========================= */
+
+.error-input{
+  border:1px solid #ef4444 !important;
+}
+
+/* =========================
+OPTION ROW
+========================= */
+
+.option-row{
+  display:flex;
+  flex-wrap:wrap;
+
+  gap:14px;
+
+  margin-top:8px;
+}
+
+/* =========================
+OPTION CARD
+========================= */
+
+.option-card{
+  padding:11px 20px;
+
+  border-radius:30px;
+
+  cursor:pointer;
+
+  font-size:14px;
+  font-weight:500;
+
+  background:
+  rgba(0,150,136,0.08);
+
+  border:
+  1px solid rgba(0,150,136,0.18);
+
+  transition:all .35s ease;
+}
+
+.option-card:hover{
+  transform:translateY(-3px);
+
+  box-shadow:
+  0 8px 18px rgba(0,150,136,0.18);
+}
+
+/* =========================
+SELECTED
+========================= */
+
+.option-card.selected{
+  background:
+  linear-gradient(
+    135deg,
+    #009688,
+    #26c6da
+  );
+
+  color:white;
+
+  border:none;
+
+  box-shadow:
+  0 8px 20px rgba(0,150,136,0.35);
+}
+
+/* =========================
+BUTTON
+========================= */
+
+.btn_form{
+  margin-top:10px;
+
+  align-self:center;
+
+  padding:14px 34px;
+
+  border:none;
+
+  border-radius:30px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #00bcd4,
+    #0097a7
+  );
+
+  color:white;
+
+  font-size:15px;
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:all .3s ease;
+}
+
+.btn_form:hover{
+  transform:translateY(-2px);
+
+  box-shadow:
+  0 10px 24px rgba(0,188,212,0.28);
+}
+
+/* =========================
+RIGHT
+========================= */
+
+.booking_right{
+  display:flex;
+  flex-direction:column;
+
+  border-radius:22px;
+
+  overflow:hidden;
+
+  background:white;
+
+  box-shadow:
+  0 15px 35px rgba(0,0,0,0.18);
+
+  animation:fadeUp .55s ease;
+}
+
+/* =========================
+PREVIEW IMAGE
+========================= */
+
+.preview_image{
+  width:100%;
+  height:260px;
+
+  background-size:cover;
+  background-position:center;
+
+  transition:all .4s ease;
+}
+
+/* =========================
+INFO
+========================= */
+
+.preview_info{
+  padding:22px;
+}
+
+/* =========================
+SUMMARY
+========================= */
+
+.summary_box{
+  padding:18px;
+
+  border-radius:16px;
+
+  background:#f8fafc;
+
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+/* =========================
+SUMMARY TITLE
+========================= */
+
+.summary_title{
+  text-align:center;
+
+  font-size:1.15rem;
+  font-weight:700;
+
+  color:#0f172a;
+
+  margin-bottom:10px;
+}
+
+/* =========================
+SUMMARY ROW
+========================= */
+
+.summary_row{
+  display:flex;
+  justify-content:space-between;
+
+  padding:8px 0;
+
+  border-bottom:
+  1px dashed #e2e8f0;
+
+  font-size:14px;
+}
+
+.summary_row span{
+  color:#64748b;
+}
+
+.summary_row strong{
+  color:#0f172a;
+  font-weight:600;
+}
+
+/* =========================
+TOTAL
+========================= */
+
+.summary_total{
+  margin-top:12px;
+
+  padding:14px;
+
+  border-radius:14px;
+
+  text-align:center;
+
+  font-size:16px;
+  font-weight:700;
+
+  color:#009688;
+
+  background:
+  linear-gradient(
+    135deg,
+    #e0f7fa,
+    #f1f5f9
+  );
+}
+
+/* =========================
+MODAL
+========================= */
+
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+
+  background:
+  rgba(0,0,0,0.55);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  z-index:1000;
+
+  backdrop-filter:blur(5px);
+}
+
+/* =========================
+MODAL BOX
+========================= */
+
+.modal-box{
+  width:420px;
+  max-width:92%;
+
+  background:white;
+
+  border-radius:24px;
+
+  padding:32px;
+
+  text-align:center;
+
+  box-shadow:
+  0 20px 45px rgba(0,0,0,0.22);
+
+  animation:pop .35s ease;
+}
+
+.modal-box h2{
+  color:#0f172a;
+
+  margin-bottom:14px;
+}
+
+.modal-box p{
+  color:#64748b;
+
+  font-size:14px;
+}
+
+/* =========================
+TICK
+========================= */
+
+.tick{
+  font-size:62px;
+
+  color:#22c55e;
+
+  margin-bottom:12px;
+}
+
+/* =========================
+MODAL BUTTONS
+========================= */
+
+.btns{
+  display:flex;
+  gap:12px;
+
+  margin-top:26px;
+}
+
+.booking .primary,
+.booking .secondary{
+  flex:1;
+
+  padding:12px;
+
+  border-radius:12px;
+
+  cursor:pointer;
+
+  font-size:14px;
+  font-weight:600;
+
+  transition:all .3s ease;
+}
+
+.primary{
+  border:none;
+
+  background:#22c55e;
+
+  color:white;
+}
+
+.primary:hover{
+  background:#16a34a;
+}
+
+.secondary{
+  border:2px solid #22c55e;
+
+  background:white;
+
+  color:#22c55e;
+}
+
+.secondary:hover{
+  background:#f0fdf4;
+}
+
+/* =========================
+ANIMATIONS
+========================= */
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+@keyframes pop{
+
+  from{
+    opacity:0;
+    transform:scale(.7);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+/* =========================
+DARK MODE
+========================= */
+
+body.dark .booking_box{
+  background:#111827;
+}
+
+body.dark .heading h2{
+  color:white;
+}
+
+body.dark .form_com label{
+  color:#e2e8f0;
+}
+
+body.dark .form_com input{
+  background:#0f172a;
+
+  border:1px solid #334155;
+
+  color:white;
+}
+
+body.dark .form_com input:focus{
+  background:#111827;
+}
+
+body.dark .booking_right{
+  background:#111827;
+}
+
+body.dark .summary_box{
+  background:#1e293b;
+}
+
+body.dark .summary_title{
+  color:white;
+}
+
+body.dark .summary_row{
+  border-bottom:
+  1px dashed #334155;
+}
+
+body.dark .summary_row span{
+  color:#cbd5e1;
+}
+
+body.dark .summary_row strong{
+  color:white;
+}
+
+body.dark .modal-box{
+  background:#111827;
+}
+
+body.dark .modal-box h2{
+  color:white;
+}
+
+body.dark .modal-box p{
+  color:#cbd5e1;
+}
+
+body.dark .secondary{
+  background:#111827;
+}
+
+/* =========================
+SELECT DROPDOWN
+========================= */
+
+.form_com select{
+  width:100%;
+
+  padding:14px 16px;
+
+  border-radius:12px;
+
+  border:1px solid #e2e8f0;
+
+  background:#f8fafc;
+
+  font-size:14px;
+
+  color:#0f172a;
+
+  outline:none;
+
+  cursor:pointer;
+
+  transition:all .25s ease;
+
+  appearance:none;
+
+  -webkit-appearance:none;
+  -moz-appearance:none;
+
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='%2364758b' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 5.646a.5.5 0 0 1 .708 0L8 11.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+
+  background-repeat:no-repeat;
+
+  background-position:right 14px center;
+
+  background-size:16px;
+
+  padding-right:45px;
+}
+
+/* HOVER */
+
+.form_com select:hover{
+  border-color:#cbd5e1;
+}
+
+/* FOCUS */
+
+.form_com select:focus{
+  background:white;
+
+  border-color:#00bcd4;
+
+  box-shadow:
+  0 0 0 3px rgba(0,188,212,0.15);
+}
+
+/* DISABLED */
+
+.form_com select:disabled{
+  opacity:0.7;
+
+  cursor:not-allowed;
+
+  background:#f1f5f9;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:900px){
+
+  .booking_container{
+    grid-template-columns:1fr;
+  }
+
+  .booking_right{
+    order:-1;
+  }
+
+  .preview_image{
+    height:220px;
+  }
+}
+
+@media(max-width:600px){
+
+  .booking{
+    padding:110px 4% 70px;
+  }
+
+  .booking_box{
+    padding:28px 22px;
+  }
+
+  .name,
+  .passengers{
+    grid-template-columns:1fr;
+  }
+
+  .btns{
+    flex-direction:column;
+  }
+
+  .preview_image{
+    height:200px;
+  }
+
+  .heading h2{
+    font-size:1.5rem;
+  }
+}
