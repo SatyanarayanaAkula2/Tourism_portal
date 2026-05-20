@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import DestinationCard from "../../components/destinationcard/destinationcard";
 
@@ -7,8 +8,9 @@ import "./destinations.css";
 function Destinations() {
 
   const navigate = useNavigate();
+  const location=useLocation();
 
-  const { type, r1, r2 } = useParams();
+  const { type, sort,r1, r2 } = useParams();
 
   const [destinations, setDestinations] = useState([]);
 
@@ -41,10 +43,16 @@ function Destinations() {
         const data = await res.json();
 
         let filtered = [...data.destinations];
+        if(type){
+          filtered=filtered.filter((item)=>item.type.toLowerCase()===type.toLowerCase());
+        }
+        if(r1&&r2){
+          filtered=filtered.filter((item)=>item.price>=Number(r1)&&item.price<=Number(r2));
+        }
 
         /* FILTERS */
 
-        if(type === "popular"){
+        if(sort === "popular"){
 
           filtered.sort(
             (a,b) => b.rating - a.rating
@@ -52,30 +60,10 @@ function Destinations() {
 
         }
 
-        else if(type === "popularrev"){
+        else if(sort === "popularrev"){
 
           filtered.sort(
             (a,b) => a.rating - b.rating
-          );
-
-        }
-
-        else if(type === "price" && r1 && r2){
-
-          filtered = filtered.filter(
-            (d) =>
-            d.price >= Number(r1) &&
-            d.price <= Number(r2)
-          );
-
-        }
-
-        else if(type){
-
-          filtered = filtered.filter(
-            (d) =>
-            d.type.toLowerCase() ===
-            type.toLowerCase()
           );
 
         }
@@ -102,7 +90,7 @@ function Destinations() {
 
     fetchDestinations();
 
-  }, [type, r1, r2]);
+  }, [type,sort, r1, r2]);
 
   /* SEARCH */
 
@@ -138,7 +126,7 @@ function Destinations() {
 
   return (
 
-    <section className="destinations">
+    <section className="destinations" id="destinations">
 
       {/* BG */}
 
@@ -214,7 +202,7 @@ function Destinations() {
 
               <li
                 onClick={() =>
-                  navigate("/destinations/popular")
+                  navigate(type?`/destinations/${type}/popular`:`/destinations/sort/popular`)
                 }
               >
                 High-Low Popularity
@@ -222,7 +210,7 @@ function Destinations() {
 
               <li
                 onClick={() =>
-                  navigate("/destinations/popularrev")
+                  navigate(type?`/destinations/${type}/popularrev`:`/destinations/sort/popularrev`)
                 }
               >
                 Low-High Popularity
@@ -244,7 +232,7 @@ function Destinations() {
                   <li
                     onClick={() =>
                       navigate(
-                        "/destinations/price/0/2500"
+                        type?`/destinations/${type}/price/0/2500`:`/destinations/price/0/2500`
                       )
                     }
                   >
@@ -254,7 +242,7 @@ function Destinations() {
                   <li
                     onClick={() =>
                       navigate(
-                        "/destinations/price/2500/5000"
+                        type?`/destinations/${type}/price/2500/5000`:`/destinations/price/2500/5000`
                       )
                     }
                   >
@@ -264,7 +252,7 @@ function Destinations() {
                   <li
                     onClick={() =>
                       navigate(
-                        "/destinations/price/5000/10000"
+                        type?`/destinations/${type}/price/5000/10000`:`/destinations/price/5000/10000`
                       )
                     }
                   >
@@ -349,6 +337,17 @@ function Destinations() {
             }
           >
             ⛰️ Hill Stations
+          </li>
+
+          <li
+            className={`button ${
+              !type?"active":""
+            }`}
+            onClick={() =>
+              navigate("/destinations")
+            }
+          >
+            All
           </li>
 
         </ul>

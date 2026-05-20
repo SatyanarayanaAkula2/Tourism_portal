@@ -17,7 +17,7 @@ const destSchema = new mongoose.Schema({
   place:{
     type:String,
   },
-  destType:{
+  type:{
     type:String,
   },
   rating:{
@@ -34,8 +34,8 @@ const destSchema = new mongoose.Schema({
   },
   bestTime:{
     type:String,
-  }
 
-});
+  }}
+  ,{timestamps:true});
 
 export default mongoose.model("Destination", destSchema);

@@ -3,6 +3,9 @@ import cors from 'cors';
 import AuthRouter from '../routers/authrouter.js';
 import UserRouter from '../routers/userrouter.js';
 import DestRouter from '../routers/destrouter.js';
+import HotelRouter from'../routers/hotelrouter.js';
+import PackageRouter from '../routers/packagerouter.js';
+import BookingRouter from '../routers/bookingroute.js';
 import cookieParser from 'cookie-parser';
 import { authMiddleware } from '../middlewares/authmiddleware.js';
 import User from '../models/users.js';
@@ -20,6 +23,9 @@ app.use('/uploads',express.static('uploads'));
 app.use('/auth', AuthRouter);
 app.use('/user', UserRouter);
 app.use('/destination', DestRouter);
+app.use('/hotel',HotelRouter);
+app.use('/package',PackageRouter);
+app.use('/booking',BookingRouter);
 
 
 app.get('/me',authMiddleware,async(req,res)=>{

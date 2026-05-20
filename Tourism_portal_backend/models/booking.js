@@ -1,0 +1,74 @@
+import mongoose from "mongoose";
+
+const bookingSchema=new mongoose.Schema({
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
+        required:true
+    },
+    destinationId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Destination",
+        required:true
+    },
+    hotelId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Hotels",
+        required:true
+    },
+    packageId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Packages",
+        required:true
+    },
+    name:{
+        type:String,
+        required:true
+    },
+    email:{
+        type:String,
+        required:true
+    },
+    phone:{
+        type:String,
+        required:true
+    },
+    members:{
+        type:Number,
+        required:true
+    },
+    location:{
+        type:String,
+        required:true
+    },
+    startDate:{
+        type:Date,
+        required:true
+    },
+    endDate:{
+        type:Date,
+        required:true
+    },
+    totalprice:{
+        type:Number,
+        required:true
+    },
+    payment:{
+        type:String,
+        required:true
+    },
+    transport:{
+        type:String,
+        required:true
+    },
+    status:{
+        type:String,
+        enum:[
+            "Upcoming","Completed","Cancelled"
+        ],
+        default:"Upcoming"
+    },
+
+},{timestamps:true});
+
+export default mongoose.model("Bookings",bookingSchema);

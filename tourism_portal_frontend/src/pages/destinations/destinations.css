@@ -281,6 +281,7 @@ body.dark .filter ul li:hover{
     position:relative;
 }
 
+
 .priceranges{
     position:absolute;
     margin-right: 10px;
@@ -307,7 +308,7 @@ body.dark .priceranges{
     display:flex;
     flex-wrap:wrap;
     justify-content:center;
-
+    list-style: none;
     gap:14px;
 }
 
@@ -379,29 +380,8 @@ body.dark .noData{
     color:#cbd5e1;
 }
 
-/* LOADER */
 
-.loader-container{
-    display:flex;
-    justify-content:center;
-    align-items:center;
 
-    padding:80px 0;
-}
-
-.loader{
-    width:55px;
-    height:55px;
-
-    border-radius:50%;
-
-    border:5px solid #dbeafe;
-
-    border-top:
-    5px solid #00bcd4;
-
-    animation:spin 1s linear infinite;
-}
 
 @keyframes spin{
     100%{

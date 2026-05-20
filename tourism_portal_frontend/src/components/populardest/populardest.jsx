@@ -20,7 +20,7 @@ function PopularDest() {
     },
     {
       id: 2,
-      title: "Hill Stations",
+      title: "Hill stations",
       image: hillstations,
       content:
         "Escape the heat and enjoy cool weather surrounded by misty hills and scenic nature views.",

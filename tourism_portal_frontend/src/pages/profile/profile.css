@@ -505,6 +505,61 @@ ANIMATION
   }
 }
 
+.booking_filters{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.booking_filters button{
+  padding:8px 16px;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+}
+
+.active_filter{
+  background:#111;
+  color:#fff;
+}
+
+.booking_top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.booking_status{
+  padding:6px 14px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:600;
+}
+
+.booking_status.Upcoming{
+  background:#fff3cd;
+  color:#856404;
+}
+
+.booking_status.Completed{
+  background:#d4edda;
+  color:#155724;
+}
+
+.booking_status.Cancelled{
+  background:#f8d7da;
+  color:#721c24;
+}
+
+.cancel_booking_btn{
+  margin-top:12px;
+  padding:10px 16px;
+  border:none;
+  border-radius:8px;
+  background:red;
+  color:white;
+  cursor:pointer;
+}
 /* =========================
 RESPONSIVE
 ========================= */

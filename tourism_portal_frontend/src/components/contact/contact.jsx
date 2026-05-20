@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useToast } from "../../context/toastContext";
 import "./contact.css";
 
 function Contact() {
+  const {showToast}=useToast();
 
   const [formData, setFormData] = useState({
     name:"",
@@ -24,9 +26,7 @@ function Contact() {
 
     console.log(formData);
 
-    // later connect backend api
-
-    alert("Message Sent Successfully!");
+    showToast("Message sent successfully","success");
 
     setFormData({
       name:"",
@@ -38,7 +38,7 @@ function Contact() {
 
   return (
 
-    <section className="contact-container">
+    <section className="contact-container" id="contact">
 
       <div className="contact-card">
 

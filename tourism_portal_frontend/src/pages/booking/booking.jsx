@@ -1,13 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
 import { useBooking } from "../../context/bookingContext";
+import { useNavigate } from "react-router-dom";
 import "./booking.css";
+import { getDestinations} from "../../services/destinationservice";
+import { getHotelsByDestinationId } from "../../services/hotelservice";
+import { getPackageByDestinationId } from "../../services/packageservice";
+import { createBooking } from "../../services/bookingservice";
+import { useAuth } from "../../context/authContext";
+import { useToast } from "../../context/toastContext";
 
 const Booking = () => {
-
-  // =========================
-  // TEMP DATA
-  // Later from Context API
-  // =========================
+  const {user}=useAuth();
+  const {showToast}=useToast();
+  const navigate=useNavigate();
   const {bookingData} = useBooking();
   const [packages, setPackages] = useState([]);
   const [destinations, setDestinations] = useState([]);
@@ -17,9 +22,7 @@ const Booking = () => {
   const [selectedPackage, setSelectedPackage] = useState(null);
   const [minStartDate,setminStartDate]=useState("");
   const [minEndDate,setminEndDate]=useState("");
-  // =========================
-  // FORM
-  // =========================
+  
 
   const [formData, setFormData] = useState({
 
@@ -42,9 +45,7 @@ const Booking = () => {
     payment: ""
   });
 
-  // =========================
-  // UI STATES
-  // =========================
+  
 
   const [submitted, setSubmitted] = useState(false);
 
@@ -54,9 +55,6 @@ const Booking = () => {
   const [showSuccess, setShowSuccess] =
     useState(false);
 
-  // =========================
-  // OPTIONS
-  // =========================
 
   const transports = [
     "Bus",
@@ -71,22 +69,68 @@ const Booking = () => {
   ];
 
 
+  useEffect(()=>{
+    const data={
+      formData,
+      destId:selectedDestination?._id||null,
+      hotelId:selectedHotel?._id|null,
+      packageId:selectedPackage?._id|null
+    };
+    console.log("SAVING:",data);
+    localStorage.setItem("bookingform",JSON.stringify({
+      data
+    }));
+  },[formData,selectedDestination,selectedHotel,selectedPackage])
+
   useEffect(() => {
     const fetchDestinations=async()=>{
       try{
-        const res=await fetch("http://localhost:5000/destination/destinations");
-        const data=await res.json();
-        setDestinations(data.destinations||[]);
+        const destinationsData=await getDestinations();
+        setDestinations(destinationsData||[]);
+        const saved=localStorage.getItem("bookingform");
+        if(!saved) return ;
+        const parsed=JSON.parse(saved).data;
+        if(!parsed) return;
+        setFormData(parsed.formData);
+        const foundDestination=destinationsData.find((d)=>d._id===parsed.destId);
+        if(!foundDestination) return ;
+        setselectedDestination(foundDestination);
+        const HotelsData=await getHotelsByDestinationId(foundDestination._id);
+        setHotels(HotelsData);
+        console.log("hotels:",HotelsData)
+        const packagesData=await getPackageByDestinationId(foundDestination._id);
+        setPackages(packagesData);
+        console.log("packages:",packagesData);
+        const foundHotel=HotelsData.find((h)=>String(h._id)===String(parsed.hotelId));
+        setSelectedHotel(foundHotel||null);
+        console.log(foundHotel);
+        const foundPackage=packagesData.find((p)=>String(p._id)===String(parsed.packageId));
+        setSelectedPackage(foundPackage||null);
+        console.log(foundPackage);
       }
       catch(err){
         console.error("Error fetching destinations:",err);
       }
     }
     fetchDestinations();
+    
   }, []);
+
+  useEffect(()=>{
+    if(user){
+      setFormData((prev)=>({
+        ...prev,
+        firstName:user.name||"",
+        email:user.email||"",
+        phone:user.mobile||"",
+        location:user.place||""
+      }));
+    }
+  },[user])
   
   useEffect(() => {
-    if(bookingData?.destination){
+    if(!bookingData?.destination) return;
+    if(selectedDestination) return;
       setselectedDestination(bookingData.destination);
       setSelectedHotel(bookingData.hotel);
       setSelectedPackage(bookingData.package);
@@ -94,16 +138,19 @@ const Booking = () => {
         ...prev,
         destination: bookingData.destination.name
       }));
-      loadHotelsandPackages(bookingData.destination.id);
+      loadHotelsandPackages(bookingData.destination._id);
     }
-  }, [bookingData]);
+  , [bookingData]);
 
   const loadHotelsandPackages=async(destId)=>{
     try{
-      const res=await fetch(`http://localhost:5000/destination/destinations/${destId}`);
-      const data=await res.json();
-      setHotels(data?.hotels||[]);
-      setPackages(data?.packages||[]);
+      const hotelsData=await getHotelsByDestinationId(destId);
+      setHotels(hotelsData);
+      const packagesData=await getPackageByDestinationId(destId);
+      setPackages(packagesData);
+      return{
+        hotelsData,packagesData
+      }
     }
     catch(err){
       console.error("Error fetching hotels and packages:",err);
@@ -119,11 +166,11 @@ const Booking = () => {
 
   useEffect(() => {
 
-  if(formData.startDate){
+  if(formData?.startDate){
 
     const nextDay =
       new Date(
-        formData.startDate
+        formData?.startDate
       );
 
     nextDay.setDate(
@@ -137,7 +184,7 @@ const Booking = () => {
     setminEndDate(formatted);
   }
 
-}, [formData.startDate]);
+}, [formData?.startDate]);
 
    const handleDestinationChange=(e)=>{
     const value=e.target.value;
@@ -150,19 +197,17 @@ const Booking = () => {
     setSelectedHotel(null);
     setSelectedPackage(null);
     if(foundDestination){
-      loadHotelsandPackages(foundDestination.id);
+      loadHotelsandPackages(foundDestination._id);
     }
    };
    const handleHotelSelect=(hotelId)=>{
-    const hotel=hotels.find((h)=>h._id===hotelId);
+    const hotel=hotels.find((h)=>String(h._id)===String(hotelId));
     setSelectedHotel(hotel);
    }
    const handlePackageSelect=(pkg)=>{
-    selectedPackage(pkg);
+    setSelectedPackage(pkg);
    }
-  // =========================
-  // HANDLE INPUT
-  // =========================
+ 
 
   const handleChange = (e) => {
 
@@ -174,17 +219,15 @@ const Booking = () => {
     }));
   };
 
-  // =========================
-  // PRICE CALCULATION
-  // =========================
+  
 
   const totalPrice = useMemo(() => {
 
   const adults =
-    Number(formData.adults);
+    Number(formData?.adults);
 
   const children =
-    Number(formData.children);
+    Number(formData?.children);
 
   const packagePrice =
     Number(
@@ -193,24 +236,24 @@ const Booking = () => {
 
   const hotelPrice =
     Number(
-      selectedHotel?.priceperNight || 0
+      selectedHotel?.pricePerNight || 0
     );
 
   let nights = 1;
 
   if(
-    formData.startDate &&
-    formData.endDate
+    formData?.startDate &&
+    formData?.endDate
   ){
 
     const start =
       new Date(
-        formData.startDate
+        formData?.startDate
       );
 
     const end =
       new Date(
-        formData.endDate
+        formData?.endDate
       );
 
     nights = Math.max(
@@ -240,27 +283,30 @@ const Booking = () => {
 
   selectedPackage
 ]);
-  // =========================
-  // SUBMIT
-  // =========================
+  
 
   const submitBooking = (e) => {
 
     e.preventDefault();
+    setSubmitted(true);
+    if(!selectedDestination){
+      showToast("select destination","error");
+      return ;
+    }
     if(!selectedPackage){
-      alert("please select package");
+      showToast("select package","error");
       return;
     }
-    setSubmitted(true);
+    
 
     if (
-      !formData.firstName ||
-      !formData.email ||
-      !formData.phone ||
-      !formData.transport ||
-      !formData.payment
+      !formData?.firstName ||
+      !formData?.email ||
+      !formData?.phone ||
+      !formData?.transport ||
+      !formData?.payment
     ) {
-      alert("fill details")
+      showToast("fill all the details","error");
       return;
     }
 
@@ -269,16 +315,41 @@ const Booking = () => {
 
   
 
-  const confirmBooking = () => {
-
-    setShowConfirm(false);
-
-    setShowSuccess(true);
+  const confirmBooking = async() => {
+    try{
+      const bookingPayload={
+        destinationId:selectedDestination._id,
+        hotelId:selectedHotel?._id || null,
+        packageId:selectedPackage._id,
+        destination:selectedDestination.name,
+        hotel:selectedHotel?.name||selectedPackage?.hotel,
+        package:selectedPackage.name,
+        name:formData.firstName+" "+formData.lastName,
+        email:formData?.email,
+        phone:formData?.phone,
+        location:formData?.location,
+        members:Number(formData?.adults)+Number(formData?.children),
+        startDate:formData?.startDate,
+        endDate:formData?.endDate,
+        transport:formData?.transport,
+        payment:formData?.payment,
+        totalprice:totalPrice,
+        status:"Upcoming"
+      };
+      await createBooking(bookingPayload);
+      setShowConfirm(true);
+      setShowSuccess(true);
+      showToast("Booking Successful","success");
+      localStorage.removeItem("bookingform");
+    }
+    catch(err){
+      showToast(err.response?.data?.message||"Booking failed","error");
+    }
   };
 
   return (
 
-    <section className="booking">
+    <section className="booking" id="booking">
 
       <div className="booking_container">
 
@@ -315,11 +386,11 @@ const Booking = () => {
                     type="text"
                     name="firstName"
                     placeholder="Enter first name"
-                    value={formData.firstName}
+                    value={formData?.firstName}
                     onChange={handleChange}
                     className={
                       submitted &&
-                      !formData.firstName
+                      !formData?.firstName
                         ? "error-input"
                         : ""
                     }
@@ -337,7 +408,7 @@ const Booking = () => {
                     type="text"
                     name="lastName"
                     placeholder="Enter last name"
-                    value={formData.lastName}
+                    value={formData?.lastName}
                     onChange={handleChange}
                   />
 
@@ -355,11 +426,11 @@ const Booking = () => {
                   type="email"
                   name="email"
                   placeholder="Enter email"
-                  value={formData.email}
+                  value={formData?.email}
                   onChange={handleChange}
                   className={
                     submitted &&
-                    !formData.email
+                    !formData?.email
                       ? "error-input"
                       : ""
                   }
@@ -377,11 +448,11 @@ const Booking = () => {
                   type="number"
                   name="phone"
                   placeholder="Enter phone number"
-                  value={formData.phone}
+                  value={formData?.phone}
                   onChange={handleChange}
                   className={
                     submitted &&
-                    !formData.phone
+                    !formData?.phone
                       ? "error-input"
                       : ""
                   }
@@ -401,7 +472,7 @@ const Booking = () => {
                   type="text"
                   name="location"
                   placeholder="Enter location"
-                  value={formData.location}
+                  value={formData?.location}
                   onChange={handleChange}
                 />
 
@@ -413,7 +484,7 @@ const Booking = () => {
                   </label>
 
                   <select
-                    value={formData.destination}
+                    value={formData?.destination}
                     onChange={
                       handleDestinationChange
                     }
@@ -440,16 +511,14 @@ const Booking = () => {
                 </div>
 
                 {/*Hotels*/}
-                    <div className="form_com">
+                    { selectedDestination && <div className="form_com">
 
                       <label>
                         Hotel (Optional)
                       </label>
 
                       <select
-                        disabled={
-                          !selectedDestination
-                        }
+                        
 
                         value={
                           selectedHotel?._id || ""
@@ -481,10 +550,10 @@ const Booking = () => {
 
                       </select>
 
-                    </div>
+                    </div> }
 
                     {/* packages */}
-                    <div className="form_com">
+                    {selectedDestination && <div className="form_com">
 
                             <h3>
                               Select Package
@@ -523,7 +592,7 @@ const Booking = () => {
 
                             </div>
 
-                          </div>
+                          </div> }
 
               {/* DATES */}
 
@@ -538,7 +607,7 @@ const Booking = () => {
                   <input
                     type="date"
                     name="startDate" min={minStartDate}
-                    value={formData.startDate}
+                    value={formData?.startDate}
                     onChange={handleChange}
                   />
 
@@ -553,7 +622,7 @@ const Booking = () => {
                   <input
                     type="date"
                     name="endDate" min={minEndDate}
-                    value={formData.endDate}
+                    value={formData?.endDate}
                     onChange={handleChange}
                   />
 
@@ -574,7 +643,7 @@ const Booking = () => {
                   <input
                     type="number"
                     name="adults"
-                    value={formData.adults}
+                    value={formData?.adults}
                     onChange={handleChange}
                   />
 
@@ -589,7 +658,7 @@ const Booking = () => {
                   <input
                     type="number"
                     name="children"
-                    value={formData.children}
+                    value={formData?.children}
                     onChange={handleChange}
                   />
 
@@ -610,7 +679,7 @@ const Booking = () => {
                     <div
                       key={item}
                       className={`option-card ${
-                        formData.transport ===
+                        formData?.transport ===
                         item
                           ? "selected"
                           : ""
@@ -647,7 +716,7 @@ const Booking = () => {
                     <div
                       key={item}
                       className={`option-card ${
-                        formData.payment ===
+                        formData?.payment ===
                         item
                           ? "selected"
                           : ""
@@ -727,21 +796,21 @@ const Booking = () => {
               <div className="summary_row">
                 <span>Transport</span>
                 <strong>
-                  {formData.transport}
+                  {formData?.transport}
                 </strong>
               </div>
 
               <div className="summary_row">
                 <span>Adults</span>
                 <strong>
-                  {formData.adults}
+                  {formData?.adults}
                 </strong>
               </div>
 
               <div className="summary_row">
                 <span>Children</span>
                 <strong>
-                  {formData.children}
+                  {formData?.children}
                 </strong>
               </div>
 
@@ -820,8 +889,8 @@ const Booking = () => {
 
             <div className="btns">
 
-              <button className="primary">
-                Back Home
+              <button className="primary" onClick={()=> navigate("/profile")}>
+                Go to Profile
               </button>
 
             </div>

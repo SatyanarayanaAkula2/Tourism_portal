@@ -3,7 +3,11 @@ import { useAuth } from "../context/authContext"
 
 const GuestRoute=({children})=>{
     const {user,loading}=useAuth();
-    if(loading) return null;
+    if(loading) return (
+        <div className="loader_container">
+            <div className="loader"></div>
+        </div>
+    );
 
     if(user){
         return <Navigate to="/" replace/>;

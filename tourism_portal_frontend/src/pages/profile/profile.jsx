@@ -4,6 +4,7 @@ import { useAuth } from "../../context/authContext";
 import { updateUser,logoutUser } from "../../services/authservice";
 import { useToast } from "../../context/toastContext";
 import "./profile.css";
+import { getMyBookings,cancelBooking } from "../../services/bookingservice";
 
 const Profile = () => {
 
@@ -14,6 +15,7 @@ const Profile = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const [myBookings, setMyBookings] = useState([]);
+  const [bookingFilter,setbookingFilter]=useState("All");
 
   const [profileForm, setProfileForm] = useState({
     name: "",
@@ -33,33 +35,101 @@ const Profile = () => {
         mobile:user.mobile||"",
         place:user.place||""
       });
-      fetchBookings(user._id);
+      fetchBookings();
     }
   },[user])
-  /* =========================
-     FETCH BOOKINGS
-  ========================= */
+  
 
-  const fetchBookings = async (userId) => {};
+ const fetchBookings = async () => {
 
-  /* =========================
-     INPUT CHANGE
-  ========================= */
+  try{
 
-  const handleChange = (e) => {
+    const data =
+    await getMyBookings();
+    console.log(data);
 
-    const { name, value } = e.target;
+    setMyBookings(data);
 
-    setProfileForm((prev) => ({
-      ...prev,
-      [name]: value
-    }));
+  }
 
-  };
+  catch(error){
 
-  /* =========================
-     SAVE PROFILE
-  ========================= */
+    console.log(error);
+
+  }
+
+};
+
+const getBookingStatus=(booking)=>{
+  return booking.status;
+}
+
+const filteredBookings =
+
+bookingFilter === "All"
+
+? myBookings
+
+: myBookings.filter(
+
+  (booking)=>
+
+  booking.status ===
+  bookingFilter
+
+);
+
+const handleCancelBooking =
+async(id)=>{
+
+  try{
+
+    await cancelBooking(id);
+
+    showToast(
+      "Booking cancelled",
+      "success"
+    );
+
+    const updated =
+    myBookings.map((booking)=>{
+
+      if(
+        booking._id === id
+      ){
+
+        return {
+
+          ...booking,
+
+          status:"Cancelled"
+
+        };
+
+      }
+
+      return booking;
+
+    });
+
+    setMyBookings(updated);
+
+  }
+
+  catch(error){
+
+    console.log(error);
+
+    showToast(
+      "Cancellation failed",
+      "error"
+    );
+
+  }
+
+};
+
+  
 
   const saveProfile = async () => {
     if (
@@ -125,16 +195,14 @@ const Profile = () => {
 
   };
 
-  /* =========================
-     LOADING
-  ========================= */
+
 
   if (loading) {
 
     return (
-      <div className="msg">
-        Loading Profile...
-      </div>
+      <div className="loader_container">
+        <div className="loader"></div>
+        </div>
     );
 
   }
@@ -155,11 +223,8 @@ const Profile = () => {
 
   return (
 
-    <section className="profile">
+    <section className="profile" id="profile">
 
-      {/* =========================
-          EDIT MODAL
-      ========================= */}
 
       {
         editMode && (
@@ -335,7 +400,7 @@ const Profile = () => {
 
             <button
               className="btn logout_btn"
-              onClick={logout}
+              onClick={handlelogout}
             >
               Logout
             </button>
@@ -346,74 +411,223 @@ const Profile = () => {
 
       </div>
 
-      {/* =========================
-          BOOKINGS
-      ========================= */}
+      
 
-      <div className="my_bookings">
+      <div className="my_bookings" id="my_bookings">
 
         <div className="heading">
 
-          <h2>My Bookings</h2>
+  <h2>
+    My Bookings
+  </h2>
 
-          <button className="view_all_btn">
-            View All
-          </button>
+  <div className="booking_filters">
 
-        </div>
+    <button
+
+      className={
+        bookingFilter==="All"
+        ? "active_filter"
+        : ""
+      }
+
+      onClick={() =>
+        setbookingFilter("All")
+      }
+    >
+      All
+    </button>
+
+    <button
+
+      className={
+        bookingFilter==="Upcoming"
+        ? "active_filter"
+        : ""
+      }
+
+      onClick={() =>
+        setbookingFilter(
+          "Upcoming"
+        )
+      }
+    >
+      Upcoming
+    </button>
+
+    <button
+
+      className={
+        bookingFilter==="Completed"
+        ? "active_filter"
+        : ""
+      }
+
+      onClick={() =>
+        setbookingFilter(
+          "Completed"
+        )
+      }
+    >
+      Completed
+    </button>
+
+    <button
+
+      className={
+        bookingFilter==="Cancelled"
+        ? "active_filter"
+        : ""
+      }
+
+      onClick={() =>
+        setbookingFilter(
+          "Cancelled"
+        )
+      }
+    >
+      Cancelled
+    </button>
+
+  </div>
+
+</div>
 
         {
 
-          myBookings.length > 0 ? (
+          filteredBookings.length > 0 ? (
 
             <div className="act_bookings">
 
               {
 
-                myBookings.map(
+                filteredBookings.map(
                   (booking, index) => (
 
-                    <div
-                      className="booking_card"
-                      key={index}
-                    >
+                           <div
+  className="booking_card"
+  key={booking._id}
+>
 
-                      <h4>
-                        {
-                          booking.destination
-                        }
-                      </h4>
+  <div className="booking_top">
 
-                      <p>
-                        Package:
-                        {" "}
-                        {booking.package}
-                      </p>
+    <h4>
+      {booking.destination}
+    </h4>
 
-                      <p>
-                        Hotel:
-                        {" "}
-                        {
-                          booking.hotel ||
-                          "Not Selected"
-                        }
-                      </p>
+    <span className={`
+      booking_status
+      ${booking.status}
+    `}>
 
-                      <p>
-                        Date:
-                        {" "}
-                        {
-                          booking.startdate
-                        }
-                      </p>
+      {booking.status}
 
-                      <p>
-                        Price:
-                        {" "}
-                        ₹{booking.price}
-                      </p>
+    </span>
 
-                    </div>
+  </div>
+
+  <p>
+
+    Package:
+
+    {" "}
+
+    {booking.package}
+
+  </p>
+
+  <p>
+
+    Hotel:
+
+    {" "}
+
+    {
+      booking.hotel ||
+
+      "Not Selected"
+    }
+
+  </p>
+
+  <p>
+
+    Start:
+
+    {" "}
+
+    {
+      new Date(
+        booking.startDate
+      ).toLocaleDateString()
+    }
+
+  </p>
+
+  <p>
+
+    End:
+
+    {" "}
+
+    {
+      new Date(
+        booking.endDate
+      ).toLocaleDateString()
+    }
+
+  </p>
+
+  <p>
+
+    Transport:
+
+    {" "}
+
+    {booking.transport}
+
+  </p>
+
+  <p>
+
+    Total:
+
+    {" "}
+
+    ₹{booking.totalPrice}
+
+  </p>
+
+  {
+
+    booking.status ===
+    "Upcoming"
+
+    &&
+
+    (
+
+      <button
+
+        className="cancel_booking_btn"
+
+        onClick={() =>
+          handleCancelBooking(
+            booking._id
+          )
+        }
+
+      >
+
+        Cancel Booking
+
+      </button>
+
+    )
+
+  }
+
+</div>
 
                   )
                 )

@@ -60,7 +60,7 @@ function DestinationCard({ destination }) {
 
         <p className="desc">
 
-          {destination.description
+          {destination.info
             ?.slice(0, 90)}...
 
         </p>

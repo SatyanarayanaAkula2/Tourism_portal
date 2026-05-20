@@ -9,7 +9,7 @@ const Hero = () => {
 
   return (
 
-    <section className="hero">
+    <section className="hero" id="home">
 
       {/* OVERLAY */}
 
@@ -64,7 +64,7 @@ const Hero = () => {
           </NavLink>
 
           <NavLink
-            to="/about"
+            to="/contact"
             className="btn secondary"
           >
             Learn More

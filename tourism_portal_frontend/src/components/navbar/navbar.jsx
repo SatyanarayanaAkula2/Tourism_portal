@@ -172,7 +172,7 @@ const Navbar = () => {
                   </li>
 
                   <li>
-                    <NavLink to="/bookings">
+                    <NavLink to="/profile">
                       My Bookings
                     </NavLink>
                   </li>

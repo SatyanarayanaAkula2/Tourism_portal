@@ -1,4 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=poppins:wght@300;400;500;600&display=swap');
+html{
+  scroll-behavior: auto;
+}
 body{
   font-family: 'poppins', sans-serif ;
+}
+
+.loader-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:80px 0;
+}
+
+.loader{
+    width:55px;
+    height:55px;
+
+    border-radius:50%;
+
+    border:5px solid #dbeafe;
+
+    border-top:
+    5px solid #00bcd4;
+
+    animation:spin 1s linear infinite;
 }

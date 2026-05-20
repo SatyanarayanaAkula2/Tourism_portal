@@ -148,7 +148,7 @@ const Signup = () => {
 
   return (
 
-    <section className="signup_page">
+    <section className="signup_page" id="signup">
 
       <div className="signup_overlay">
 

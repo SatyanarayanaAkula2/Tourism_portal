@@ -2,11 +2,16 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./destinationdetail.css"
 import { useBooking } from "../../context/bookingContext";
+import { getDestinationById } from "../../services/destinationservice";
+import { getHotelsByDestinationId } from "../../services/hotelservice";
+import { getPackageByDestinationId } from "../../services/packageservice";
+import { useToast } from "../../context/toastContext";
 
 function DestinationDetails() {
 
   const { id } = useParams();
   const navigate = useNavigate();
+  const {showToast}=useToast();
 
   const [destination, setDestination] = useState(null);
 
@@ -44,10 +49,14 @@ function DestinationDetails() {
 
       try {
         setloading(true);
-        const res=await fetch(`http://localhost:5000/destination/destinations/${id}`);
-        const data=await res.json();
+        const destinationData=await getDestinationById(id);
+        setDestination(destinationData);
 
-        setDestination(data.destination);
+        const hotelsData=await getHotelsByDestinationId(id);
+        setHotels(hotelsData);
+
+        const packagesData=await getPackageByDestinationId(id);
+        setPackages(packagesData);
 
         setAllLocations([
           "Goa",
@@ -55,64 +64,6 @@ function DestinationDetails() {
           "Delhi",
           "Mumbai",
           "Kerala"
-        ]);
-
-        setHotels([
-          {
-            id: 1,
-            name: "Sea View Resort",
-            image: "/assets/hotels/hotel1.jpg",
-            rating: 4.5,
-            type: "Luxury",
-            priceperNight: "₹4500/night"
-          },
-
-          {
-            id: 2,
-            name: "Blue Ocean Hotel",
-            image: "/assets/hotels/hotel2.jpg",
-            rating: 4.2,
-            type: "Premium",
-            priceperNight: "₹3800/night"
-          }
-        ]);
-
-        setPackages([
-          {
-            id: 1,
-            name: "Basic",
-            price: "₹5000",
-
-            includes: [
-              "2 Days",
-              "Breakfast",
-              "Sightseeing"
-            ]
-          },
-
-          {
-            id: 2,
-            name: "Standard",
-            price: "₹9000",
-
-            includes: [
-              "4 Days",
-              "Hotel Stay",
-              "Transport"
-            ]
-          },
-
-          {
-            id: 3,
-            name: "Premium",
-            price: "₹15000",
-
-            includes: [
-              "7 Days",
-              "Luxury Hotel",
-              "Private Cab"
-            ]
-          }
         ]);
 
       } catch (err) {
@@ -161,7 +112,7 @@ function DestinationDetails() {
 
   const selectHotel = (hotel) => {
 
-    if (selectedHotel?.id === hotel.id) {
+    if (selectedHotel?._id === hotel._id) {
       setSelectedHotel(null);
     } else {
       setSelectedHotel(hotel);
@@ -174,7 +125,7 @@ function DestinationDetails() {
 
   const selectPackage = (pkg) => {
 
-    if (selectedPackage?.id === pkg.id) {
+    if (selectedPackage?._id === pkg._id) {
       setSelectedPackage(null);
     } else {
       setSelectedPackage(pkg);
@@ -241,7 +192,7 @@ function DestinationDetails() {
   const gotoBook = () => {
 
     if (!selectedPackage) {
-      alert("Please select a package");
+      showToast("Please select a package","error");
       return;
     }
     setBookingData({
@@ -266,7 +217,7 @@ function DestinationDetails() {
 
   return (
 
-    <section className="spec-dest">
+    <section className="spec-dest" id="destination_detail">
 
       {/* GALLERY */}
 
@@ -418,11 +369,11 @@ function DestinationDetails() {
 
                 <p>{hotel.type}</p>
 
-                <p>{hotel.priceperNight}</p>
+                <p>{hotel.pricePerNight}/night</p>
 
                 <button
                   className={`btn-primary ${
-                    selectedHotel?.id === hotel.id
+                    selectedHotel?._id === hotel._id
                       ? "btn-selected"
                       : ""
                   }`}
@@ -430,7 +381,7 @@ function DestinationDetails() {
                     selectHotel(hotel)
                   }
                 >
-                  {selectedHotel?.id === hotel.id
+                  {selectedHotel?._id === hotel._id
                     ? "Selected"
                     : "Select Hotel"}
                 </button>
@@ -460,7 +411,7 @@ function DestinationDetails() {
               className={`package-card 
                 ${getPackageClass(pkg.name)}
                 ${
-                  selectedPackage?.id === pkg.id
+                  selectedPackage?._id === pkg._id
                     ? "selected"
                     : ""
                 }`}
@@ -472,6 +423,12 @@ function DestinationDetails() {
                 {pkg.price}
               </p>
 
+              <p className="package-duration">
+                {pkg.duration}
+              </p>
+              {/* <p className="package-hotel">
+                Hotel:{pkg.hotel}
+              </p> */}
               <ul>
 
                 {pkg.includes.map((item, index) => (
@@ -483,6 +440,9 @@ function DestinationDetails() {
                 ))}
 
               </ul>
+              <p className="package-desc">
+                {pkg.description}
+              </p>
 
               <button
                 className="btn-primary"
@@ -490,7 +450,7 @@ function DestinationDetails() {
                   selectPackage(pkg)
                 }
               >
-                {selectedPackage?.id === pkg.id
+                {selectedPackage?._id === pkg._id
                   ? "Selected"
                   : "Select Package"}
               </button>
