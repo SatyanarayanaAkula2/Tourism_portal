@@ -4,7 +4,7 @@ import {
   useState
 } from "react";
 
-import Toast from "../components/toast/Toast";
+import Toast from "../components/toast/toast";
 
 const ToastContext =
   createContext();

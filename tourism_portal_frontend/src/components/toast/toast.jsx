@@ -1,4 +1,4 @@
-import styles from "./toast.module.css";
+import './toast.css'
 
 const Toast = ({
   message,
