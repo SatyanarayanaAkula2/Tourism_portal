@@ -6,7 +6,7 @@ import bookingCron from './cron/bookingcron.js';
 import app from './src/app.js';
 
 
-const port =process.env.port||5000;
+const port =process.env.PORT||5000;
 connectDB();
 bookingCron();
 
