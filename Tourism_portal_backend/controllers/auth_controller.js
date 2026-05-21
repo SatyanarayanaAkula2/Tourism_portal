@@ -23,9 +23,9 @@ export const signup=async(req,res)=>{
     //send token as cookie
     res.cookie('accesstoken',token,{
         httpOnly:true,
-        secure:false,
-        sameSite:'lax',
-        maxAge:1*60*1000, //1 minute
+        secure:true,
+        sameSite:"none",
+        maxAge:15*60*1000, //15 minute
     });
     const userdata=user.toObject();
         delete userdata.password;
@@ -53,9 +53,9 @@ export const signin=async(req,res)=>{
         //send token as cookie
         res.cookie('accesstoken',token,{
             httpOnly:true,
-            secure:false,
-            sameSite:'lax',
-            maxAge:1*60*1000, //1 minute
+            secure:true,
+            sameSite:'none',
+            maxAge:15*60*1000, //15 minute
         })
         const userdata=user.toObject();
         delete userdata.password;
