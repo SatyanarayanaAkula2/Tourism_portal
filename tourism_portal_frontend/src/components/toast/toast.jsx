@@ -1,4 +1,4 @@
-import 'styles from "./toast.module.css";'
+import './toast.css";'
 
 const Toast = ({
   message,
@@ -8,13 +8,10 @@ const Toast = ({
   return (
 
     <div
-      className={`
-        ${styles.toast}
-        ${styles[type]}
-      `}
+      className={`toast ${type}`}
     >
 
-      <div className={styles.icon}>
+      <div className="icon">
 
         {
           type === "success"
