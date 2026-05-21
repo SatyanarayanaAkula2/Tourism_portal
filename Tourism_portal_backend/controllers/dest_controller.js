@@ -5,9 +5,22 @@ export const getAllDestinations = async (req, res) => {
         const dests = await Destination.find();
         res.status(200).json({ destinations: dests });
     } catch (error) {
-        res.status(500).json({ message: "Error fetching destinations", error });
+        res.status(500).json({ message: "Internal server error" });
     }
 };
+
+export const getDestinations=async(req,res)=>{
+      try {
+        const page=Number(req.query.page)||1;
+        const limit=Number(req.query.limit)||8;
+        const skip=(page-1)*limit;
+        const total=await Destination.countDocuments();
+        const dests = await Destination.find().skip(skip).limit(limit);
+        res.status(200).json({ destinations: dests,currentPage:page,totalPages:Math.ceil(total/limit),totalDestinations:total });
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
 
 export const getDestinationById = async (req, res) => {
     try {
@@ -17,7 +30,7 @@ export const getDestinationById = async (req, res) => {
         }
         res.status(200).json({ destination: dest });
     } catch (error) {
-        res.status(500).json({ message: "Error fetching destination", error });
+        res.status(500).json({ message: "Internal server error" });
     }
 };
 
@@ -27,7 +40,7 @@ export const createDestination = async (req, res) => {
         const savedDest = await newDest.save();
         res.status(201).json({ destination: savedDest });
     } catch (error) {
-        res.status(500).json({ message: "Error creating destination", error });
+        res.status(500).json({ message: "Internal server error" });
     }   
 };
 
@@ -39,7 +52,7 @@ export const updateDestination = async (req, res) => {
         }
         res.status(200).json({ destination: updatedDest });
     } catch (error) {
-        res.status(500).json({ message: "Error updating destination", error });
+        res.status(500).json({ message: "Internal server error" });
     }
 };
 
@@ -51,6 +64,6 @@ export const deleteDestination = async (req, res) => {
         }
         res.status(200).json({ message: "Destination deleted successfully" });
     } catch (error) {
-        res.status(500).json({ message: "Error deleting destination", error });
+        res.status(500).json({ message: "Internal server error" });
     }
 };

@@ -83,6 +83,10 @@ FORM
 
   gap:18px;
 }
+.disabled_btn{
+  opacity:0.7;
+  cursor:not-allowed;
+}
 
 /* =========================
 FORM BLOCK

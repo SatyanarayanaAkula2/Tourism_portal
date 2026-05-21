@@ -12,7 +12,7 @@ export const createBooking=async(req,res)=>{
     }
     catch(err){
         res.status(500).json({
-            message:err.message
+            message:"Internal server error"
         });
     }
 };
@@ -30,7 +30,7 @@ export const cancelBooking=async(req,res)=>{
     }
     catch(err){
         res.status(500).json({
-            message:err.message
+            message:"Internal server error"
         })
     }
 }
@@ -46,7 +46,7 @@ export const getMyBookings=async(req,res)=>{
     }
     catch(err){
         res.status(500).json({
-            message:err.message
+            message:"Internal server error"
         })
     }
 }
@@ -64,7 +64,7 @@ export const getAllBookings=async(req,res)=>{
     }
     catch(err){
         res.status(500).json({
-            message:err.message
+            message:"Internal server error"
         })
     }
 }

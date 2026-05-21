@@ -1,5 +1,7 @@
 import express from 'express';
 import cors from 'cors';
+import helmet, { crossOriginResourcePolicy } from 'helmet';
+import rateLimit from "express-rate-limit";
 import AuthRouter from '../routers/authrouter.js';
 import UserRouter from '../routers/userrouter.js';
 import DestRouter from '../routers/destrouter.js';
@@ -10,6 +12,12 @@ import cookieParser from 'cookie-parser';
 import { authMiddleware } from '../middlewares/authmiddleware.js';
 import User from '../models/users.js';
 
+const limiter=rateLimit({
+    windowMs:15*60*1000,
+    max:100,
+    message:"Too many requests,please try again later."
+})
+
 const app=express();
 
 app.use(cors({
@@ -18,7 +26,12 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(helmet({crossOriginResourcePolicy:{
+    policy:"cross-origin"
+},contentSecurityPolicy:false}));
+app.use(limiter);
 app.use('/uploads',express.static('uploads'));
+
 
 app.use('/auth', AuthRouter);
 app.use('/user', UserRouter);

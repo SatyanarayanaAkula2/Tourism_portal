@@ -9,11 +9,14 @@ import "./adminanalytics.css";
 import {
   getAllBookings
 } from "../../services/bookingservice";
+import Loader from "../../components/loader/loader";
+import ErrorComponent from "../../components/errorcomponent/errorcomponent";
 
 const AdminAnalytics = ()=>{
 
   const [bookings,setBookings] =
   useState([]);
+   const [error,seterror]=useState("");
 
   const [loading,setLoading] =
   useState(true);
@@ -38,7 +41,7 @@ const AdminAnalytics = ()=>{
 
       catch(err){
 
-        console.log(err);
+       seterror("something went wrong");
 
       }
 
@@ -213,14 +216,18 @@ const AdminAnalytics = ()=>{
         className="admin_analytics"
       >
 
-        <h2>
-          Loading Analytics...
-        </h2>
+        <Loader/>
+        <h2>Loading Admin analytics...</h2>
 
       </section>
 
     );
 
+  }
+  if(error){
+    return (
+      <ErrorComponent message={error} onRetry={()=>window.location.reload()}/>
+    )
   }
 
   return(

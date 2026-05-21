@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./destinationcard.css";
+import { getImageUrl } from "../../utils/getimage";
 
 function DestinationCard({ destination }) {
 
@@ -22,7 +23,7 @@ function DestinationCard({ destination }) {
       <div className="card-image">
 
         <img
-          src={destination?.image}
+          src={getImageUrl(destination?.image)}
           alt={destination?.name}
         />
 

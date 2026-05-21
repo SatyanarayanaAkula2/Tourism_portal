@@ -1,12 +1,11 @@
 import {Navigate} from "react-router-dom"
 import { useAuth } from "../context/authContext"
+import Loader from "../components/loader/loader";
 
 const GuestRoute=({children})=>{
     const {user,loading}=useAuth();
     if(loading) return (
-        <div className="loader_container">
-            <div className="loader"></div>
-        </div>
+        <Loader/>
     );
 
     if(user){

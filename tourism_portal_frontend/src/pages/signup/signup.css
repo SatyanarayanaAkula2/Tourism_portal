@@ -22,7 +22,10 @@ PAGE
   background-position:center;
   background-repeat:no-repeat;
 }
-
+.disabled_btn{
+  opacity:0.7;
+  cursor: not-allowed;
+}
 /* =========================
 OVERLAY
 ========================= */

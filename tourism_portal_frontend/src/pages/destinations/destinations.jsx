@@ -4,6 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import DestinationCard from "../../components/destinationcard/destinationcard";
 
 import "./destinations.css";
+import Loader from "../../components/loader/loader";
+import { getDestinations } from "../../services/destinationservice";
+import ErrorComponent from "../../components/errorcomponent/errorcomponent";
 
 function Destinations() {
 
@@ -17,12 +20,15 @@ function Destinations() {
   const [filteredDestinations, setFilteredDestinations] = useState([]);
 
   const [loading, setLoading] = useState(true);
+  const [error,seterror]=useState("");
 
   const [search, setSearch] = useState("");
 
   const [menuFilter, setMenuFilter] = useState(false);
 
   const [priceMenu, setPriceMenu] = useState(false);
+  const [page,setpage]=useState(1);
+  const [totalPages,settotalPages]=useState(1);
 
   /* TEMP DATA
      later replace with backend api */
@@ -36,11 +42,8 @@ function Destinations() {
         setLoading(true);
 
         // later backend api
-        const res = await fetch(
-          "http://localhost:5000/destination/destinations"
-        );
-
-        const data = await res.json();
+        const data = await getDestinations(page);
+        settotalPages(data.totalPages);
 
         let filtered = [...data.destinations];
         if(type){
@@ -76,7 +79,7 @@ function Destinations() {
 
       catch(error){
 
-        console.log(error);
+        seterror(error.message);
 
       }
 
@@ -90,7 +93,7 @@ function Destinations() {
 
     fetchDestinations();
 
-  }, [type,sort, r1, r2]);
+  }, [type,sort, r1, r2,page]);
 
   /* SEARCH */
 
@@ -123,6 +126,13 @@ function Destinations() {
     setFilteredDestinations(filtered);
 
   }, [search, destinations]);
+
+  if(error){
+    return (
+      <ErrorComponent message={error} onRetry={()=>window.location.reload()}/>
+    )
+  }
+ 
 
   return (
 
@@ -358,11 +368,7 @@ function Destinations() {
 
       {loading ? (
 
-        <div className="loader-container">
-
-          <div className="loader"></div>
-
-        </div>
+        <Loader/>
 
       ) : filteredDestinations.length > 0 ? (
 
@@ -386,6 +392,12 @@ function Destinations() {
         </p>
 
       )}
+
+      <div className="pagination">
+        <button disabled={page===1} onClick={()=>setpage(page-1)}>Prev</button>
+        <span>page{page}/{totalPages}</span>
+        <button disabled={page===totalPages} onClick={()=>setpage(page+1)}> Next</button>
+      </div>
 
     </section>
   );

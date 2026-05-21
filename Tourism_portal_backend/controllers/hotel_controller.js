@@ -9,7 +9,7 @@ export const getHotels=async(req,res)=>{
     }
     catch(error){
         res.status(500).json({
-            message:error.message
+            message:"Internal server error"
         })
     }
 }
@@ -35,7 +35,7 @@ async(req,res)=>{
   catch(error){
 
     res.status(500).json({
-      message:error.message
+      message:"Internal server error"
     });
 
   }
@@ -59,7 +59,7 @@ async(req,res)=>{
   catch(error){
 
     res.status(500).json({
-      message:error.message
+      message:"Internal server error"
     });
 
   }

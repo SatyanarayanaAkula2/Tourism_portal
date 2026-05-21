@@ -13,6 +13,7 @@ export const AuthProvider=({children})=>{
     const checkAuth=async()=>{
         try{
             const data=await getCurrentUser();
+            
             setuser(data.user);
         }
         catch(err){

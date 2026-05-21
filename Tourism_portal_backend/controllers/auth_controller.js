@@ -32,9 +32,8 @@ export const signup=async(req,res)=>{
     res.status(200).json({message:"User Registered",user:userdata});
     }
     catch(error){
-        console.log(error);
         res.status(500).json({
-            error:error.message
+            error:"Internal server error"
         });
     }
 }
@@ -63,9 +62,9 @@ export const signin=async(req,res)=>{
         res.status(200).json({message:"User signed in",user:userdata});
     }
     catch(error){
-        console.log(error);
+        
         res.status(500).json({
-            error:error.message
+            error:"Internal server error"
         });
     }
 }

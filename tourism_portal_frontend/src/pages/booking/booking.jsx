@@ -2,18 +2,20 @@ import { useEffect, useMemo, useState } from "react";
 import { useBooking } from "../../context/bookingContext";
 import { useNavigate } from "react-router-dom";
 import "./booking.css";
-import { getDestinations} from "../../services/destinationservice";
+import { getAllDestinations} from "../../services/destinationservice";
 import { getHotelsByDestinationId } from "../../services/hotelservice";
 import { getPackageByDestinationId } from "../../services/packageservice";
 import { createBooking } from "../../services/bookingservice";
 import { useAuth } from "../../context/authContext";
 import { useToast } from "../../context/toastContext";
+import ErrorComponent from "../../components/errorcomponent/errorcomponent";
 
 const Booking = () => {
   const {user}=useAuth();
   const {showToast}=useToast();
   const navigate=useNavigate();
   const {bookingData} = useBooking();
+   const [error,seterror]=useState("");
   const [packages, setPackages] = useState([]);
   const [destinations, setDestinations] = useState([]);
   const [hotels, setHotels] = useState([]);
@@ -22,6 +24,7 @@ const Booking = () => {
   const [selectedPackage, setSelectedPackage] = useState(null);
   const [minStartDate,setminStartDate]=useState("");
   const [minEndDate,setminEndDate]=useState("");
+  const [loading,setloading]=useState(false);
   
 
   const [formData, setFormData] = useState({
@@ -76,7 +79,6 @@ const Booking = () => {
       hotelId:selectedHotel?._id|null,
       packageId:selectedPackage?._id|null
     };
-    console.log("SAVING:",data);
     localStorage.setItem("bookingform",JSON.stringify({
       data
     }));
@@ -85,7 +87,7 @@ const Booking = () => {
   useEffect(() => {
     const fetchDestinations=async()=>{
       try{
-        const destinationsData=await getDestinations();
+        const destinationsData=await getAllDestinations();
         setDestinations(destinationsData||[]);
         const saved=localStorage.getItem("bookingform");
         if(!saved) return ;
@@ -109,7 +111,7 @@ const Booking = () => {
         console.log(foundPackage);
       }
       catch(err){
-        console.error("Error fetching destinations:",err);
+       seterror("something went wrong");;
       }
     }
     fetchDestinations();
@@ -153,7 +155,7 @@ const Booking = () => {
       }
     }
     catch(err){
-      console.error("Error fetching hotels and packages:",err);
+      seterror("something went wrong");;
     }
   };
 
@@ -288,6 +290,7 @@ const Booking = () => {
   const submitBooking = (e) => {
 
     e.preventDefault();
+    if(loading) return;
     setSubmitted(true);
     if(!selectedDestination){
       showToast("select destination","error");
@@ -316,7 +319,9 @@ const Booking = () => {
   
 
   const confirmBooking = async() => {
+     if(loading) return;
     try{
+      setloading(true);
       const bookingPayload={
         destinationId:selectedDestination._id,
         hotelId:selectedHotel?._id || null,
@@ -345,8 +350,15 @@ const Booking = () => {
     catch(err){
       showToast(err.response?.data?.message||"Booking failed","error");
     }
+    finally{
+      setloading(false);
+    }
   };
-
+  if(error){
+    return (
+      <ErrorComponent message={error} onRetry={()=>window.location.reload()}/>
+    )
+  }
   return (
 
     <section className="booking" id="booking">
@@ -740,10 +752,10 @@ const Booking = () => {
               {/* BUTTON */}
 
               <button
-                className="btn_form"
-                type="submit"
+                className={`btn_form ${loading?"disabled_btn":""}`}
+                type="submit" disabled={loading}
               >
-                Book Now
+                {loading?"Booking...":"Book Now"}
               </button>
 
             </form>
@@ -843,10 +855,10 @@ const Booking = () => {
             <div className="btns">
 
               <button
-                className="primary"
-                onClick={confirmBooking}
+                className={`primary ${loading?"disabled_btn":""}`}
+                onClick={confirmBooking} disabled={loading}
               >
-                Yes
+                {loading?"Processing...":"Yes"}
               </button>
 
               <button

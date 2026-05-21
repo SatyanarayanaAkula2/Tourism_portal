@@ -7,7 +7,6 @@ const bookingCron=()=>{
         "0 0 * * *",
         async()=>{
             try{
-                console.log("Running Booking Cron");
                 const today=new Date();
                 await bookings.updateMany(
                     {

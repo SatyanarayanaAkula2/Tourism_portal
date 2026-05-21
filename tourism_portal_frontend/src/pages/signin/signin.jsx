@@ -18,6 +18,7 @@ import { useToast } from "../../context/toastContext";
 const Signin = () => {
   const {login}=useAuth();
   const {showToast}=useToast();
+  const [loading,setloading]=useState(false);
 
   const navigate = useNavigate();
 
@@ -55,6 +56,7 @@ const Signin = () => {
 async(e)=>{
 
   e.preventDefault();
+  if(loading) return;
 
   if(
     !formData.email ||
@@ -70,6 +72,7 @@ async(e)=>{
   }
 
   try{
+    setloading(true);
 
     const data =
     await signinUser(formData);
@@ -98,6 +101,9 @@ async(e)=>{
 
     );
 
+  }
+  finally{
+    setloading(false);
   }
 
 };
@@ -212,11 +218,11 @@ async(e)=>{
             {/* BUTTON */}
 
             <button
-              className="signin_btn"
-              type="submit"
+              className={loading?"signin_btn disabled_btn":"signin_btn"}
+              type="submit" disabled={loading}
             >
 
-              Login
+             {loading?"logging in...":"Login"} 
 
             </button>
 

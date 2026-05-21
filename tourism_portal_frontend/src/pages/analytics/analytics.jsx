@@ -13,6 +13,8 @@ import {
 import {
   useAuth
 } from "../../context/authContext";
+import Loader from "../../components/loader/loader";
+import ErrorComponent from "../../components/errorcomponent/errorcomponent";
 
 const Analytics = ()=>{
 
@@ -21,6 +23,7 @@ const Analytics = ()=>{
 
   const [bookings,setBookings] =
   useState([]);
+   const [error,seterror]=useState("");
 
   const [loading,setLoading] =
   useState(true);
@@ -47,7 +50,7 @@ const Analytics = ()=>{
 
       catch(err){
 
-        console.log(err);
+        seterror("something went wrong");
 
       }
 
@@ -286,14 +289,17 @@ const Analytics = ()=>{
 
       <section className="analytics">
 
-        <h2>
-          Loading Analytics...
-        </h2>
-
+      <Loader/>
+      <h2>Loading analytics...</h2>
       </section>
 
     );
 
+  }
+  if(error){
+    return (
+      <ErrorComponent message={error} onRetry={()=>window.location.reload()}/>
+    )
   }
 
   return(

@@ -6,6 +6,9 @@ import { getDestinationById } from "../../services/destinationservice";
 import { getHotelsByDestinationId } from "../../services/hotelservice";
 import { getPackageByDestinationId } from "../../services/packageservice";
 import { useToast } from "../../context/toastContext";
+import Loader from "../../components/loader/loader";
+import ErrorComponent from "../../components/errorcomponent/errorcomponent";
+import { getImageUrl } from "../../utils/getimage";
 
 function DestinationDetails() {
 
@@ -26,6 +29,7 @@ function DestinationDetails() {
   const [allLocations, setAllLocations] = useState([]);
 
   const [showDropdown, setShowDropdown] = useState(false);
+  const [error,seterror]=useState("");
   
 
   const [selectedHotel, setSelectedHotel] = useState(null);
@@ -67,7 +71,7 @@ function DestinationDetails() {
         ]);
 
       } catch (err) {
-        console.log(err);
+        seterror("something went wrong");;
       }
       finally{
         setloading(false);
@@ -209,9 +213,12 @@ function DestinationDetails() {
 
   if(loading){
     return(
-        <div className="loader-container">
-            <div className="loader"></div>
-        </div>
+        <Loader/>
+    )
+  }
+  if(error){
+    return (
+      <ErrorComponent message={error} onRetry={()=>window.location.reload()}/>
     )
   }
 
@@ -225,7 +232,7 @@ function DestinationDetails() {
 
         <img
           className="main-img"
-          src={destination?.image}
+          src={getImageUrl(destination?.image)}
           alt={destination?.name}
         />
 

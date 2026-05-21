@@ -14,7 +14,7 @@ export const updateProfile=async(req,res)=>{
     catch(error){
         console.log(error);
         res.status(500).json({
-            message:error.message
+            message:"Internal server error"
         });
     }
 }

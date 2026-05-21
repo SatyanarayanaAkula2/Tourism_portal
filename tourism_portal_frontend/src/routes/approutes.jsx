@@ -18,6 +18,7 @@ import { useAuth } from "../context/authContext";
 import NotFound from "../pages/notfound/notfound";
 import Analytics from "../pages/analytics/analytics";
 import AdminAnalytics from "../pages/adminanalytics/adminanalytics";
+import AdminRoute from "./adminroute";
 
 
 
@@ -47,7 +48,7 @@ const AppRoutesContent=()=>{
                     <Route path="/signup" element={<GuestRoute><Signup/></GuestRoute>}/>
                     <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
                     <Route path="/analytics" element={<ProtectedRoute><Analytics/></ProtectedRoute>}/>
-                    <Route path="/adminanalytics" element={<AdminAnalytics/>}/>
+                    <Route path="/adminanalytics" element={<AdminRoute><AdminAnalytics/></AdminRoute>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Route>
         </Routes>
@@ -67,7 +68,6 @@ function AppRoutes(){
             </BookingProvider>
             </ToastProvider>
             </AuthProvider>
-            
         </BrowserRouter>
     );
 }

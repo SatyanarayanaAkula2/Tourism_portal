@@ -389,6 +389,25 @@ body.dark .noData{
     }
 }
 
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:20px;
+}
+.pagination button{
+    padding:10px 18px;
+    border:none;
+    border-radius: 8px;
+    background: #089cce;
+    color:white;
+    cursor:pointer;
+}
+.pagination button:disabled{
+    opacity:0.5;
+    cursor: not-allowed;
+}
+
 /* MOBILE */
 
 @media(max-width:768px){

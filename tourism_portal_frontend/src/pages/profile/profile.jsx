@@ -5,6 +5,7 @@ import { updateUser,logoutUser } from "../../services/authservice";
 import { useToast } from "../../context/toastContext";
 import "./profile.css";
 import { getMyBookings,cancelBooking } from "../../services/bookingservice";
+import Loader from "../../components/loader/loader";
 
 const Profile = () => {
 
@@ -200,9 +201,10 @@ async(id)=>{
   if (loading) {
 
     return (
-      <div className="loader_container">
-        <div className="loader"></div>
-        </div>
+      <>
+      <Loader/>
+      <h2>Loading Profile...</h2>
+      </>
     );
 
   }
@@ -216,6 +218,7 @@ async(id)=>{
     return (
       <div className="msg">
         Please login to view profile.
+        <button onClick={navigate("/signin")}>Signin</button>
       </div>
     );
 

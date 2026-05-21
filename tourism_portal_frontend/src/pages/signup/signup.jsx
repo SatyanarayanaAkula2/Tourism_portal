@@ -18,6 +18,8 @@ const Signup = () => {
   const {login}=useAuth();
   const {showToast}=useToast();
 
+  const[loading,setloading]=useState(false);
+
 
   const [submitted, setSubmitted] =
     useState(false);
@@ -98,7 +100,7 @@ const Signup = () => {
   }
 
   try{
-
+    setloading(true);
     const payload = {
 
       name:formData.name,
@@ -142,6 +144,9 @@ const Signup = () => {
       "error"
     );
 
+  }
+  finally{
+    setloading(false);
   }
 
 };
@@ -310,11 +315,11 @@ const Signup = () => {
             {/* BUTTON */}
 
             <button
-              className="signup_btn"
-              type="submit"
+              className={loading?"signup_btn disabled_btn":"signup_btn"}
+              type="submit" disabled={loading}
             >
 
-              Create Account
+              {loading?"Creating...":"Create Account"}
 
             </button>
 
