@@ -1,4 +1,4 @@
-import { BrowserRouter,Routes, Route } from "react-router-dom";
+import { HashRouter,Routes, Route } from "react-router-dom";
 import MainLayout from "../layouts/mainLayout";
 import Home from "../pages/Home";
 import Contact from "../components/contact/contact";
@@ -59,7 +59,7 @@ function AppRoutes(){
    
      
     return(
-        <BrowserRouter>
+        <HashRouter>
         <ScrollToTop/>
         <AuthProvider>
         <ToastProvider>
@@ -68,7 +68,7 @@ function AppRoutes(){
             </BookingProvider>
             </ToastProvider>
             </AuthProvider>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 
