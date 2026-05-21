@@ -679,6 +679,8 @@ RESPONSIVE
 
 @media(max-width:900px){
 
+  
+
   .booking_container{
     grid-template-columns:1fr;
   }

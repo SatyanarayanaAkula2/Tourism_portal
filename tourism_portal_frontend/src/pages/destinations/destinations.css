@@ -411,6 +411,7 @@ body.dark .noData{
 /* MOBILE */
 
 @media(max-width:768px){
+    
 
     .destinations{
         padding:120px 5% 70px;
@@ -419,9 +420,27 @@ body.dark .noData{
     .search_filter{
         flex-direction:column;
         align-items:stretch;
+        gap:16px;
+    }
+    .search{
+        width:100%;
     }
 
     .search_form{
+        width:100%;
+        display: flex;
+        flex-direction: column;
+        gap:14px;
+    }
+    .searchbar{
+        
+        width:100%;
+        padding:14px 18px;
+        border: none;
+        border-radius: 40px;
+        font-size: 14px;
+    }
+    .search_form .btn{
         width:100%;
     }
 
