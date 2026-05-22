@@ -337,7 +337,7 @@ async(id)=>{
                   className={loading?"btn disabled_btn":"btn save_btn"}  
                   onClick={saveProfile} disabled={loading}
                 >
-                  {loading?"Saving":"Save Changes"}
+                  {loading?"Saving...":"Save Changes"}
                 </button>
 
                 <button
