@@ -131,18 +131,65 @@ const Booking = () => {
   },[user])
   
   useEffect(() => {
+
+  async function setupBooking(){
+
     if(!bookingData?.destination) return;
+
     if(selectedDestination) return;
-      setselectedDestination(bookingData.destination);
-      setSelectedHotel(bookingData.hotel);
-      setSelectedPackage(bookingData.package);
-      setFormData((prev) => ({
-        ...prev,
-        destination: bookingData.destination.name
-      }));
-      loadHotelsandPackages(bookingData.destination._id);
+
+    setselectedDestination(
+      bookingData.destination
+    );
+
+    setFormData((prev) => ({
+      ...prev,
+      destination:
+        bookingData.destination.name
+    }));
+
+    const data =
+      await loadHotelsandPackages(
+        bookingData.destination._id
+      );
+
+    // RESET SELECTED HOTEL
+    if(bookingData.hotel){
+
+      const matchedHotel =
+        data?.hotelsData?.find(
+          (h) =>
+            String(h._id) ===
+            String(bookingData.hotel._id)
+        );
+
+      setSelectedHotel(
+        matchedHotel || null
+      );
+
     }
-  , [bookingData]);
+
+    // RESET SELECTED PACKAGE
+    if(bookingData.package){
+
+      const matchedPackage =
+        data?.packagesData?.find(
+          (p) =>
+            String(p._id) ===
+            String(bookingData.package._id)
+        );
+
+      setSelectedPackage(
+        matchedPackage || null
+      );
+
+    }
+
+  }
+
+  setupBooking();
+
+}, [bookingData]);
 
   const loadHotelsandPackages=async(destId)=>{
     try{
@@ -771,8 +818,8 @@ const Booking = () => {
           <div
             className="preview_image"
             style={{
-              backgroundImage:
-              `url(${selectedDestination?.image})`
+              backgroundImage:selectedDestination?.image?
+              `url(${import.meta.env.VITE_API_URL}${selectedDestination.image}`:"none"
             }}
           />
 

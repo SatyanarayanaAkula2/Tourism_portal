@@ -54,6 +54,9 @@ function Destinations() {
         }
 
         /* FILTERS */
+        if(search.trim()){
+          filtered=filtered.filter((d)=>d.name.toLowerCase().includes(search.toLowerCase())||d.place.toLowerCase().includes(search.toLowerCase())||d.type?.toLowerCase().includes(search.toLowerCase()));
+        }
 
         if(sort === "popular"){
 
@@ -71,8 +74,13 @@ function Destinations() {
 
         }
         const itemsPerPage=8;
-        const filteredTotalPages=Math.ceil(filtered.length/itemsPerPage);
+        const filteredTotalPages=Math.max(1,Math.ceil(filtered.length/itemsPerPage));
         settotalPages(filteredTotalPages);
+        const safepage=page>filteredTotalPages?1:page;
+        if(page!==safepage){
+          setpage(safepage);
+          return;
+        }
         const start=(page-1)*itemsPerPage;
         const end=start + itemsPerPage;
 
@@ -99,39 +107,9 @@ function Destinations() {
 
     fetchDestinations();
 
-  }, [type,sort, r1, r2,page]);
+  }, [type,sort, r1, r2,page,search]);
 
-  /* SEARCH */
-
-  useEffect(() => {
-
-    if(!search.trim()){
-
-      setFilteredDestinations(destinations);
-
-      return;
-
-    }
-
-    const filtered = destinations.filter((d) =>
-
-      d.name.toLowerCase().includes(
-        search.toLowerCase()
-      ) ||
-
-      d.place.toLowerCase().includes(
-        search.toLowerCase()
-      ) ||
-
-      d.type?.toLowerCase().includes(
-        search.toLowerCase()
-      )
-
-    );
-
-    setFilteredDestinations(filtered);
-
-  }, [search, destinations]);
+ 
 
   if(error){
     return (
