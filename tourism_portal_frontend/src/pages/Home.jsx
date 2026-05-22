@@ -6,14 +6,12 @@ import PopularDest from "../components/populardest/populardest";
 
 function Home() {
   return (
-   <Pagewraper>
-     <div>
+     <main>
       <Hero />
       <Highlights/>
       <PopularDest/>
       <About/>
-    </div>
-   </Pagewraper>
+    </main>
   );
 }
 

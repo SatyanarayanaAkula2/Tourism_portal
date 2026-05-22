@@ -10,7 +10,6 @@ const Hero = () => {
 
   return (
 
-   <Reveal>
     <section className="hero" id="home">
 
       {/* OVERLAY */}
@@ -18,8 +17,8 @@ const Hero = () => {
       <div className="hero-overlay"></div>
 
       {/* CONTENT */}
-
-      <div className="hero-content">
+      <Reveal>
+        <div className="hero-content">
 
         <div className="desc">
 
@@ -76,8 +75,9 @@ const Hero = () => {
 
       </div>
 
+      </Reveal>
     </section>
-   </Reveal>
+
   );
 };
 
