@@ -13,7 +13,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const [editMode, setEditMode] = useState(false);
-  const [loading,setloading]=useState(false);
+  const [bloading,setbloading]=useState(false);
 
   const [submitted, setSubmitted] = useState(false);
 
@@ -152,7 +152,7 @@ async(id)=>{
     }
 
     try {
-      setloading(true);
+      setbloading(true);
 
       const data=await updateUser({
         name:profileForm.name,
@@ -170,7 +170,7 @@ async(id)=>{
 
     }
     finally{
-      setloading(false);
+      setbloading(false);
     }
 
   };
@@ -334,10 +334,10 @@ async(id)=>{
               <div className="edit_buttons">
 
                 <button
-                  className={loading?"btn disabled_btn":"btn save_btn"}  
-                  onClick={saveProfile} disabled={loading}
+                  className={bloading?"btn disabled_btn":"btn save_btn"}  
+                  onClick={saveProfile} disabled={bloading}
                 >
-                  {loading?"Saving...":"Save Changes"}
+                  {bloading?"Saving...":"Save Changes"}
                 </button>
 
                 <button
