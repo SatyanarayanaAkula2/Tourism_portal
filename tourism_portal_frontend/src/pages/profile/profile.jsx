@@ -6,6 +6,7 @@ import { useToast } from "../../context/toastContext";
 import "./profile.css";
 import { getMyBookings,cancelBooking } from "../../services/bookingservice";
 import Loader from "../../components/loader/loader";
+import Pagewraper from "../../components/pagewraper";
 
 const Profile = () => {
 
@@ -60,6 +61,14 @@ const Profile = () => {
   }
 
 };
+
+const handleChange=(e)=>{
+  const {name,value}=e.target;
+  setProfileForm((prev)=>({
+    ...prev,
+    [name]:value
+  }));
+}
 
 const getBookingStatus=(booking)=>{
   return booking.status;
@@ -202,8 +211,10 @@ async(id)=>{
 
     return (
       <>
-      <Loader/>
+      <Pagewraper>
+        <Loader/>
       <h2>Loading Profile...</h2>
+      </Pagewraper>
       </>
     );
 
@@ -216,15 +227,18 @@ async(id)=>{
   if (!user) {
 
     return (
+      <Pagewraper>
       <div className="msg">
         Please login to view profile.
         <button onClick={navigate("/signin")}>Signin</button>
       </div>
+      </Pagewraper>
     );
 
   }
 
   return (
+    <Pagewraper>
 
     <section className="profile" id="profile">
 
@@ -667,6 +681,7 @@ async(id)=>{
       </div>
 
     </section>
+    </Pagewraper>
 
   );
 

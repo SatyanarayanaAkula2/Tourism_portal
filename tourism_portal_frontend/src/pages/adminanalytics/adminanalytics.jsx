@@ -11,6 +11,7 @@ import {
 } from "../../services/bookingservice";
 import Loader from "../../components/loader/loader";
 import ErrorComponent from "../../components/errorcomponent/errorcomponent";
+import Pagewraper from "../../components/pagewraper";
 
 const AdminAnalytics = ()=>{
 
@@ -226,11 +227,12 @@ const AdminAnalytics = ()=>{
   }
   if(error){
     return (
-      <ErrorComponent message={error} onRetry={()=>window.location.reload()}/>
+      <ErrorComponent message={error}/>
     )
   }
 
   return(
+    <Pagewraper>
 
     <section className="admin_analytics">
 
@@ -567,6 +569,7 @@ const AdminAnalytics = ()=>{
       </div>
 
     </section>
+    </Pagewraper>
 
   );
 

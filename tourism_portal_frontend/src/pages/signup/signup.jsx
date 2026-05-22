@@ -11,6 +11,7 @@ import { useAuth } from "../../context/authContext";
 import { useToast } from "../../context/toastContext";
 
 import "./signup.css";
+import Pagewraper from "../../components/pagewraper";
 
 const Signup = () => {
 
@@ -152,6 +153,7 @@ const Signup = () => {
 };
 
   return (
+    <Pagewraper>
 
     <section className="signup_page" id="signup">
 
@@ -343,6 +345,7 @@ const Signup = () => {
       </div>
 
     </section>
+    </Pagewraper>
   );
 };
 

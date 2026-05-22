@@ -46,8 +46,13 @@
 
     line-height:1.6;
 }
+.btns{
+    display: flex;
+    justify-content: center;
+    gap:20px;
+}
 
-.retry_btn{
+.retry_btn,.home_btn{
 
     padding:12px 22px;
 

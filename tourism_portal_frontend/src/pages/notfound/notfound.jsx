@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import "./notfound.css";
+import Pagewraper from "../../components/pagewraper";
 
 const NotFound = ()=>{
 
@@ -9,7 +10,8 @@ const NotFound = ()=>{
 
   return(
 
-    <section className="notfound">
+    <Pagewraper>
+      <section className="notfound">
 
       <div className="notfound_content">
 
@@ -38,6 +40,7 @@ const NotFound = ()=>{
       </div>
 
     </section>
+    </Pagewraper>
 
   );
 

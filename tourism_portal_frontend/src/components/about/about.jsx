@@ -1,3 +1,4 @@
+import Reveal from "../reveal";
 import "./about.css";
 
 function About() {
@@ -10,7 +11,8 @@ function About() {
 
         {/* LEFT */}
 
-        <div className="about_text">
+        <Reveal>
+          <div className="about_text">
 
           <span className="sub_heading">
             ABOUT US
@@ -59,14 +61,17 @@ function About() {
           </div>
 
         </div>
+        </Reveal>
 
         {/* RIGHT IMAGE */}
 
-        <div className="about_image">
+        <Reveal>
+          <div className="about_image">
 
           <div className="image_overlay"></div>
 
         </div>
+        </Reveal>
 
       </div>
 

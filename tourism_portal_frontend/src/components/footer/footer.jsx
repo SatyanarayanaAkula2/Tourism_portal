@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import "./footer.css";
+import Reveal from "../reveal";
 
 function Footer() {
 
   return (
 
-    <footer className="footer">
+   <Reveal>
+     <footer className="footer">
 
       <div className="footer_container">
 
@@ -114,6 +116,7 @@ function Footer() {
       </div>
 
     </footer>
+   </Reveal>
 
   );
 }

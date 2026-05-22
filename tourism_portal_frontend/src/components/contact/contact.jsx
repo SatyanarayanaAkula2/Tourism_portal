@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useToast } from "../../context/toastContext";
 import "./contact.css";
+import Pagewraper from "../pagewraper";
 
 function Contact() {
   const {showToast}=useToast();
@@ -37,6 +38,7 @@ function Contact() {
   };
 
   return (
+    <Pagewraper>
 
     <section className="contact-container" id="contact">
 
@@ -170,6 +172,7 @@ function Contact() {
       </div>
 
     </section>
+    </Pagewraper>
 
   );
 }

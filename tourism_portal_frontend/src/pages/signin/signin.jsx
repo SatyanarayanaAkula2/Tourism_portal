@@ -14,6 +14,7 @@ import Toast from "../../components/toast/toast";
 
 import "./signin.css";
 import { useToast } from "../../context/toastContext";
+import Pagewraper from "../../components/pagewraper";
 
 const Signin = () => {
   const {login}=useAuth();
@@ -109,6 +110,7 @@ async(e)=>{
 };
 
   return (
+    <Pagewraper>
 
     <section className="signin_page" id="signin">
 
@@ -246,6 +248,7 @@ async(e)=>{
       </div>
 
     </section>
+    </Pagewraper>
   );
 };
 

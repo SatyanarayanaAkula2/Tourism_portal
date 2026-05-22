@@ -3,6 +3,7 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import "./navbar.css";
 import { logoutUser } from "../../services/authservice";
 import { useAuth } from "../../context/authContext";
+import Navanim from "../navanimation";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -85,7 +86,8 @@ const Navbar = () => {
     }
   }
   return (
-    <nav
+    <Navanim>
+      <nav
       className={`navbar ${shouldshowWhite?"white":""}${darkMode?" dark":""}`}
     >
       {/* LOGO */}
@@ -201,6 +203,7 @@ const Navbar = () => {
         </ul>
       </div>
     </nav>
+    </Navanim>
   );
 }
 

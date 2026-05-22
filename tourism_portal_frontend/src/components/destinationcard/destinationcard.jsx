@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./destinationcard.css";
 import { getImageUrl } from "../../utils/getimage";
+import Reveal from "../reveal";
 
 function DestinationCard({ destination }) {
 
@@ -15,8 +16,8 @@ function DestinationCard({ destination }) {
   };
 
   return (
-
-    <div className="destination-card">
+    <Reveal>
+       <div className="destination-card">
 
       {/* IMAGE */}
 
@@ -88,6 +89,7 @@ function DestinationCard({ destination }) {
       </div>
 
     </div>
+    </Reveal>
   );
 }
 

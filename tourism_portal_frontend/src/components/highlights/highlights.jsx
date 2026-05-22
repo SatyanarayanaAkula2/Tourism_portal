@@ -1,3 +1,4 @@
+import Reveal from "../reveal";
 import "./highlights.css";
 
 const highlightCards = [
@@ -32,7 +33,8 @@ function Highlights() {
 
   return (
 
-    <section className="highlights">
+    <Reveal>
+      <section className="highlights">
 
       <div className="highlight-container">
 
@@ -62,7 +64,8 @@ function Highlights() {
 
           {highlightCards.map((card) => (
 
-            <div
+            <Reveal>
+              <div
               className="high-card"
               key={card.id}
             >
@@ -86,6 +89,7 @@ function Highlights() {
               </div>
 
             </div>
+            </Reveal>
 
           ))}
 
@@ -95,6 +99,7 @@ function Highlights() {
 
     </section>
 
+    </Reveal>
   );
 }
 

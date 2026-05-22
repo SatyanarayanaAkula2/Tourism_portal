@@ -6,6 +6,7 @@ import beaches from "../../assets/beaches.jpg";
 import hillstations from "../../assets/hillstations.jpg";
 import mountains from "../../assets/mountains.jpg";
 import temples from "../../assets/temples.jpg";
+import Reveal from "../reveal";
 
 function PopularDest() {
   const [title, setTitle] = useState("Destinations");
@@ -42,7 +43,8 @@ function PopularDest() {
   ];
 
   return (
-    <section className="pop_dests">
+    <Reveal>
+      <section className="pop_dests">
       <div className="heading">
         <h1>Find Your Favourite Destinations.</h1>
       </div>
@@ -70,7 +72,8 @@ function PopularDest() {
 
         <div className="bar">
           {types.map((t) => (
-            <div
+            <Reveal>
+              <div
               key={t.id}
               className="bar_card"
               style={{
@@ -95,6 +98,7 @@ function PopularDest() {
                 </div>
               </div>
             </div>
+            </Reveal>
           ))}
         </div>
 
@@ -105,6 +109,7 @@ function PopularDest() {
         </div>
       </div>
     </section>
+    </Reveal>
   );
 }
 

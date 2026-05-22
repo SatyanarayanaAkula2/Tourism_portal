@@ -1,3 +1,4 @@
+import Reveal from "../reveal";
 import "./hero.css";
 import { NavLink } from "react-router-dom";
 
@@ -9,6 +10,7 @@ const Hero = () => {
 
   return (
 
+   <Reveal>
     <section className="hero" id="home">
 
       {/* OVERLAY */}
@@ -75,6 +77,7 @@ const Hero = () => {
       </div>
 
     </section>
+   </Reveal>
   );
 };
 

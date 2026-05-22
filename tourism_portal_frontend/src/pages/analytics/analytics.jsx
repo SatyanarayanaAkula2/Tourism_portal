@@ -15,6 +15,7 @@ import {
 } from "../../context/authContext";
 import Loader from "../../components/loader/loader";
 import ErrorComponent from "../../components/errorcomponent/errorcomponent";
+import Pagewraper from "../../components/pagewraper";
 
 const Analytics = ()=>{
 
@@ -286,23 +287,28 @@ const Analytics = ()=>{
   if(loading){
 
     return(
+      <Pagewraper>
 
       <section className="analytics">
 
       <Loader/>
       <h2>Loading analytics...</h2>
       </section>
+      </Pagewraper>
 
     );
 
   }
   if(error){
     return (
-      <ErrorComponent message={error} onRetry={()=>window.location.reload()}/>
+      <Pagewraper>
+      <ErrorComponent message={error} />
+        </Pagewraper>
     )
   }
 
   return(
+    <Pagewraper>
 
     <section className="analytics">
 
@@ -562,6 +568,7 @@ const Analytics = ()=>{
       </div>
 
     </section>
+    </Pagewraper>
 
   );
 

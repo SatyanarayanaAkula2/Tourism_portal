@@ -5,8 +5,9 @@ import DestinationCard from "../../components/destinationcard/destinationcard";
 
 import "./destinations.css";
 import Loader from "../../components/loader/loader";
-import { getDestinations } from "../../services/destinationservice";
+import { getAllDestinations } from "../../services/destinationservice";
 import ErrorComponent from "../../components/errorcomponent/errorcomponent";
+import Pagewraper from "../../components/pagewraper";
 
 function Destinations() {
 
@@ -42,8 +43,7 @@ function Destinations() {
         setLoading(true);
 
         // later backend api
-        const data = await getDestinations(page);
-        settotalPages(data.totalPages);
+        const data = await getAllDestinations();
 
         let filtered = [...data.destinations];
         if(type){
@@ -70,8 +70,14 @@ function Destinations() {
           );
 
         }
+        const itemsPerPage=8;
+        const filteredTotalPages=Math.ceil(filtered.length/itemsPerPage);
+        settotalPages(filteredTotalPages);
+        const start=(page-1)*itemsPerPage;
+        const end=start + itemsPerPage;
 
-        setDestinations(filtered);
+        const paginatedData=filtered.slice(start,end);
+        setDestinations(paginatedData);
 
         setFilteredDestinations(filtered);
 
@@ -129,12 +135,15 @@ function Destinations() {
 
   if(error){
     return (
-      <ErrorComponent message={error} onRetry={()=>window.location.reload()}/>
+      <Pagewraper>
+      <ErrorComponent message={error} />
+        </Pagewraper>
     )
   }
  
 
   return (
+    <Pagewraper>
 
     <section className="destinations" id="destinations">
 
@@ -400,6 +409,7 @@ function Destinations() {
       </div>
 
     </section>
+    </Pagewraper>
   );
 }
 

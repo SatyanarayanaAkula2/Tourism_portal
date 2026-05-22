@@ -9,6 +9,7 @@ import { useToast } from "../../context/toastContext";
 import Loader from "../../components/loader/loader";
 import ErrorComponent from "../../components/errorcomponent/errorcomponent";
 import { getImageUrl } from "../../utils/getimage";
+import Pagewraper from "../../components/pagewraper";
 
 function DestinationDetails() {
 
@@ -213,16 +214,19 @@ function DestinationDetails() {
 
   if(loading){
     return(
-        <Loader/>
+        <Pagewraper><Loader/></Pagewraper>
     )
   }
   if(error){
     return (
-      <ErrorComponent message={error} onRetry={()=>window.location.reload()}/>
+      <Pagewraper>
+      <ErrorComponent message={error} />
+        </Pagewraper>
     )
   }
 
   return (
+    <Pagewraper>
 
     <section className="spec-dest" id="destination_detail">
 
@@ -545,6 +549,7 @@ function DestinationDetails() {
       </div>
 
     </section>
+    </Pagewraper>
   );
 }
 
