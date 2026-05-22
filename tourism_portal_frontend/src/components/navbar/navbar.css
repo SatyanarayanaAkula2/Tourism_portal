@@ -470,6 +470,9 @@ body.dark{
 /* MOBILE */
 
 @media(max-width:768px){
+  .navbar{
+    background: #f4fbfc;
+  }
   .menu-btn{
     display:block;
     z-index:2001;

@@ -45,7 +45,7 @@ function Destinations() {
         // later backend api
         const data = await getAllDestinations();
 
-        let filtered = [...data.destinations];
+        let filtered = [...data];
         if(type){
           filtered=filtered.filter((item)=>item.type.toLowerCase()===type.toLowerCase());
         }
