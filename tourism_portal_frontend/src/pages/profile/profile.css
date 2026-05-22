@@ -560,6 +560,9 @@ ANIMATION
   color:white;
   cursor:pointer;
 }
+.disabled_btn{
+  opacity:0.6;
+}
 /* =========================
 RESPONSIVE
 ========================= */

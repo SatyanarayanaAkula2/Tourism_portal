@@ -13,6 +13,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const [editMode, setEditMode] = useState(false);
+  const [loading,setloading]=useState(false);
 
   const [submitted, setSubmitted] = useState(false);
 
@@ -151,6 +152,7 @@ async(id)=>{
     }
 
     try {
+      setloading(true);
 
       const data=await updateUser({
         name:profileForm.name,
@@ -166,6 +168,9 @@ async(id)=>{
       console.log("eror:",err);
       showToast(err.response?.data?.message||"update failed","error");
 
+    }
+    finally{
+      setloading(false);
     }
 
   };
@@ -329,10 +334,10 @@ async(id)=>{
               <div className="edit_buttons">
 
                 <button
-                  className="btn save_btn"
-                  onClick={saveProfile}
+                  className={loading?"btn disabled_btn":"btn save_btn"}  
+                  onClick={saveProfile} disabled={loading}
                 >
-                  Save Changes
+                  {loading?"Saving":"Save Changes"}
                 </button>
 
                 <button
