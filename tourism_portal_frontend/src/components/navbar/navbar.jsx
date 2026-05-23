@@ -189,7 +189,7 @@ const Navbar = () => {
                     <button
                       className="logout-btn"
                       onClick={()=>{
-                        handlelogout;
+                        handlelogout();
                       setMenuOpen(false);
                       setProfileOpen(false);
                     }}
