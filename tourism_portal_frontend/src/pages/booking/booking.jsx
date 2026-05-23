@@ -99,16 +99,16 @@ const Booking = () => {
         setselectedDestination(foundDestination);
         const HotelsData=await getHotelsByDestinationId(foundDestination._id);
         setHotels(HotelsData);
-        console.log("hotels:",HotelsData)
+      
         const packagesData=await getPackageByDestinationId(foundDestination._id);
         setPackages(packagesData);
-        console.log("packages:",packagesData);
+       
         const foundHotel=HotelsData.find((h)=>String(h._id)===String(parsed.hotelId));
         setSelectedHotel(foundHotel||null);
-        console.log(foundHotel);
+  
         const foundPackage=packagesData.find((p)=>String(p._id)===String(parsed.packageId));
         setSelectedPackage(foundPackage||null);
-        console.log(foundPackage);
+       
       }
       catch(err){
        seterror("something went wrong");;

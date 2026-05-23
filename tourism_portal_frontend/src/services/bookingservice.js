@@ -12,7 +12,7 @@ export const createBooking=async(data)=>{
 }
 
 export const cancelBooking=async(id)=>{
-    const repsonse=await axiosInstance.post(`/booking/cancel/${id}`);
+    const response=await axiosInstance.post(`/booking/cancel/${id}`);
     return response.data.booking;
 }
 
