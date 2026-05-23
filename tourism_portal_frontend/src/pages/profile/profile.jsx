@@ -14,6 +14,7 @@ const Profile = () => {
 
   const [editMode, setEditMode] = useState(false);
   const [bloading,setbloading]=useState(false);
+  const [cloading,setcloading]=useState(false);
 
   const [submitted, setSubmitted] = useState(false);
 
@@ -94,6 +95,7 @@ const handleCancelBooking =
 async(id)=>{
 
   try{
+    setcloading(true);
 
     await cancelBooking(id);
 
@@ -136,6 +138,9 @@ async(id)=>{
       "error"
     );
 
+  }
+  finally{
+    setcloading(false);
   }
 
 };
@@ -631,17 +636,17 @@ async(id)=>{
 
       <button
 
-        className="cancel_booking_btn"
+        className={cloading?"cancel_booking_btn disabled_btn":"cancel_booking_btn"}
 
         onClick={() =>
           handleCancelBooking(
             booking._id
           )
-        }
+        }  disabled={cloading}
 
       >
 
-        Cancel Booking
+        {cloading?"Cancelling...":"Cancel Booking"}
 
       </button>
 
