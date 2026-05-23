@@ -168,13 +168,19 @@ const Navbar = () => {
               {profileOpen && (
                 <ul className="dropdown-menu">
                   <li>
-                    <NavLink to="/profile">
+                    <NavLink to="/profile" onClick={()=>{
+                      setMenuOpen(false);
+                      setProfileOpen(false);
+                    }}>
                       Profile
                     </NavLink>
                   </li>
 
                   <li>
-                    <NavLink to="/profile">
+                    <NavLink to="/profile" onClick={()=>{
+                      setMenuOpen(false);
+                      setProfileOpen(false);
+                    }}>
                       My Bookings
                     </NavLink>
                   </li>
@@ -182,7 +188,11 @@ const Navbar = () => {
                   <li>
                     <button
                       className="logout-btn"
-                      onClick={handlelogout}
+                      onClick={()=>{
+                        handlelogout;
+                      setMenuOpen(false);
+                      setProfileOpen(false);
+                    }}
                     >
                       Logout
                     </button>

@@ -154,7 +154,7 @@ const Booking = () => {
       );
 
     // RESET SELECTED HOTEL
-    if(bookingData.hotel){
+    if(bookingData.hotel && (data?.hotelsData?.length > 0)){
 
       const matchedHotel =
         data?.hotelsData?.find(
@@ -166,11 +166,15 @@ const Booking = () => {
       setSelectedHotel(
         matchedHotel || null
       );
+      setFormData((prev)=>({
+        ...prev,
+        hotel:matchedHotel
+      }));
 
     }
 
     // RESET SELECTED PACKAGE
-    if(bookingData.package){
+    if(bookingData.package && data?.packagesData?.length>0){
 
       const matchedPackage =
         data?.packagesData?.find(
@@ -182,6 +186,10 @@ const Booking = () => {
       setSelectedPackage(
         matchedPackage || null
       );
+      setFormData((prev)=>({
+        ...prev,
+        package:matchedPackage
+      }));
 
     }
 
