@@ -4,7 +4,6 @@ import { authMiddleware } from "../middlewares/authmiddleware.js";
 
 const router = express.Router();
 
-router.get("/destinations", getDestinations);
 router.get("/all",getAllDestinations)
 router.get("/destinations/:id",authMiddleware, getDestinationById);
 router.post("/destinations",authMiddleware, createDestination);
