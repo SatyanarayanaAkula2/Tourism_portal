@@ -1,3 +1,75 @@
+# 🎨 Tourism Portal Frontend
+
+Frontend application for the Tourism Portal built using React.js and Vite.
+
+## 🚀 Features
+
+- Responsive UI
+- Protected Routes
+- Dark / Light Theme
+- Pagination & Filtering
+- Booking Workflow
+- Analytics Dashboard
+- Global Loaders & Error Handling
+- Context API State Management
+
+## 🛠️ Tech Stack
+
+- React.js
+- React Router DOM
+- Axios
+- Context API
+- CSS3
+- Vite
+
+
+## 📂 Frontend Structure
+
+bash
+src/
+│
+├── components/
+├── pages/
+├── context/
+├── services/
+├── routes/
+├── layouts/
+├── utils/
+└── assets/
+
+
+## ⚙️ Installation
+
+bash
+npm install
+
+## ▶️ Run Development Server
+
+bash
+npm run dev
+
+
+## 🔑 Environment Variables
+
+Create .env file:
+
+env
+VITE_API_URL=backend server url
+
+## 🌐 Deployment
+
+Frontend deployed using Render / Vercel.
+
+## 📌 Key Frontend Features
+
+- Component-based scalable architecture
+- Route protection using React Router
+- Centralized API service handling
+- Global authentication management
+- Responsive mobile-first design
+- Animated UI interactions
+
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
