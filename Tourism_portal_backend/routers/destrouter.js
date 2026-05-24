@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllDestinations,getDestinations,getDestinationById,createDestination,updateDestination,deleteDestination } from "../controllers/dest_controller.js";
+import { getAllDestinations,getDestinationById,createDestination,updateDestination,deleteDestination } from "../controllers/dest_controller.js";
 import { authMiddleware } from "../middlewares/authmiddleware.js";
 
 const router = express.Router();
